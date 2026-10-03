@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel — High-Throughput Threat Intelligence & Fraud Prevention</title>
+    <meta name="description" content="Enterprise threat intelligence and real-time proxy detection engineered for high-concurrency infrastructure, APIs, and gaming networks.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Reading Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Ambient background -->
+    <div class="aurora-wrapper" aria-hidden="true">
+        <div class="aurora-blade blade-1"></div>
+        <div class="aurora-blade blade-2"></div>
+        <div class="aurora-blade blade-3"></div>
+        <div class="aurora-blade blade-4"></div>
+        <div class="aurora-blade blade-5"></div>
+        <div class="aurora-plasma-orb"></div>
+        <div class="aurora-vignette"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav class="floating-pill-nav">
+            <a href="#" class="nav-brand">
+                <span class="brand-glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <polygon points="12,2 22,12 12,22 2,12" fill="url(#warm-diamond)" />
+                        <defs>
+                            <linearGradient id="warm-diamond" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffb347" />
+                                <stop offset="50%" stop-color="#ff6b4a" />
+                                <stop offset="100%" stop-color="#ff2f3a" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </span>
+                <span class="brand-text">Sentinel</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#inspector" class="nav-link">Telemetry</a>
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#spectrum" class="nav-link">Game Ingress</a>
+                <a href="#developer" class="nav-link">Integration</a>
+                <a href="#benchmarks" class="nav-link">Benchmarks</a>
+                <a href="#api-reference" class="nav-link">API Docs</a>
+            </div>
+
+            <div class="nav-right">
+                <a href="https://github.com/undrrwrldd/sentinel" target="_blank" rel="noopener" class="nav-link-muted">GitHub</a>
+                <a href="#inspector" class="nav-pill-btn">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <span>Test IP</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-viewport">
+        <div class="hero-container">
+            <div class="eyebrow-chip">
+                <span class="eyebrow-dot"></span>
+                <span class="eyebrow-text">v1.2 · Enterprise Threat Intelligence</span>
+            </div>
+
+            <h1 class="hero-title">
+                Real-time threat defense,<br>
+                engineered for <span class="hero-highlight">scale</span>.
+            </h1>
+
+            <p class="hero-subtitle">
+                Sentinel delivers line-rate proxy detection and autonomous threat intelligence across global infrastructure, stopping credential abuse and malicious traffic before connection acceptance.
+            </p>
+
+            <div class="keycap-btn-row">
+                <a href="#inspector" class="keycap-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="keycap-glyph">
+                        <polyline points="4 17 10 11 4 5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                    </svg>
+                    <span>Query Edge API</span>
+                </a>
+
+                <a href="#spectrum" class="keycap-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="keycap-glyph">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <span>Game Engine & TCP Ingress</span>
+                </a>
+            </div>
+
+            <div class="install-caption">
+                <code>curl -s "https://api.antivpn.tech/v1/check?ip=185.213.154.20"</code>
+                <button id="hero-copy-btn" class="caption-copy" title="Copy cURL command">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+            </div>
+
+            <!-- Query bar demo -->
+            <div class="command-bar-wrapper">
+                <div class="command-bar-panel">
+                    <div class="command-input-row">
+                        <svg class="search-glyph" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <div class="typed-query-box">
+                            <span class="typed-query">sentinel evaluate 185.213.154.20</span>
+                            <span class="blinking-caret"></span>
+                        </div>
+                        <span class="command-mode-pill">API Mode</span>
+                    </div>
+
+                    <div class="command-results">
+                        <div class="command-row active-row" data-ip="185.213.154.20">
+                            <div class="row-left">
+                                <span class="row-icon shield-icon">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <span class="row-label">Mullvad WireGuard Endpoint</span>
+                                <span class="row-arg">BLOCK · Risk 95/100 · AS206016</span>
+                            </div>
+                            <span class="row-shortcut">Cmd+Enter</span>
+                        </div>
+
+                        <div class="command-row" data-ip="78.46.12.34">
+                            <div class="row-left">
+                                <span class="row-icon server-icon">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                                </span>
+                                <span class="row-label">Hetzner Cloud VPS Node</span>
+                                <span class="row-arg">BLOCK · Risk 90/100 · AS24940</span>
+                            </div>
+                            <span class="row-shortcut">Cmd+H</span>
+                        </div>
+
+                        <div class="command-row" data-ip="185.220.101.5">
+                            <div class="row-left">
+                                <span class="row-icon onion-icon">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                                </span>
+                                <span class="row-label">Tor Consensus Exit Relay</span>
+                                <span class="row-arg">BLOCK · Risk 100/100 · AS208294</span>
+                            </div>
+                            <span class="row-shortcut">Cmd+T</span>
+                        </div>
+
+                        <div class="command-row" data-ip="24.130.12.8">
+                            <div class="row-left">
+                                <span class="row-icon home-icon">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                </span>
+                                <span class="row-label">Residential Subscriber Subnet</span>
+                                <span class="row-arg">ALLOW · Risk 0/100 · AS7922</span>
+                            </div>
+                            <span class="row-shortcut">Cmd+R</span>
+                        </div>
+                    </div>
+
+                    <div class="command-footer">
+                        <div class="footer-hints">
+                            <span>↑↓ navigate</span>
+                            <span>·</span>
+                            <span>↵ execute check</span>
+                            <span>·</span>
+                            <span>esc dismiss</span>
+                        </div>
+                        <span class="footer-brand">Sentinel Engine · api.antivpn.tech</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ghost-pill-wrapper">
+                <a href="#inspector" class="ghost-pill">
+                    <span>Explore live connection telemetry</span>
+                    <span class="ghost-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="floating-badge">
+            <div class="badge-status-dot"></div>
+            <div class="badge-content">
+                <span class="badge-title">Edge Network Active</span>
+                <span class="badge-desc" id="hero-badge-latency">Sub-5ms response</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Telemetry Inspector -->
+    <section id="inspector" class="container dev-section">
+        <div class="section-label">Live Telemetry Inspector</div>
+        <h2 class="section-title">Test Any IP Against the Edge Network</h2>
+        <p class="section-desc">
+            Direct real-time query executed against the live Sentinel Edge API across global distributed points of presence.
+        </p>
+
+        <div class="inspector-panel">
+            <!-- Toolbar -->
+            <div class="panel-toolbar">
+                <div class="toolbar-left">
+                    <span class="panel-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                        Connection Telemetry Inspector
+                    </span>
+                    <span id="edge-timing" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">
+                        Edge Latency: <strong id="latency-stat" style="color: var(--text-primary);">Pinging Edge...</strong>
+                    </span>
+                </div>
+                <div class="toolbar-tabs">
+                    <button id="tab-visual" class="tab-btn active">Visual</button>
+                    <button id="tab-json" class="tab-btn">JSON Payload</button>
+                </div>
+            </div>
+
+            <!-- Query Input Bar -->
+            <div class="query-bar">
+                <div class="ip-field-wrap">
+                    <input type="text" id="ip-input" class="ip-field" placeholder="Enter IPv4 or IPv6 target (e.g., 78.46.12.34 or 185.213.154.20)..." autocomplete="off" spellcheck="false">
+                    <button type="button" id="btn-toggle-ip" class="btn-eye-toggle" aria-label="Toggle IP visibility" title="Reveal IP address">
+                        <svg class="eye-icon eye-show" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <svg class="eye-icon eye-hide" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button id="btn-scan" class="btn-inspect">
+                    <span>Inspect Target</span>
+                </button>
+            </div>
+
+            <!-- Presets Strip -->
+            <div class="presets-strip">
+                <span class="presets-label">Reference Targets:</span>
+                <div id="presets-container" style="display: flex; gap: 8px;"></div>
+            </div>
+
+            <!-- Panel Body -->
+            <div class="panel-body">
+                <!-- Visual Mode -->
+                <div id="visual-view">
+                    <!-- Verdict Banner -->
+                    <div id="verdict-banner" class="verdict-banner clean">
+                        <div class="verdict-left">
+                            <span id="verdict-badge" class="verdict-badge verdict-clean-badge">ALLOWED</span>
+                            <span id="verdict-desc" class="verdict-desc">Analyzing incoming connection headers...</span>
+                        </div>
+                        <div class="verdict-score-wrap">
+                            <span class="score-num" id="meter-value">0</span>
+                            <span class="score-max">/ 100 Risk</span>
+                        </div>
+                    </div>
+
+                    <!-- Risk Score Progress Bar -->
+                    <div class="score-bar-track">
+                        <div id="score-bar-fill" class="score-bar-fill"></div>
+                    </div>
+
+                    <!-- Telemetry Data Grid -->
+                    <div class="telemetry-grid">
+                        <div class="data-cell data-cell-ip">
+                            <div class="cell-label-row">
+                                <span class="cell-label">IP Address</span>
+                                <button type="button" id="btn-toggle-cell-ip" class="btn-cell-eye" aria-label="Toggle IP visibility" title="Reveal IP address">
+                                    <svg class="eye-icon eye-show" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-icon eye-hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="tel-ip" class="cell-value">--</div>
+                        </div>
+                        <div class="data-cell">
+                            <div class="cell-label">Reverse DNS Hostname (rDNS)</div>
+                            <div id="tel-hostname" class="cell-value" style="font-size: 13px; word-break: break-all;">--</div>
+                        </div>
+                        <div class="data-cell">
+                            <div class="cell-label">Autonomous System (ASN)</div>
+                            <div id="tel-asn" class="cell-value">--</div>
+                        </div>
+                        <div class="data-cell">
+                            <div class="cell-label">Routing Carrier / Org</div>
+                            <div id="tel-provider" class="cell-value">--</div>
+                        </div>
+                        <div class="data-cell">
+                            <div class="cell-label">Classification & Region</div>
+                            <div id="tel-type" class="cell-value">--</div>
+                        </div>
+                        <div class="data-cell">
+                            <div class="cell-label">Execution Latency</div>
+                            <div id="tel-time" class="cell-value">-- ms</div>
+                        </div>
+                    </div>
+
+                    <!-- Diagnosis Box -->
+                    <div class="diagnosis-container">
+                        <div class="diagnosis-header">Telemetry Diagnosis</div>
+                        <div id="reasons-text">Evaluating network connection against global threat feeds...</div>
+                        <div class="diagnosis-footer">
+                            <span>Evaluated by Sentinel Global Edge Network</span>
+                            <span>Endpoint: <code class="tel-endpoint-tag" id="tel-request">GET /v1/check</code></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON Mode -->
+                <div id="json-view-wrap" style="display: none; position: relative;">
+                    <button id="btn-copy-json" class="btn-copy" style="position: absolute; top: 12px; right: 12px;">Copy JSON</button>
+                    <pre id="json-view"><code>Loading payload...</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture -->
+    <section id="architecture" class="container dev-section">
+        <div class="section-label">Platform Architecture</div>
+        <h2 class="section-title">Multi-Stage Threat Inspection Pipeline</h2>
+        <p class="section-desc">
+            How Sentinel evaluates connections at line rate to neutralize malicious traffic before session authorization.
+        </p>
+
+        <div class="arch-flow-grid">
+            <div class="flow-card">
+                <div class="flow-step">01</div>
+                <div class="flow-title">Edge Ingress & Origin Resolution</div>
+                <div class="flow-desc">
+                    Intercepts inbound connections at the network boundary, seamlessly resolving true client origins across enterprise reverse proxies and load balancers without exposing internal topology.
+                </div>
+            </div>
+            <div class="flow-card">
+                <div class="flow-step">02</div>
+                <div class="flow-title">Autonomous Threat Correlation</div>
+                <div class="flow-desc">
+                    Performs sub-millisecond classification against globally synchronized threat intelligence feeds, instantly isolating commercial VPN pools, Tor relays, and bulletproof hosting subnets.
+                </div>
+            </div>
+            <div class="flow-card">
+                <div class="flow-step">03</div>
+                <div class="flow-title">Heuristic Risk Scoring</div>
+                <div class="flow-desc">
+                    Synthesizes routing anomalies, carrier reputation, and connection behavior into an instantaneous risk score, enabling dynamic automated enforcement policies.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- High-concurrency ingress -->
+    <section id="spectrum" class="container dev-section">
+        <div class="section-label">High-Throughput Ingress</div>
+        <h2 class="section-title">Reverse-Proxy Compatibility & Game Ingress Defense</h2>
+        <p class="section-desc">
+            Engineered for high-concurrency multiplayer platforms and real-time TCP applications. Sentinel preserves true client visibility through enterprise reverse proxies and edge layers, preventing bot floods and automated abuse without introducing latency.
+        </p>
+
+        <div class="spectrum-grid">
+            <div class="spectrum-card">
+                <div class="spectrum-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="spectrum-title">Transparent Proxy Ingress</div>
+                <div class="spectrum-desc">
+                    Preserves genuine client visibility across enterprise reverse proxies and edge load balancers, ensuring accurate enforcement without network masking.
+                </div>
+            </div>
+            <div class="spectrum-card">
+                <div class="spectrum-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <div class="spectrum-title">Zero-Stall Async Verification</div>
+                <div class="spectrum-desc">
+                    High-throughput asynchronous connection hooks evaluate inbound sessions before authentication, maintaining smooth server performance even during intense traffic surges.
+                </div>
+            </div>
+            <div class="spectrum-card">
+                <div class="spectrum-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <div class="spectrum-title">Ultra-Low-Latency Memory Cache</div>
+                <div class="spectrum-desc">
+                    Intelligent local state management resolves repeat connections instantly, eliminating redundant network round-trips under high concurrency.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer integration -->
+    <section id="developer" class="container dev-section">
+        <div class="section-label">Developer First</div>
+        <h2 class="section-title">Drop-in Integration Across Any Stack</h2>
+        <p class="section-desc">
+            Integrate via standard REST endpoints, edge middleware, or native SDK connectors with minimal lines of code.
+        </p>
+
+        <div class="code-card">
+            <div class="code-header">
+                <div class="code-tabs">
+                    <button class="code-tab-btn active" data-tab="curl">cURL</button>
+                    <button class="code-tab-btn" data-tab="node">Node.js / Fetch</button>
+                    <button class="code-tab-btn" data-tab="python">Python</button>
+                    <button class="code-tab-btn" data-tab="go">Go Middleware</button>
+                    <button class="code-tab-btn" data-tab="mc">Game SDK (Java/Netty)</button>
+                </div>
+                <button id="btn-copy-code" class="btn-copy">Copy</button>
+            </div>
+            <div class="code-content">
+                <pre id="code-display"><code># Query the live Sentinel Edge API
+curl -s -X GET "https://api.antivpn.tech/v1/check?ip=185.213.154.20"
+
+# Live JSON Response:
+# {
+#   "ip": "185.213.154.20",
+#   "action": "BLOCK",
+#   "risk_score": 95,
+#   "threat_type": "Commercial VPN",
+#   "asn": 206016,
+#   "provider": "Mullvad VPN",
+#   "country": "SE",
+#   "reasons": ["BGP Prefix Match: Mullvad VPN (Commercial VPN)"],
+#   "duration_ms": 1
+# }</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance benchmarks -->
+    <section id="benchmarks" class="container dev-section">
+        <div class="section-label">Technical Benchmarks</div>
+        <h2 class="section-title">Engineered to Eliminate Latency Bottlenecks</h2>
+        <p class="section-desc">
+            Performance comparison across line-rate execution, infrastructure overhead, and proxy transparency.
+        </p>
+
+        <div class="table-card">
+            <table class="benchmarks-table">
+                <thead>
+                    <tr>
+                        <th>Metric / Capability</th>
+                        <th style="color: var(--brand-warm-amber);">Sentinel Engine</th>
+                        <th>Enterprise Cloud APIs</th>
+                        <th>Traditional Edge Rules</th>
+                        <th>Static Blocklists</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lookup Latency</td>
+                        <td class="td-highlight">&lt; 1 ms <span class="badge-metric">Sub-Millisecond</span></td>
+                        <td>40 – 120 ms</td>
+                        <td>80 – 200 ms</td>
+                        <td>150 – 500 ms</td>
+                    </tr>
+                    <tr>
+                        <td>Memory Overhead</td>
+                        <td class="td-highlight">Ultra-Low Overhead <span class="badge-metric">Optimized</span></td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>Layer 4 / TCP Reverse Proxies</td>
+                        <td class="td-highlight">Native Support <span class="badge-metric">Transparent</span></td>
+                        <td>Requires Add-on</td>
+                        <td>Fails (Masked)</td>
+                        <td>Incompatible</td>
+                    </tr>
+                    <tr>
+                        <td>Threat Classification</td>
+                        <td class="td-highlight">Autonomous Ingestion</td>
+                        <td>Proprietary Sync</td>
+                        <td>Manual Maintenance</td>
+                        <td>Stale Lists</td>
+                    </tr>
+                    <tr>
+                        <td>Dual-Stack Support</td>
+                        <td class="td-highlight">IPv4 & IPv6 Parity</td>
+                        <td>Supported</td>
+                        <td>IPv4 Only</td>
+                        <td>Inconsistent</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment Model</td>
+                        <td class="td-highlight">Global Managed Edge <span class="badge-metric">High Availability</span></td>
+                        <td>Cloud Dependent</td>
+                        <td>Manual Maintenance</td>
+                        <td>Manual Maintenance</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- REST API reference -->
+    <section id="api-reference" class="container dev-section">
+        <div class="section-label">REST API Specifications</div>
+        <h2 class="section-title">Global Serverless Edge Endpoints</h2>
+        <p class="section-desc">
+            Hosted across distributed serverless edge infrastructure at <code>api.antivpn.tech</code> with zero cold starts.
+        </p>
+
+        <div class="api-grid">
+            <div class="api-card">
+                <div class="api-endpoint-header">
+                    <span class="method-badge">GET</span>
+                    <span class="api-path">/v1/check?ip={target_ip}</span>
+                </div>
+                <div class="api-summary">
+                    Evaluates an explicit target IP address against proprietary threat intelligence and network routing classifications. Returns instantaneous verdict (<code>ALLOW</code> or <code>BLOCK</code>), <code>risk_score</code> (0-100), and threat categorization.
+                </div>
+            </div>
+
+            <div class="api-card">
+                <div class="api-endpoint-header">
+                    <span class="method-badge">GET</span>
+                    <span class="api-path">/v1/check</span>
+                </div>
+                <div class="api-summary">
+                    Automatically evaluates the calling client's connection origin using edge network telemetry. Ideal for browser connection inspection and client-side anti-fraud verification.
+                </div>
+            </div>
+
+            <div class="api-card">
+                <div class="api-endpoint-header">
+                    <span class="method-badge">GET</span>
+                    <span class="api-path">/healthz</span>
+                </div>
+                <div class="api-summary">
+                    Service health check endpoint for uptime monitors, load balancers, and heartbeat liveness probes. Returns <code>status: "operational"</code> with current timestamp.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-wrap">
+            <span>Sentinel Security Architecture &copy; 2026. High-concurrency network defense.</span>
+            <span>Live Global API: <code>api.antivpn.tech</code></span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/dataset.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
