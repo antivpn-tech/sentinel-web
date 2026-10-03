@@ -13,5 +13,10 @@ dist/
 # Agent and internal working documents
 brain/
 scratch/
+drafts/
+notes/
+*.draft.md
+*.internal.md
 *.agent.md
 *_notes.md
+.env*
