@@ -1608,3 +1608,127 @@ footer {
         display: none;
     }
 }
+
+/* Trust & Privacy Assurance Banner */
+.trust-banner {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 22px;
+    background: rgba(16, 20, 31, 0.72);
+    border: 1px solid rgba(0, 242, 254, 0.18);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    transition: border-color var(--transition-fast);
+}
+
+.trust-banner:hover {
+    border-color: rgba(0, 242, 254, 0.35);
+}
+
+.trust-badge-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 10px;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    color: var(--brand-electric-cyan);
+}
+
+.trust-banner-text {
+    flex: 1;
+}
+
+.trust-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+}
+
+.trust-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.trust-pill {
+    padding: 6px 12px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    border-radius: 20px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+    white-space: nowrap;
+}
+
+/* Code tip pro-tip card */
+.code-tip-card {
+    margin-top: 14px;
+    padding: 12px 18px;
+    background: rgba(16, 20, 31, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.code-tip-badge {
+    padding: 3px 8px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    background: rgba(0, 242, 254, 0.12);
+    border: 1px solid rgba(0, 242, 254, 0.28);
+    color: var(--brand-electric-cyan);
+    white-space: nowrap;
+}
+
+.code-tip-text {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.code-tip-text code {
+    color: var(--brand-warm-amber);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .trust-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+    .trust-pill {
+        align-self: flex-start;
+    }
+    .code-tip-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+

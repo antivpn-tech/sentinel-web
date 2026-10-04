@@ -55,7 +55,7 @@
             </div>
 
             <div class="nav-right">
-                <a href="https://github.com/undrrwrldd/sentinel" target="_blank" rel="noopener" class="nav-link-muted">GitHub</a>
+                <a href="https://github.com/undrrwrldd/sentinel-web" target="_blank" rel="noopener" class="nav-link-muted">GitHub</a>
                 <a href="#inspector" class="nav-pill-btn">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -333,6 +333,27 @@
         </div>
     </section>
 
+    <!-- Trust & Privacy Assurance Banner -->
+    <section class="container" style="margin-top: 10px; margin-bottom: 24px;">
+        <div class="trust-banner">
+            <div class="trust-badge-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="m9 12 2 2 4-4"/>
+                </svg>
+            </div>
+            <div class="trust-banner-text">
+                <div class="trust-title">
+                    <span>Zero-Log & Volatile Memory Guarantee</span>
+                </div>
+                <div class="trust-desc">
+                    Inspected client IP addresses are evaluated strictly in volatile edge isolate RAM. Zero persistent disk logging, zero query telemetry tracking, and zero third-party data sharing.
+                </div>
+            </div>
+            <div class="trust-pill">Stateless Edge Processing</div>
+        </div>
+    </section>
+
     <!-- Architecture -->
     <section id="architecture" class="container dev-section">
         <div class="section-label">Platform Architecture</div>
@@ -442,6 +463,13 @@ curl -s -X GET "https://api.antivpn.tech/v1/check?ip=185.213.154.20"
 # }</code></pre>
             </div>
         </div>
+
+        <div class="code-tip-card">
+            <span class="code-tip-badge">Pro-Tip</span>
+            <span class="code-tip-text">
+                Implement a local in-memory cache (e.g., Caffeine/Guava in Java, or <code>sync.Map</code> with TTL in Go) with a 6–12 hour window to achieve 0ms local evaluations for repeat players without consuming API round-trips.
+            </span>
+        </div>
     </section>
 
     <!-- Performance benchmarks -->
@@ -465,11 +493,18 @@ curl -s -X GET "https://api.antivpn.tech/v1/check?ip=185.213.154.20"
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Lookup Latency</td>
-                        <td class="td-highlight">&lt; 1 ms <span class="badge-metric">Sub-Millisecond</span></td>
+                        <td>Edge Engine Execution</td>
+                        <td class="td-highlight">&lt; 1 ms <span class="badge-metric">Isolate RAM</span></td>
                         <td>40 – 120 ms</td>
                         <td>80 – 200 ms</td>
                         <td>150 – 500 ms</td>
+                    </tr>
+                    <tr>
+                        <td>Global Network Ingress</td>
+                        <td class="td-highlight">300+ Anycast PoPs <span class="badge-metric">Sub-15ms Regional</span></td>
+                        <td>Centralized Origin (80–250ms)</td>
+                        <td>Origin Bound</td>
+                        <td>Host Bound</td>
                     </tr>
                     <tr>
                         <td>Memory Overhead</td>

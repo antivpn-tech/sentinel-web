@@ -14,7 +14,7 @@ Evaluate any IP address live at **[antivpn.tech](https://antivpn.tech)**.
 
 ## How It Works
 
-Sentinel evaluates inbound traffic at the edge before connection authorization, eliminating server load and blocking malicious sessions with sub-5ms round-trip latency.
+Sentinel evaluates inbound traffic at the edge before connection authorization, eliminating server load and blocking malicious sessions with sub-millisecond edge compute execution across 300+ global PoPs.
 
 ### Connection Filtering Lifecycle
 
@@ -249,6 +249,16 @@ Automatically evaluates the inbound visitor's connection headers.
 
 ### `GET /healthz`
 Global edge health and liveness probe.
+
+---
+
+## Privacy & Zero-Log Architecture
+
+Sentinel is engineered around strict data minimization and stateless evaluation:
+
+* **Volatile Memory Processing**: Inbound IP queries are evaluated strictly in ephemeral edge isolate memory (V8 isolates).
+* **Zero Persistent Storage**: Inspected IPs and query payloads are never written to disk, database, or persistent storage.
+* **No Telemetry Harvesting**: Zero user identity tracking, zero traffic logging, and zero third-party data sharing.
 
 ---
 
