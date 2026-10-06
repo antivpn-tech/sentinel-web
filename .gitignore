@@ -1,0 +1,24 @@
+# OS & Editor files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Node / Build artifacts
+node_modules/
+.netlify/
+dist/
+
+# Agent and internal working documents
+brain/
+scratch/
+drafts/
+notes/
+AGENT.md
+agent.md
+*.draft.md
+*.internal.md
+*.agent.md
+*_notes.md
+.env*

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Notice — Sentinel Edge Threat Intelligence</title>
+    <meta name="description" content="Data protection disclosures, GDPR/CCPA compliance statements, volatile RAM processing, and zero-log architecture for Sentinel threat intelligence network.">
+    <link rel="canonical" href="https://antivpn.tech/privacy">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffb347'><path d='M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4.0">
+</head>
+<body class="legal-standalone-page">
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-diamond"></span>
+                <span class="brand-text">SENTINEL</span>
+            </a>
+            <div class="nav-right">
+                <a href="index.html#pricing" class="nav-cta">View Licensing</a>
+                <a href="terms.html" class="nav-link-muted">Terms of Service</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="legal-page-card">
+            <div class="legal-page-header">
+                <span class="sentinel-modal-badge">Privacy & Data Protection Notice</span>
+                <h1 style="font-size: 28px; font-weight: 800; color: #ffffff; margin: 12px 0 6px 0; letter-spacing: -0.5px;">Privacy Policy & Data Processing Notice</h1>
+                <p style="font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); margin: 0;">GDPR, CCPA & Global Data Protection Compliance · Last Revised: October 2026</p>
+            </div>
+
+            <div class="legal-section-block">
+                <div class="legal-callout-shield">
+                    <strong>DATA MINIMIZATION PRINCIPLE (GDPR ARTICLE 5(1)(c)):</strong><br>
+                    • Sentinel does not log, harvest, or persist inspected client IP queries to persistent disk or relational storage.<br>
+                    • All telemetry evaluation occurs strictly within volatile V8 isolate RAM for sub-millisecond execution and is discarded immediately upon response delivery.<br>
+                    • We operate completely free of tracking cookies, analytics pixels, and third-party advertising scripts.
+                </div>
+
+                <h3>1. Overview & Commitment to Privacy</h3>
+                <p>Sentinel ("we", "us", or "our") operates an autonomous edge threat intelligence network and developer API designed to evaluate network integrity and block malicious traffic. We treat data privacy as an architectural requirement, engineering our service around strict data minimization and ephemeral memory processing.</p>
+                <p>This Privacy Policy explains how data is handled when you interact with our web platform (<code>antivpn.tech</code>) or issue connection queries through our global edge endpoints (<code>api.antivpn.tech</code>).</p>
+
+                <h3>2. IP Addresses as Personal Data & Ephemeral Processing</h3>
+                <p>Under European Union General Data Protection Regulation (GDPR Recital 30) and judicial rulings (such as the Court of Justice of the European Union in <em>Patrick Breyer v. Bundesrepublik Deutschland</em>), dynamic and static IP addresses are recognized as Personal Data.</p>
+                <p>When an application queries Sentinel to evaluate an IP address (e.g., via <code>/v1/check?ip=...</code>):</p>
+                <ul>
+                    <li>The target IP address is received by an Anycast edge isolate node located nearest to the client.</li>
+                    <li>The address is evaluated against in-memory prefix bitsets, ASN tables, and algorithmic heuristics strictly inside <strong>volatile RAM</strong>.</li>
+                    <li>The evaluation is completed in under 2 milliseconds, the resulting JSON risk verdict is returned, and <strong>the in-memory inspection state is immediately released</strong>.</li>
+                    <li><strong>Zero Persistent Storage:</strong> Queried IP addresses, request payloads, and query metadata are never written to disk, database tables, or persistent query logs.</li>
+                </ul>
+
+                <h3>3. Legal Basis for Processing (GDPR Article 6(1)(f))</h3>
+                <p>Sentinel processes queried IP addresses strictly under the legal basis of <strong>Legitimate Interests (GDPR Art. 6(1)(f))</strong>. Specifically, processing is strictly necessary to:</p>
+                <ul>
+                    <li>Protect digital systems, servers, and networks against unauthorized access, automated botnets, and distributed abuse.</li>
+                    <li>Prevent credential stuffing, credit card testing, and automated fraud.</li>
+                    <li>Enforce rate limiting and prevent denial-of-service volumetric impairment.</li>
+                </ul>
+                <p>Because processing is transient (0ms disk persistence) and strictly confined to network security classification, the rights and freedoms of the data subjects are safeguarded.</p>
+
+                <h3>4. Account & Billing Information</h3>
+                <p>When you subscribe to a paid commercial license:</p>
+                <ul>
+                    <li>All checkout, billing, credit card processing, and invoicing are conducted exclusively by <strong>Lemon Squeezy, LLC</strong> acting as Merchant of Record.</li>
+                    <li>Sentinel never collects, stores, or processes your raw credit card numbers or banking credentials.</li>
+                    <li>Lemon Squeezy securely passes order status, customer email, and cryptographic license tokens to Sentinel to maintain license provisioning. Customer email addresses are used solely for license delivery and critical security updates.</li>
+                </ul>
+
+                <h3>5. Infrastructure Sub-Processors</h3>
+                <p>Sentinel utilizes enterprise-grade sub-processors to deliver global edge performance and commercial operations:</p>
+                <ul>
+                    <li><strong>Cloudflare, Inc. (United States / Global):</strong> Provides Anycast edge compute, DDoS mitigation, and TLS termination across 300+ global data centers. Certified under standard contractual clauses (SCCs) and global security frameworks.</li>
+                    <li><strong>Lemon Squeezy, LLC (United States):</strong> Merchant of Record handling payment processing, billing, tax calculation, and invoicing.</li>
+                </ul>
+
+                <h3>6. Cookie-Free Architecture</h3>
+                <p>The Sentinel web platform does not utilize tracking cookies, marketing beacons, or session fingerprinting scripts. We do not engage in behavioral user profiling, and we do not sell or share personal data under the California Consumer Privacy Act (CCPA) / California Privacy Rights Act (CPRA).</p>
+
+                <h3>7. Security Measures</h3>
+                <p>All communication with Sentinel endpoints requires modern cryptographic protocols (TLS 1.3). Edge execution occurs within isolated V8 sandbox environments that prevent cross-tenant data leakage or persistence.</p>
+
+                <h3>8. Data Subject Rights & Contact</h3>
+                <p>Under GDPR and CCPA, individuals hold rights regarding access, rectification, and erasure of personal data. Because Sentinel operates a zero-log ephemeral architecture, Sentinel does not maintain searchable records or persistent databases of inspected IP queries.</p>
+                <p>For data protection inquiries or to reach our privacy compliance team, email: <code>legal@antivpn.tech</code>.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer" style="margin-top: 60px;">
+        <div class="container footer-bottom-bar">
+            <div class="footer-copyright-row">
+                <span>&copy; 2026 Sentinel Security / AntiVPN Tech. All rights reserved.</span>
+                <span><a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms of Service</a> · <a href="index.html" style="color: var(--text-muted); text-decoration: none;">Return to Home</a></span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
