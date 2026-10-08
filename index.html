@@ -647,9 +647,9 @@
                   <span class="text-[10px] font-mono text-white/50 uppercase tracking-wider">Setup</span>
                 </div>
                 <h3 class="text-sm sm:text-base lg:text-lg font-display text-white mb-0.5 sm:mb-1">Initialize</h3>
-                <span class="text-[11px] sm:text-xs font-mono text-white/70 block mb-1 sm:mb-1.5">SDK & API Credentials</span>
+                <span class="text-[11px] sm:text-xs font-mono text-white/70 block mb-1 sm:mb-1.5">Endpoint & Ingress Setup</span>
                 <p class="text-xs text-muted-foreground leading-relaxed">
-                  Import `@sentinel/edge` and instantiate client credentials in any edge runtime.
+                  Target <code class="text-white/90 bg-white/5 px-1 py-0.5 rounded text-[11px]">/v1/check</code> via zero-dependency native fetch or cURL in any runtime.
                 </p>
               </div>
               <div id="step-bar-0" class="absolute bottom-0 left-0 right-0 h-1 bg-white transition-transform origin-left scale-x-100"></div>
@@ -696,23 +696,31 @@
 
           <!-- Code Preview Box (Right 7 Cols) -->
           <div class="lg:col-span-7 bg-[#020204] border border-white/15 rounded-xl overflow-hidden shadow-2xl flex flex-col justify-between h-full">
-            <!-- Window Bar -->
-            <div class="flex items-center justify-between px-3.5 sm:px-5 py-3 border-b border-white/10 bg-black/60">
-              <div class="flex items-center gap-1.5 sm:gap-2">
-                <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/50 border border-red-500/70"></div>
-                <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/50 border border-yellow-500/70"></div>
-                <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/50 border border-emerald-500/70"></div>
-                <div class="ml-2 sm:ml-3 flex items-center gap-1.5 bg-white/5 border border-white/10 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[11px] sm:text-xs font-mono text-white/90">
-                  <svg class="w-3.5 h-3.5 text-white/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                  <span id="code-filename">sentinel.ts</span>
+            <!-- Window Bar with Multi-Language Switcher -->
+            <div class="flex items-center justify-between px-3 sm:px-5 py-2.5 sm:py-3 border-b border-white/10 bg-black/60 gap-2">
+              <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/50 border border-red-500/70"></div>
+                  <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/50 border border-yellow-500/70"></div>
+                  <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/50 border border-emerald-500/70"></div>
+                </div>
+                <!-- Language Selector Tabs -->
+                <div class="flex items-center bg-white/[0.04] border border-white/10 rounded-lg p-0.5 text-[11px] font-mono shrink-0">
+                  <button type="button" onclick="selectLang('ts')" id="lang-btn-ts" class="px-2 sm:px-2.5 py-0.5 rounded-md transition-all text-white bg-white/15 font-medium shadow-sm">TypeScript</button>
+                  <button type="button" onclick="selectLang('curl')" id="lang-btn-curl" class="px-2 sm:px-2.5 py-0.5 rounded-md transition-all text-white/50 hover:text-white/80">cURL</button>
+                  <button type="button" onclick="selectLang('py')" id="lang-btn-py" class="px-2 sm:px-2.5 py-0.5 rounded-md transition-all text-white/50 hover:text-white/80">Python</button>
                 </div>
               </div>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 shrink-0">
+                <div class="hidden md:flex items-center gap-1.5 bg-white/5 border border-white/10 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[11px] font-mono text-white/90">
+                  <svg class="w-3.5 h-3.5 text-white/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  <span id="code-filename">middleware.ts</span>
+                </div>
                 <button onclick="copySnippet()" id="btn-copy-code" class="text-[11px] font-mono text-white/60 hover:text-white px-2.5 py-1 rounded border border-white/10 hover:border-white/30 bg-white/5 transition-all flex items-center gap-1.5">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
                   <span id="btn-copy-text">Copy</span>
                 </button>
-                <span class="font-mono text-[10px] text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/20 hidden sm:inline">Zero-Log Edge</span>
+                <span class="font-mono text-[10px] text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/20 hidden xl:inline">Zero-Log Edge</span>
               </div>
             </div>
 
@@ -995,21 +1003,21 @@
 
         <!-- 4 Bento-Style Developer Windows (Fits screen in one clean row) -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 w-full">
-          <!-- Window 01: TypeScript Native SDK -->
+          <!-- Window 01: Zero-Dependency Native -->
           <div class="relative p-6 sm:p-7 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl h-full">
             <div>
               <div class="flex items-center justify-between mb-3">
-                <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">01 / SDK</span>
+                <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">01 / Integration</span>
                 <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">Zero-Dep</span>
               </div>
-              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">TypeScript Native</h3>
+              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">Zero-Dependency Native</h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
-                Full type safety for risk evaluation, Autonomous System telemetry, and verdict enums across Node, Bun, and Deno.
+                Native fetch and standard REST integration for risk evaluation, Carrier Network Classification, and dual-stack IP intelligence.
               </p>
             </div>
             <div class="mt-6 pt-3.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
-              <span class="text-zinc-400">@sentinel/edge</span>
-              <span class="text-emerald-400">STRICT TYPES</span>
+              <span class="text-zinc-400">api.antivpn.tech</span>
+              <span class="text-emerald-400">STANDARD REST</span>
             </div>
           </div>
 
@@ -1561,95 +1569,254 @@
 
 
 
-    // 4. How It Works Steps & Code Switcher (Deep Professional Blue Syntax Highlighting)
-    const stepSnippets = [
-`// 01 Initialize Sentinel Edge SDK
-import { Sentinel } from '@sentinel/edge';
+    // 4. How It Works Steps & Multi-Language Code Switcher (TypeScript, cURL, Python)
+    const SNIPPETS = {
+      ts: {
+        name: 'TypeScript',
+        files: ['middleware.ts', 'evaluate.edge.ts', 'enforce.ts'],
+        outputs: [
+          'STATUS: READY &middot; 0.18ms &middot; ZERO-DEPENDENCY EDGE RUNTIME',
+          'STATUS: EVALUATED &middot; 0.38ms &middot; RESIDENTIAL ISP &middot; RISK: 04/100',
+          'STATUS: VERDICT: 200 OK &middot; 0.15ms &middot; ZERO PERSISTED LOGS'
+        ],
+        plain: [
+`// 01 Initialize Edge Ingress & Client Credentials
+const clientIP = req.headers.get('cf-connecting-ip')
+  || req.headers.get('x-forwarded-for')
+  || '1.1.1.1';
 
-export const guard = new Sentinel({
-  apiKey: process.env.SENTINEL_EDGE_KEY,
-  environment: 'production',
-  zeroLog: true, // Volatile memory isolate
-  timeoutMs: 800
+const SENTINEL_ENDPOINT = 'https://api.antivpn.tech/v1/check';
+const SENTINEL_KEY = process.env.SENTINEL_EDGE_KEY || 'stl_live_your_api_key_here';
+
+// Zero-dependency native edge fetch (<0.2ms cold start)`,
+`// 02 Query Sentinel Global Threat Grid (<0.5ms)
+const res = await fetch(\`\${SENTINEL_ENDPOINT}?ip=\${encodeURIComponent(clientIP)}\`, {
+  headers: {
+    'Authorization': \`Bearer \${SENTINEL_KEY}\`,
+    'Accept': 'application/json'
+  }
 });
 
-// Anycast edge isolate initialized (<0.2ms)`,
-`// 02 Deep Topology & Ingress Telemetry (<0.5ms)
-const telemetry = await guard.evaluateDeep({
-  ip: clientIP,
-  requireCleanResidential: true,
-  maxRiskScore: 65
-});
-
-// Carrier Network Classification verdict
-if (telemetry.isProxy || telemetry.riskScore > 65) {
-  return guard.refuseIngress('UNTRUSTED_GATEWAY');
-}`,
+const verdict = await res.json();
+// Carrier Network Classification verdict resolved`,
 `// 03 Stateless Edge Enforcement in Volatile Memory
-const verdict = await guard.inspect(clientIP);
-
-if (verdict.action === 'BLOCK') {
+if (verdict.action === 'BLOCK' || verdict.risk_score > 65) {
   return new Response('Ingress Denied: Untrusted Ingress', {
     status: 403,
-    headers: { 'X-Sentinel-Verdict': 'REJECTED' }
+    headers: {
+      'X-Sentinel-Verdict': 'REJECTED',
+      'X-Sentinel-Threat': verdict.threat_type
+    }
   });
 }
 
 // Pass authenticated subscriber with zero persisted logs
 return next();`
-    ];
+        ],
+        html: [
+`<span class="text-zinc-500 italic">// 01 Initialize Edge Ingress &amp; Client Credentials</span>
+<span class="text-blue-400 font-semibold">const</span> clientIP = req.headers.get(<span class="text-zinc-300">'cf-connecting-ip'</span>)
+  || req.headers.get(<span class="text-zinc-300">'x-forwarded-for'</span>)
+  || <span class="text-zinc-300">'1.1.1.1'</span>;
 
-    const stepSnippetsHtml = [
-`<span class="text-zinc-500 italic">// 01 Initialize Sentinel Edge SDK</span>
-<span class="text-blue-400 font-semibold">import</span> { Sentinel } <span class="text-blue-400 font-semibold">from</span> <span class="text-zinc-300">'@sentinel/edge'</span>;
+<span class="text-blue-400 font-semibold">const</span> SENTINEL_ENDPOINT = <span class="text-zinc-300">'https://api.antivpn.tech/v1/check'</span>;
+<span class="text-blue-400 font-semibold">const</span> SENTINEL_KEY = process.env.SENTINEL_EDGE_KEY || <span class="text-zinc-300">'stl_live_your_api_key_here'</span>;
 
-<span class="text-blue-400 font-semibold">export const</span> guard = <span class="text-blue-400 font-semibold">new</span> Sentinel({
-  apiKey: process.env.SENTINEL_EDGE_KEY,
-  environment: <span class="text-zinc-300">'production'</span>,
-  zeroLog: true, <span class="text-zinc-500 italic">// Volatile memory isolate</span>
-  timeoutMs: 800
+<span class="text-zinc-500 italic">// Zero-dependency native edge fetch (&lt;0.2ms cold start)</span>`,
+`<span class="text-zinc-500 italic">// 02 Query Sentinel Global Threat Grid (&lt;0.5ms)</span>
+<span class="text-blue-400 font-semibold">const</span> res = <span class="text-blue-400 font-semibold">await</span> fetch(\`\${SENTINEL_ENDPOINT}?ip=\${encodeURIComponent(clientIP)}\`, {
+  headers: {
+    <span class="text-zinc-300">'Authorization'</span>: \`Bearer \${SENTINEL_KEY}\`,
+    <span class="text-zinc-300">'Accept'</span>: <span class="text-zinc-300">'application/json'</span>
+  }
 });
 
-<span class="text-zinc-500 italic">// Anycast edge isolate initialized (&lt;0.2ms)</span>`,
-`<span class="text-zinc-500 italic">// 02 Deep Topology & Ingress Telemetry (&lt;0.5ms)</span>
-<span class="text-blue-400 font-semibold">const</span> telemetry = <span class="text-blue-400 font-semibold">await</span> guard.evaluateDeep({
-  ip: clientIP,
-  requireCleanResidential: true,
-  maxRiskScore: 65
-});
-
-<span class="text-zinc-500 italic">// Carrier Network Classification verdict</span>
-<span class="text-blue-400 font-semibold">if</span> (telemetry.isProxy || telemetry.riskScore &gt; 65) {
-  <span class="text-blue-400 font-semibold">return</span> guard.refuseIngress(<span class="text-zinc-300">'UNTRUSTED_GATEWAY'</span>);
-}`,
+<span class="text-blue-400 font-semibold">const</span> verdict = <span class="text-blue-400 font-semibold">await</span> res.json();
+<span class="text-zinc-500 italic">// Carrier Network Classification verdict resolved</span>`,
 `<span class="text-zinc-500 italic">// 03 Stateless Edge Enforcement in Volatile Memory</span>
-<span class="text-blue-400 font-semibold">const</span> verdict = <span class="text-blue-400 font-semibold">await</span> guard.inspect(clientIP);
-
-<span class="text-blue-400 font-semibold">if</span> (verdict.action === <span class="text-zinc-300">'BLOCK'</span>) {
+<span class="text-blue-400 font-semibold">if</span> (verdict.action === <span class="text-zinc-300">'BLOCK'</span> || verdict.risk_score &gt; 65) {
   <span class="text-blue-400 font-semibold">return new</span> Response(<span class="text-zinc-300">'Ingress Denied: Untrusted Ingress'</span>, {
     status: 403,
-    headers: { <span class="text-zinc-300">'X-Sentinel-Verdict'</span>: <span class="text-zinc-300">'REJECTED'</span> }
+    headers: {
+      <span class="text-zinc-300">'X-Sentinel-Verdict'</span>: <span class="text-zinc-300">'REJECTED'</span>,
+      <span class="text-zinc-300">'X-Sentinel-Threat'</span>: verdict.threat_type
+    }
   });
 }
 
 <span class="text-zinc-500 italic">// Pass authenticated subscriber with zero persisted logs</span>
 <span class="text-blue-400 font-semibold">return</span> next();`
-    ];
+        ]
+      },
+      curl: {
+        name: 'cURL',
+        files: ['ingress.sh', 'inspect.sh', 'verdict.json'],
+        outputs: [
+          'HTTP/2 200 OK &middot; 0.28ms &middot; DIRECT EDGE PROBE',
+          'STATUS: EVALUATED &middot; 0.41ms &middot; DUAL-STACK IPv4/IPv6',
+          'STATUS: 200 OK &middot; ACTION: ALLOW &middot; 0 PERSISTED LOGS'
+        ],
+        plain: [
+`# 01 Fast Terminal Ingress Check (Zero Dependencies)
+curl -s -X GET "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
+  -H "Authorization: Bearer stl_live_your_api_key_here" \\
+  -H "Accept: application/json"
 
-    const stepFilenames = [
-      'sentinel.ts',
-      'telemetry.edge.ts',
-      'enforce.middleware.ts'
-    ];
+# Sub-millisecond dual-stack ingress response from 300+ edge nodes`,
+`# 02 Query Dual-Stack Threat Intelligence & Carrier Telemetry
+curl -s "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
+  -H "Authorization: Bearer stl_live_your_api_key_here" | jq .
 
-    const stepOutputs = [
-      'STATUS: READY &middot; 0.22ms &middot; VOLATILE RAM ISOLATE INITIALIZED',
-      'STATUS: EVALUATED &middot; 0.41ms &middot; RESIDENTIAL ISP &middot; RISK: 04/100',
-      'STATUS: VERDICT: 200 OK &middot; 0.18ms &middot; ZERO PERSISTED LOGS'
-    ];
+# Carrier Network Classification verdict in volatile RAM`,
+`// 03 Real-Time JSON Ingress Verdict from Global Threat Grid
+{
+  "ip": "1.1.1.1",
+  "action": "ALLOW",
+  "risk_score": 0,
+  "threat_type": "Clean Residential",
+  "is_vpn": false,
+  "asn": 13335,
+  "provider": "Cloudflare, Inc.",
+  "country": "US",
+  "city": "San Jose",
+  "duration_ms": 1
+}`
+        ],
+        html: [
+`<span class="text-zinc-500 italic"># 01 Fast Terminal Ingress Check (Zero Dependencies)</span>
+<span class="text-blue-400 font-semibold">curl</span> -s -X GET <span class="text-zinc-300">"https://api.antivpn.tech/v1/check?ip=1.1.1.1"</span> \\
+  -H <span class="text-zinc-300">"Authorization: Bearer stl_live_your_api_key_here"</span> \\
+  -H <span class="text-zinc-300">"Accept: application/json"</span>
+
+<span class="text-zinc-500 italic"># Sub-millisecond dual-stack ingress response from 300+ edge nodes</span>`,
+`<span class="text-zinc-500 italic"># 02 Query Dual-Stack Threat Intelligence &amp; Carrier Telemetry</span>
+<span class="text-blue-400 font-semibold">curl</span> -s <span class="text-zinc-300">"https://api.antivpn.tech/v1/check?ip=1.1.1.1"</span> \\
+  -H <span class="text-zinc-300">"Authorization: Bearer stl_live_your_api_key_here"</span> | jq .
+
+<span class="text-zinc-500 italic"># Carrier Network Classification verdict in volatile RAM</span>`,
+`<span class="text-zinc-500 italic">// 03 Real-Time JSON Ingress Verdict from Global Threat Grid</span>
+{
+  <span class="text-blue-400">"ip"</span>: <span class="text-zinc-300">"1.1.1.1"</span>,
+  <span class="text-blue-400">"action"</span>: <span class="text-emerald-400">"ALLOW"</span>,
+  <span class="text-blue-400">"risk_score"</span>: <span class="text-emerald-400">0</span>,
+  <span class="text-blue-400">"threat_type"</span>: <span class="text-zinc-300">"Clean Residential"</span>,
+  <span class="text-blue-400">"is_vpn"</span>: <span class="text-emerald-400">false</span>,
+  <span class="text-blue-400">"asn"</span>: <span class="text-zinc-300">13335</span>,
+  <span class="text-blue-400">"provider"</span>: <span class="text-zinc-300">"Cloudflare, Inc."</span>,
+  <span class="text-blue-400">"country"</span>: <span class="text-zinc-300">"US"</span>,
+  <span class="text-blue-400">"city"</span>: <span class="text-zinc-300">"San Jose"</span>,
+  <span class="text-blue-400">"duration_ms"</span>: <span class="text-emerald-400">1</span>
+}`
+        ]
+      },
+      py: {
+        name: 'Python',
+        files: ['client.py', 'evaluate.py', 'middleware.py'],
+        outputs: [
+          'STATUS: READY &middot; ASYNC CLIENT INITIALIZED',
+          'STATUS: EVALUATED &middot; 0.39ms &middot; TOPOLOGY RESOLVED',
+          'STATUS: VERDICT: 200 OK &middot; 0.16ms &middot; ZERO PERSISTED LOGS'
+        ],
+        plain: [
+`# 01 Initialize Ingress Guard (httpx or requests)
+import os, httpx
+
+SENTINEL_ENDPOINT = "https://api.antivpn.tech/v1/check"
+SENTINEL_KEY = os.getenv("SENTINEL_EDGE_KEY", "stl_live_your_api_key_here")
+
+client = httpx.AsyncClient(timeout=0.8)
+# Stateless volatile memory architecture`,
+`# 02 Query Sentinel Global Threat Grid (<0.5ms)
+response = await client.get(
+    SENTINEL_ENDPOINT,
+    params={"ip": client_ip},
+    headers={"Authorization": f"Bearer {SENTINEL_KEY}"}
+)
+
+verdict = response.json()
+# Carrier Network Classification verdict resolved`,
+`# 03 Enforce Sub-ms Ingress Verdict in Microservice
+if verdict.get("action") == "BLOCK" or verdict.get("risk_score", 0) > 65:
+    return JSONResponse(
+        status_code=403,
+        content={"error": "Untrusted Ingress", "threat": verdict["threat_type"]}
+    )
+
+# Pass verified subscriber with zero persisted logs
+return await call_next(request)`
+        ],
+        html: [
+`<span class="text-zinc-500 italic"># 01 Initialize Ingress Guard (httpx or requests)</span>
+<span class="text-blue-400 font-semibold">import</span> os, httpx
+
+SENTINEL_ENDPOINT = <span class="text-zinc-300">"https://api.antivpn.tech/v1/check"</span>
+SENTINEL_KEY = os.getenv(<span class="text-zinc-300">"SENTINEL_EDGE_KEY"</span>, <span class="text-zinc-300">"stl_live_your_api_key_here"</span>)
+
+client = httpx.AsyncClient(timeout=0.8)
+<span class="text-zinc-500 italic"># Stateless volatile memory architecture</span>`,
+`<span class="text-zinc-500 italic"># 02 Query Sentinel Global Threat Grid (&lt;0.5ms)</span>
+response = <span class="text-blue-400 font-semibold">await</span> client.get(
+    SENTINEL_ENDPOINT,
+    params={<span class="text-zinc-300">"ip"</span>: client_ip},
+    headers={<span class="text-zinc-300">"Authorization"</span>: <span class="text-zinc-300">f"Bearer {SENTINEL_KEY}"</span>}
+)
+
+verdict = response.json()
+<span class="text-zinc-500 italic"># Carrier Network Classification verdict resolved</span>`,
+`<span class="text-zinc-500 italic"># 03 Enforce Sub-ms Ingress Verdict in Microservice</span>
+<span class="text-blue-400 font-semibold">if</span> verdict.get(<span class="text-zinc-300">"action"</span>) == <span class="text-zinc-300">"BLOCK"</span> <span class="text-blue-400 font-semibold">or</span> verdict.get(<span class="text-zinc-300">"risk_score"</span>, 0) &gt; 65:
+    <span class="text-blue-400 font-semibold">return</span> JSONResponse(
+        status_code=403,
+        content={<span class="text-zinc-300">"error"</span>: <span class="text-zinc-300">"Untrusted Ingress"</span>, <span class="text-zinc-300">"threat"</span>: verdict[<span class="text-zinc-300">"threat_type"</span>]}
+    )
+
+<span class="text-zinc-500 italic"># Pass verified subscriber with zero persisted logs</span>
+<span class="text-blue-400 font-semibold">return await</span> call_next(request)`
+        ]
+      }
+    };
 
     let currentStep = 0;
+    let currentLang = 'ts';
     let stepTimer = null;
+
+    function selectLang(lang) {
+      if (!SNIPPETS[lang]) return;
+      currentLang = lang;
+
+      ['ts', 'curl', 'py'].forEach((l) => {
+        const btn = document.getElementById(`lang-btn-${l}`);
+        if (btn) {
+          if (l === lang) {
+            btn.className = 'px-2 sm:px-2.5 py-0.5 rounded-md transition-all text-white bg-white/15 font-medium shadow-sm';
+          } else {
+            btn.className = 'px-2 sm:px-2.5 py-0.5 rounded-md transition-all text-white/50 hover:text-white/80';
+          }
+        }
+      });
+
+      renderCurrentStep();
+    }
+
+    function renderCurrentStep() {
+      const langData = SNIPPETS[currentLang];
+      const codeSnippetEl = document.getElementById('code-snippet');
+      if (codeSnippetEl) codeSnippetEl.innerHTML = langData.html[currentStep];
+
+      const filenameEl = document.getElementById('code-filename');
+      if (filenameEl) filenameEl.textContent = langData.files[currentStep];
+
+      const outputEl = document.getElementById('code-output-text');
+      if (outputEl) outputEl.innerHTML = langData.outputs[currentStep];
+
+      const lines = langData.plain[currentStep].trim().split('\n').length;
+      let lineNumsHtml = '';
+      for (let l = 1; l <= lines; l++) {
+        lineNumsHtml += `<div>${String(l).padStart(2, '0')}</div>`;
+      }
+      const lineNumEl = document.getElementById('code-line-numbers');
+      if (lineNumEl) lineNumEl.innerHTML = lineNumsHtml;
+    }
 
     function selectStep(idx) {
       currentStep = idx;
@@ -1680,26 +1847,12 @@ return next();`
         }
       }
 
-      const codeSnippetEl = document.getElementById('code-snippet');
-      if (codeSnippetEl) codeSnippetEl.innerHTML = stepSnippetsHtml[idx];
-      const filenameEl = document.getElementById('code-filename');
-      if (filenameEl) filenameEl.textContent = stepFilenames[idx];
-      const outputEl = document.getElementById('code-output-text');
-      if (outputEl) outputEl.innerHTML = stepOutputs[idx];
-
-      const lines = stepSnippets[idx].trim().split('\n').length;
-      let lineNumsHtml = '';
-      for (let l = 1; l <= lines; l++) {
-        lineNumsHtml += `<div>${String(l).padStart(2, '0')}</div>`;
-      }
-      const lineNumEl = document.getElementById('code-line-numbers');
-      if (lineNumEl) lineNumEl.innerHTML = lineNumsHtml;
-
+      renderCurrentStep();
       resetStepTimer();
     }
 
     function copySnippet() {
-      const code = stepSnippets[currentStep];
+      const code = SNIPPETS[currentLang].plain[currentStep];
       if (navigator.clipboard) {
         navigator.clipboard.writeText(code).then(() => {
           const btnText = document.getElementById('btn-copy-text');
