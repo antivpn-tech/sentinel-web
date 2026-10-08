@@ -4,6 +4,7 @@
 .vscode/
 *.swp
 *~
+shutdown.sh
 
 # Node / Build artifacts
 node_modules/
