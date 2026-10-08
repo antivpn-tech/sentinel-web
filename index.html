@@ -1414,14 +1414,14 @@
   <!-- Official ruucm/shadergradient & Cobe Bundle -->
   <script src="js/shadergradient.bundle.js"></script>
   <script>
-    // Background Initial Load / Hydration Glitch (FOUC) Guard - Wait 600ms for 3D camera rotation to settle
+    // Background Initial Load / Hydration Glitch (FOUC) Guard
     function revealShaderBackgrounds() {
       setTimeout(() => {
         const hero = document.getElementById('shadergradient-hero');
         if (hero) hero.classList.add('loaded');
         const bento = document.getElementById('shadergradient-bento');
         if (bento) bento.classList.add('loaded');
-      }, 600);
+      }, 200);
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', revealShaderBackgrounds);
