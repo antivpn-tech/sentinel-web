@@ -348,6 +348,12 @@
 
         <!-- Desktop Action Buttons -->
         <div class="hidden md:flex items-center gap-4">
+          <div id="nav-license-btn-container" class="hidden">
+            <button onclick="SentinelLicense.openModal()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all shadow-[0_0_15px_rgba(16,185,129,0.15)] group" title="View Sentinel API License">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="nav-license-label">Active Key</span>
+            </button>
+          </div>
           <a href="#developers" id="sign-in-link" class="text-sm text-white/70 hover:text-white transition-all duration-500 font-mono">
             API Docs
           </a>
@@ -379,6 +385,12 @@
         <a href="#pricing" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Pricing</a>
       </div>
       <div class="flex flex-col gap-3 pt-6 border-t border-white/10 mt-6">
+        <div id="mobile-license-btn-container" class="hidden">
+          <button onclick="SentinelLicense.openModal(); closeMobileMenu();" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs mb-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="mobile-license-label">View Claimed Key</span>
+          </button>
+        </div>
         <a href="#developers" class="mobile-nav-link w-full py-2.5 text-center border border-white/20 rounded-full text-white font-mono text-xs sm:text-sm">API Docs</a>
         <a href="#pricing" class="mobile-nav-link w-full py-2.5 text-center bg-white text-black rounded-full font-medium text-xs sm:text-sm">Deploy Edge</a>
       </div>
@@ -1418,6 +1430,142 @@
 
   </main>
 
+  <!-- ==================== LICENSE KEY MODAL ==================== -->
+  <div id="license-modal" class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300" role="dialog" aria-modal="true" aria-labelledby="license-modal-title">
+    <div id="license-modal-card" class="relative w-full max-w-xl bg-[#07090e] border border-white/20 rounded-2xl shadow-[0_0_60px_rgba(0,0,0,0.95)] p-6 sm:p-8 transform scale-95 transition-all duration-300 max-h-[92vh] overflow-y-auto">
+      <!-- Ambient Top Glow -->
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-32 bg-emerald-500/20 blur-3xl rounded-full pointer-events-none"></div>
+
+      <!-- Close Button -->
+      <button onclick="SentinelLicense.closeModal()" class="absolute top-5 right-5 text-white/40 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors" aria-label="Close dialog">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <!-- Header Section -->
+      <div class="flex items-start gap-4 mb-6">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <div class="pr-6">
+          <div class="flex items-center gap-2 mb-1">
+            <span id="license-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              Developer License Linked
+            </span>
+          </div>
+          <h3 id="license-modal-title" class="text-xl sm:text-2xl font-display text-white">
+            Welcome back, Developer
+          </h3>
+          <p id="license-modal-desc" class="text-xs sm:text-sm text-white/60 mt-1 leading-relaxed">
+            Your active Sentinel Developer API license key linked to your GitHub account is ready.
+          </p>
+        </div>
+      </div>
+
+      <!-- API Key Box -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-[11px] font-mono text-white/50 uppercase tracking-wider">Production API Key</label>
+          <button id="license-mask-toggle" onclick="SentinelLicense.toggleMask()" class="text-[11px] font-mono text-white/60 hover:text-white flex items-center gap-1.5 transition-colors">
+            <svg id="license-mask-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            <span id="license-mask-text">Hide</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-2 p-2.5 sm:p-3 bg-[#020306] border border-white/20 rounded-xl relative group focus-within:border-emerald-500/50 transition-colors">
+          <input id="license-key-input" type="text" readonly class="w-full bg-transparent font-mono text-xs sm:text-sm text-white outline-none select-all font-semibold tracking-wider" value="stl_live_..." />
+          <button id="license-copy-btn" onclick="SentinelLicense.copyKey()" class="shrink-0 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-medium flex items-center gap-1.5 transition-all active:scale-95 border border-white/10">
+            <svg id="license-copy-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span id="license-copy-label">Copy</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Telemetry / Quota Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-6">
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col gap-1">
+          <span class="text-[10px] font-mono text-white/50 uppercase tracking-wider">Tier</span>
+          <span id="license-stat-tier" class="font-mono text-xs sm:text-sm font-semibold text-white capitalize">Developer</span>
+        </div>
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col gap-1">
+          <span class="text-[10px] font-mono text-white/50 uppercase tracking-wider">Monthly Limit</span>
+          <span id="license-stat-limit" class="font-mono text-xs sm:text-sm font-semibold text-white">5,000 checks</span>
+        </div>
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col gap-1">
+          <span class="text-[10px] font-mono text-white/50 uppercase tracking-wider">Remaining</span>
+          <span id="license-stat-remaining" class="font-mono text-xs sm:text-sm font-semibold text-emerald-400">Loading...</span>
+        </div>
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col gap-1">
+          <span class="text-[10px] font-mono text-white/50 uppercase tracking-wider">Cycle Reset</span>
+          <span id="license-stat-reset" class="font-mono text-xs sm:text-sm font-semibold text-white/80">30 days</span>
+        </div>
+      </div>
+
+      <!-- Quick Integration Snippets -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-mono text-white/50 uppercase tracking-wider">Integration Snippet</span>
+          <!-- Tabs -->
+          <div class="flex items-center gap-1 bg-white/5 p-1 rounded-lg border border-white/10">
+            <button onclick="SentinelLicense.switchSnippet('minecraft')" id="snippet-tab-minecraft" class="snippet-tab px-2.5 py-1 rounded text-[10px] font-mono text-white bg-white/15">Minecraft</button>
+            <button onclick="SentinelLicense.switchSnippet('curl')" id="snippet-tab-curl" class="snippet-tab px-2.5 py-1 rounded text-[10px] font-mono text-white/50 hover:text-white">cURL</button>
+            <button onclick="SentinelLicense.switchSnippet('node')" id="snippet-tab-node" class="snippet-tab px-2.5 py-1 rounded text-[10px] font-mono text-white/50 hover:text-white">Node / TS</button>
+            <button onclick="SentinelLicense.switchSnippet('python')" id="snippet-tab-python" class="snippet-tab px-2.5 py-1 rounded text-[10px] font-mono text-white/50 hover:text-white">Python</button>
+          </div>
+        </div>
+        <div class="relative bg-[#020306] border border-white/15 rounded-xl p-3.5 font-mono text-[11px] sm:text-xs text-white/80 overflow-x-auto">
+          <pre><code id="license-snippet-code">...</code></pre>
+          <button onclick="SentinelLicense.copySnippet()" id="snippet-copy-btn" class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white text-[10px] font-mono flex items-center gap-1 border border-white/10 transition-colors">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span id="snippet-copy-label">Copy Snippet</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Actions Footer -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/10">
+        <a href="https://api.antivpn.tech/v1/auth/github/login" class="text-xs font-mono text-white/40 hover:text-white/70 transition-colors">
+          Switch GitHub account &rarr;
+        </a>
+        <div class="flex items-center gap-2.5 w-full sm:w-auto">
+          <button onclick="SentinelLicense.closeModal()" class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-white text-black font-medium text-xs hover:bg-white/90 transition-colors">
+            Done &amp; Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== AUTH ERROR MODAL ==================== -->
+  <div id="auth-error-modal" class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300" role="dialog" aria-modal="true">
+    <div class="relative w-full max-w-md bg-[#07090e] border border-amber-500/30 rounded-2xl shadow-[0_0_60px_rgba(245,158,11,0.15)] p-6 sm:p-7 text-left">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+        <div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+            Verification Notice
+          </span>
+          <h3 id="auth-error-title" class="text-lg font-display text-white mt-1">
+            Account Ineligible
+          </h3>
+        </div>
+      </div>
+      <p id="auth-error-msg" class="text-xs sm:text-sm text-white/70 leading-relaxed mb-6">
+        Your GitHub account does not meet the eligibility requirements for a free Developer license.
+      </p>
+      <div class="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+        <button onclick="SentinelLicense.closeErrorModal()" class="px-4 py-2 rounded-full border border-white/20 text-white text-xs hover:bg-white/5 transition-colors">
+          Dismiss
+        </button>
+        <button onclick="SentinelPricing.checkout('starter')" class="px-5 py-2 rounded-full bg-white text-black font-medium text-xs hover:bg-white/90 transition-colors">
+          Upgrade to Starter ($29)
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== JAVASCRIPT ENGINE ==================== -->
   <!-- Official ruucm/shadergradient & Cobe Bundle -->
   <script src="js/shadergradient.bundle.js"></script>
@@ -1508,6 +1656,18 @@
     const closeIcon = document.getElementById('close-icon');
     let menuOpen = false;
 
+    function closeMobileMenu() {
+      menuOpen = false;
+      document.body.style.overflow = '';
+      if (mobileMenu) {
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+      }
+      if (hamburgerIcon) hamburgerIcon.classList.remove('hidden');
+      if (closeIcon) closeIcon.classList.add('hidden');
+    }
+    window.closeMobileMenu = closeMobileMenu;
+
     mobileBtn.addEventListener('click', () => {
       menuOpen = !menuOpen;
       if (menuOpen) {
@@ -1517,22 +1677,12 @@
         hamburgerIcon.classList.add('hidden');
         closeIcon.classList.remove('hidden');
       } else {
-        document.body.style.overflow = '';
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-        hamburgerIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
+        closeMobileMenu();
       }
     });
 
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        menuOpen = false;
-        document.body.style.overflow = '';
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        hamburgerIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
-      });
+      link.addEventListener('click', closeMobileMenu);
     });
 
     // 2. Rotating Hero Words with Character Blur Dissolve
@@ -1974,6 +2124,13 @@ verdict = response.json()
 
     window.SentinelPricing = {
       claimFreeKey() {
+        try {
+          const storedKey = localStorage.getItem('sentinel_license_key');
+          if (storedKey && storedKey.startsWith('stl_live_')) {
+            SentinelLicense.openModal(storedKey);
+            return;
+          }
+        } catch (e) {}
         window.location.href = 'https://api.antivpn.tech/v1/auth/github/login';
       },
 
@@ -2013,14 +2170,14 @@ verdict = response.json()
         if (!container) {
           container = document.createElement('div');
           container.id = 'toast-container';
-          container.className = 'fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none';
+          container.className = 'fixed bottom-6 right-6 z-[110] flex flex-col gap-2 pointer-events-none';
           document.body.appendChild(container);
         }
 
         const toast = document.createElement('div');
-        toast.className = 'flex items-center gap-3 px-4 py-3 bg-[#0a0d14]/90 backdrop-blur-md border border-white/30 rounded-xl text-white text-xs font-mono shadow-2xl pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0';
+        toast.className = 'flex items-center gap-3 px-4 py-3 bg-[#0a0d14]/95 backdrop-blur-md border border-white/30 rounded-xl text-white text-xs font-mono shadow-2xl pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0';
         toast.innerHTML = `
-          <svg class="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
           <span>${message}</span>
@@ -2034,6 +2191,317 @@ verdict = response.json()
           toast.classList.add('translate-y-2', 'opacity-0');
           setTimeout(() => toast.remove(), 300);
         }, 4500);
+      }
+    };
+
+    // 8. Universal Sentinel Licensing & Claimed Key Manager
+    window.SentinelLicense = {
+      currentKey: '',
+      isMasked: false,
+      activeSnippetTab: 'minecraft',
+
+      init() {
+        const params = new URLSearchParams(window.location.search);
+        const claimedKey = params.get('claimed_key');
+        const isReturning = params.get('returning') === 'true';
+        const isNew = params.get('new') === 'true';
+        const authError = params.get('auth_error');
+        const sessionId = params.get('session_id') || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('sentinel_active_session'));
+
+        // Handle return from checkout
+        if (sessionId && sessionId.startsWith('stl_sec_')) {
+          this.checkCheckoutSession(sessionId);
+        }
+
+        // Handle claimed license key from GitHub OAuth
+        if (claimedKey && claimedKey.startsWith('stl_live_')) {
+          this.currentKey = claimedKey;
+          try {
+            localStorage.setItem('sentinel_license_key', claimedKey);
+            localStorage.setItem('sentinel_license_tier', 'developer');
+          } catch(e) {}
+
+          this.updateNavbar(claimedKey);
+          this.openModal(claimedKey, { isReturning, isNew });
+          SentinelPricing.showToast(isReturning ? 'Active developer license retrieved' : 'Developer license provisioned');
+
+          // Clean up URL securely without full page reload
+          const cleanUrl = window.location.origin + window.location.pathname + window.location.hash;
+          window.history.replaceState({}, document.title, cleanUrl);
+          return;
+        }
+
+        // Handle authentication or anti-abuse errors
+        if (authError) {
+          this.showAuthError(authError);
+          const cleanUrl = window.location.origin + window.location.pathname + window.location.hash;
+          window.history.replaceState({}, document.title, cleanUrl);
+          return;
+        }
+
+        // Initialize from persistent browser storage if previously claimed
+        try {
+          const savedKey = localStorage.getItem('sentinel_license_key');
+          if (savedKey && savedKey.startsWith('stl_live_')) {
+            this.currentKey = savedKey;
+            this.updateNavbar(savedKey);
+          }
+        } catch(e) {}
+      },
+
+      updateNavbar(key) {
+        if (!key) return;
+        const desktopContainer = document.getElementById('nav-license-btn-container');
+        const mobileContainer = document.getElementById('mobile-license-btn-container');
+        const masked = key.length >= 16 
+          ? `${key.substring(0, 10)}•••${key.substring(key.length - 4)}` 
+          : key;
+
+        if (desktopContainer) {
+          desktopContainer.classList.remove('hidden');
+          const label = document.getElementById('nav-license-label');
+          if (label) label.textContent = masked;
+        }
+        if (mobileContainer) {
+          mobileContainer.classList.remove('hidden');
+          const label = document.getElementById('mobile-license-label');
+          if (label) label.textContent = `Key: ${masked}`;
+        }
+      },
+
+      async checkCheckoutSession(sessionId) {
+        try {
+          const res = await fetch(`https://api.antivpn.tech/v1/billing/order?session_id=${encodeURIComponent(sessionId)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.status === 'success' && data.key) {
+              try { sessionStorage.removeItem('sentinel_active_session'); } catch(e) {}
+              this.currentKey = data.key;
+              try {
+                localStorage.setItem('sentinel_license_key', data.key);
+                localStorage.setItem('sentinel_license_tier', data.tier || 'starter');
+              } catch(e) {}
+              this.updateNavbar(data.key);
+              this.openModal(data.key, {
+                isNew: true,
+                tierName: data.tier_name || 'Production',
+                monthlyLimit: data.monthly_limit
+              });
+              SentinelPricing.showToast('Production license provisioned');
+              const cleanUrl = window.location.origin + window.location.pathname + window.location.hash;
+              window.history.replaceState({}, document.title, cleanUrl);
+            }
+          }
+        } catch(e) {}
+      },
+
+      async openModal(key = this.currentKey, options = {}) {
+        if (!key) return;
+        this.currentKey = key;
+        this.isMasked = false;
+
+        const modal = document.getElementById('license-modal');
+        const card = document.getElementById('license-modal-card');
+        const input = document.getElementById('license-key-input');
+        const badge = document.getElementById('license-modal-badge');
+        const title = document.getElementById('license-modal-title');
+        const desc = document.getElementById('license-modal-desc');
+
+        if (input) input.value = key;
+        const maskText = document.getElementById('license-mask-text');
+        if (maskText) maskText.textContent = 'Hide';
+
+        if (options.isReturning) {
+          if (badge) badge.textContent = 'Existing License Retrieved';
+          if (title) title.textContent = 'Welcome Back';
+          if (desc) desc.textContent = 'We recognized your GitHub account and retrieved your active Developer API license key.';
+        } else if (options.isNew) {
+          if (badge) badge.textContent = options.tierName ? `${options.tierName.toUpperCase()} PROVISIONED` : 'LICENSE PROVISIONED • 5,000/MO';
+          if (title) title.textContent = 'Developer License Ready';
+          if (desc) desc.textContent = 'Your complimentary Developer license is active across our global Anycast edge network.';
+        } else {
+          if (badge) badge.textContent = 'Active Developer License';
+          if (title) title.textContent = 'Your Sentinel API Key';
+          if (desc) desc.textContent = 'Manage your license credentials, live monthly quota, and quick integration snippets below.';
+        }
+
+        this.renderSnippet(this.activeSnippetTab);
+
+        if (modal && card) {
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+          modal.classList.add('opacity-100', 'pointer-events-auto');
+          card.classList.remove('scale-95');
+          card.classList.add('scale-100');
+          document.body.style.overflow = 'hidden';
+        }
+
+        this.fetchLiveStatus(key);
+      },
+
+      closeModal() {
+        const modal = document.getElementById('license-modal');
+        const card = document.getElementById('license-modal-card');
+        if (modal && card) {
+          modal.classList.add('opacity-0', 'pointer-events-none');
+          modal.classList.remove('opacity-100', 'pointer-events-auto');
+          card.classList.remove('scale-100');
+          card.classList.add('scale-95');
+          document.body.style.overflow = '';
+        }
+      },
+
+      async fetchLiveStatus(key) {
+        const tierEl = document.getElementById('license-stat-tier');
+        const limitEl = document.getElementById('license-stat-limit');
+        const remEl = document.getElementById('license-stat-remaining');
+        const resetEl = document.getElementById('license-stat-reset');
+
+        try {
+          const res = await fetch(`https://api.antivpn.tech/v1/license/status?key=${encodeURIComponent(key)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (tierEl) tierEl.textContent = data.tier || 'Developer';
+            if (limitEl) limitEl.textContent = `${Number(data.monthly_limit || 5000).toLocaleString()} checks`;
+            if (remEl) remEl.textContent = `${Number(data.remaining_checks !== undefined ? data.remaining_checks : 5000).toLocaleString()} left`;
+            if (resetEl && data.cycle_reset) {
+              const resetDate = new Date(data.cycle_reset);
+              resetEl.textContent = resetDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+            }
+          } else {
+            if (remEl) remEl.textContent = '5,000 left';
+          }
+        } catch (e) {
+          if (remEl) remEl.textContent = '5,000 left';
+        }
+      },
+
+      toggleMask() {
+        this.isMasked = !this.isMasked;
+        const input = document.getElementById('license-key-input');
+        const text = document.getElementById('license-mask-text');
+        if (input) {
+          if (this.isMasked) {
+            input.value = this.currentKey.substring(0, 10) + '••••••••••••••••' + this.currentKey.substring(this.currentKey.length - 4);
+            if (text) text.textContent = 'Reveal';
+          } else {
+            input.value = this.currentKey;
+            if (text) text.textContent = 'Hide';
+          }
+        }
+      },
+
+      copyKey() {
+        if (!this.currentKey) return;
+        navigator.clipboard.writeText(this.currentKey).then(() => {
+          const label = document.getElementById('license-copy-label');
+          const btn = document.getElementById('license-copy-btn');
+          if (label) label.textContent = 'Copied!';
+          if (btn) btn.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+          setTimeout(() => {
+            if (label) label.textContent = 'Copy';
+            if (btn) btn.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+          }, 2000);
+        }).catch(() => {
+          const input = document.getElementById('license-key-input');
+          if (input) {
+            input.select();
+            document.execCommand('copy');
+          }
+        });
+      },
+
+      switchSnippet(tab) {
+        this.activeSnippetTab = tab;
+        document.querySelectorAll('.snippet-tab').forEach(el => {
+          el.classList.remove('bg-white/15', 'text-white');
+          el.classList.add('text-white/50');
+        });
+        const activeTab = document.getElementById(`snippet-tab-${tab}`);
+        if (activeTab) {
+          activeTab.classList.remove('text-white/50');
+          activeTab.classList.add('bg-white/15', 'text-white');
+        }
+        this.renderSnippet(tab);
+      },
+
+      renderSnippet(tab) {
+        const codeEl = document.getElementById('license-snippet-code');
+        if (!codeEl) return;
+        const key = this.currentKey || 'stl_live_your_api_key_here';
+
+        let snippet = '';
+        if (tab === 'minecraft') {
+          snippet = `# In plugins/Sentinel/config.yml:
+api:
+  endpoint: "https://api.antivpn.tech/v1/check"
+  license-key: "${key}"
+  timeout-ms: 2500
+mode: "ENFORCE"
+risk-threshold: 80`;
+        } else if (tab === 'curl') {
+          snippet = `curl -s -X GET "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
+  -H "Authorization: Bearer ${key}" \\
+  -H "Accept: application/json"`;
+        } else if (tab === 'node') {
+          snippet = `const res = await fetch('https://api.antivpn.tech/v1/check?ip=' + encodeURIComponent(clientIp), {
+  headers: {
+    'Authorization': 'Bearer ${key}',
+    'Accept': 'application/json'
+  }
+});
+const verdict = await res.json();`;
+        } else if (tab === 'python') {
+          snippet = `import requests
+
+res = requests.get(
+    "https://api.antivpn.tech/v1/check",
+    params={"ip": client_ip},
+    headers={"Authorization": "Bearer ${key}"}
+)
+verdict = res.json()`;
+        }
+        codeEl.textContent = snippet;
+      },
+
+      copySnippet() {
+        const codeEl = document.getElementById('license-snippet-code');
+        if (!codeEl) return;
+        navigator.clipboard.writeText(codeEl.textContent).then(() => {
+          const label = document.getElementById('snippet-copy-label');
+          if (label) label.textContent = 'Copied Snippet!';
+          setTimeout(() => {
+            if (label) label.textContent = 'Copy Snippet';
+          }, 2000);
+        }).catch(() => {});
+      },
+
+      showAuthError(err) {
+        const modal = document.getElementById('auth-error-modal');
+        const titleEl = document.getElementById('auth-error-title');
+        const msgEl = document.getElementById('auth-error-msg');
+
+        if (err === 'account_too_new') {
+          if (titleEl) titleEl.textContent = 'GitHub Account Ineligible';
+          if (msgEl) msgEl.textContent = 'To protect edge capacity from automated multi-accounting, free Developer keys require a GitHub account created at least 30 days ago. You can upgrade to a Starter tier for instant unmetered production access.';
+        } else {
+          if (titleEl) titleEl.textContent = 'Authentication Failed';
+          if (msgEl) msgEl.textContent = 'We could not complete your GitHub verification at this time. Please try again in a few moments or contact support.';
+        }
+
+        if (modal) {
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+          modal.classList.add('opacity-100', 'pointer-events-auto');
+          document.body.style.overflow = 'hidden';
+        }
+      },
+
+      closeErrorModal() {
+        const modal = document.getElementById('auth-error-modal');
+        if (modal) {
+          modal.classList.add('opacity-0', 'pointer-events-none');
+          modal.classList.remove('opacity-100', 'pointer-events-auto');
+          document.body.style.overflow = '';
+        }
       }
     };
 
@@ -2448,6 +2916,36 @@ verdict = response.json()
     window.addEventListener('load', initThreatGlobe);
     document.addEventListener('DOMContentLoaded', initThreatGlobe);
     setTimeout(initThreatGlobe, 100);
+
+    // Initialize Sentinel Licensing Manager & Dialog Listeners
+    function setupSentinelLicense() {
+      const licModal = document.getElementById('license-modal');
+      if (licModal) {
+        licModal.addEventListener('click', (e) => {
+          if (e.target === licModal) SentinelLicense.closeModal();
+        });
+      }
+      const errModal = document.getElementById('auth-error-modal');
+      if (errModal) {
+        errModal.addEventListener('click', (e) => {
+          if (e.target === errModal) SentinelLicense.closeErrorModal();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          SentinelLicense.closeModal();
+          SentinelLicense.closeErrorModal();
+        }
+      });
+
+      SentinelLicense.init();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupSentinelLicense);
+    } else {
+      setupSentinelLicense();
+    }
 
   </script>
 </body>
