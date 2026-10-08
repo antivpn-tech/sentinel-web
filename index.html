@@ -261,7 +261,7 @@
       filter: blur(36px);
       transform: scale(1.06) translateZ(0);
       opacity: 0;
-      transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform, opacity;
     }
     #shadergradient-hero.loaded {
@@ -274,13 +274,10 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
+      border-radius: 0.75rem;
+      filter: blur(28px);
       opacity: 0;
-      transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
-      clip-path: url(#bento-clip-path);
-      -webkit-clip-path: url(#bento-clip-path);
-      mask: url(#bento-cards-mask);
-      -webkit-mask: url(#bento-cards-mask);
-      -webkit-mask-image: url(#bento-cards-mask);
+      transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 0;
       will-change: transform, opacity;
       transform: translateZ(0);
@@ -289,7 +286,7 @@
       opacity: 0.75;
     }
     #shadergradient-bento canvas {
-      filter: blur(28px);
+      border-radius: 0.75rem;
     }
     #bento-card-1,
     #bento-card-2,
@@ -508,33 +505,14 @@
           </div>
         </div>
 
-        <!-- SVG Mask & Clip-Path for the 4 Bento Windows -->
-        <svg class="absolute w-0 h-0 overflow-hidden pointer-events-none" style="position: absolute; width: 0; height: 0;" aria-hidden="true">
-          <defs>
-            <clipPath id="bento-clip-path" clipPathUnits="userSpaceOnUse">
-              <rect id="bento-clip-1" rx="12" ry="12" />
-              <rect id="bento-clip-2" rx="12" ry="12" />
-              <rect id="bento-clip-3" rx="12" ry="12" />
-              <rect id="bento-clip-4" rx="12" ry="12" />
-            </clipPath>
-            <mask id="bento-cards-mask" maskUnits="userSpaceOnUse">
-              <rect width="100%" height="100%" fill="black" />
-              <rect id="bento-mask-1" rx="12" ry="12" fill="white" />
-              <rect id="bento-mask-2" rx="12" ry="12" fill="white" />
-              <rect id="bento-mask-3" rx="12" ry="12" fill="white" />
-              <rect id="bento-mask-4" rx="12" ry="12" fill="white" />
-            </mask>
-          </defs>
-        </svg>
-
         <!-- Bento Grid Cards Container -->
         <div id="bento-grid-wrapper" class="relative">
-          <!-- Shared Unified Bento Shader Layer (Masked to the 4 Cards) -->
-          <div id="shadergradient-bento" aria-hidden="true"></div>
-
           <div class="relative z-10 grid lg:grid-cols-12 gap-5 sm:gap-6">
             <!-- Card 01: Hero Bento Card -->
             <div id="bento-card-1" class="lg:col-span-12 relative bg-[#000101]/60 border border-white/10 min-h-0 lg:min-h-[400px] overflow-hidden rounded-xl group transition-all duration-700 flex flex-col lg:flex-row hover:border-white/40 isolate">
+              <!-- Bento Card 01 Background Shader (Confined strictly inside Card 01) -->
+              <div id="shadergradient-bento" aria-hidden="true"></div>
+
               <!-- Left Copy & Structure -->
               <div class="relative flex-1 p-5 sm:p-8 lg:p-10 bg-black/15 z-10 flex flex-col justify-between overflow-hidden rounded-xl lg:rounded-r-none">
                 <div class="relative z-10">
@@ -591,7 +569,8 @@
             </div>
 
             <!-- Card 02: Carrier & Topology Intelligence -->
-            <div id="bento-card-2" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+            <div id="bento-card-2" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between isolate">
+              <div class="absolute -top-12 -right-12 w-44 h-44 bg-cyan-500/10 rounded-full filter blur-[35px] pointer-events-none -z-10" aria-hidden="true"></div>
               <div>
                 <span class="font-mono text-xs sm:text-sm text-white/70">02</span>
                 <h3 class="text-lg sm:text-xl lg:text-2xl font-display mt-2 sm:mt-3 mb-2 sm:mb-3 text-white">Carrier & Topology Intelligence</h3>
@@ -606,7 +585,8 @@
             </div>
 
             <!-- Card 03: Dynamic Tunnel & Gateway Anomaly Detection -->
-            <div id="bento-card-3" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+            <div id="bento-card-3" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between isolate">
+              <div class="absolute -bottom-12 -right-12 w-44 h-44 bg-blue-600/10 rounded-full filter blur-[35px] pointer-events-none -z-10" aria-hidden="true"></div>
               <div>
                 <span class="font-mono text-xs sm:text-sm text-white/70">03</span>
                 <h3 class="text-lg sm:text-xl lg:text-2xl font-display mt-2 sm:mt-3 mb-2 sm:mb-3 text-white">Dynamic Tunnel Mitigation</h3>
@@ -621,7 +601,8 @@
             </div>
 
             <!-- Card 04: Zero-Log Volatile Memory Architecture -->
-            <div id="bento-card-4" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+            <div id="bento-card-4" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between isolate">
+              <div class="absolute -top-12 -left-12 w-44 h-44 bg-sky-400/10 rounded-full filter blur-[35px] pointer-events-none -z-10" aria-hidden="true"></div>
               <div>
                 <span class="font-mono text-xs sm:text-sm text-white/70">04</span>
                 <h3 class="text-lg sm:text-xl lg:text-2xl font-display mt-2 sm:mt-3 mb-2 sm:mb-3 text-white">Zero-Log Memory Architecture</h3>
@@ -1433,16 +1414,14 @@
   <!-- Official ruucm/shadergradient & Cobe Bundle -->
   <script src="js/shadergradient.bundle.js"></script>
   <script>
-    // Background Initial Load / Hydration Glitch (FOUC) Guard
+    // Background Initial Load / Hydration Glitch (FOUC) Guard - Wait 600ms for 3D camera rotation to settle
     function revealShaderBackgrounds() {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const hero = document.getElementById('shadergradient-hero');
-          if (hero) hero.classList.add('loaded');
-          const bento = document.getElementById('shadergradient-bento');
-          if (bento) bento.classList.add('loaded');
-        }, 120);
-      });
+      setTimeout(() => {
+        const hero = document.getElementById('shadergradient-hero');
+        if (hero) hero.classList.add('loaded');
+        const bento = document.getElementById('shadergradient-bento');
+        if (bento) bento.classList.add('loaded');
+      }, 600);
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', revealShaderBackgrounds);
@@ -2317,58 +2296,6 @@ return next();`
     document.addEventListener('DOMContentLoaded', initThreatGlobe);
     setTimeout(initThreatGlobe, 100);
 
-    // 11. Unified Bento Grid Mask & Clip-Path Synchronizer
-    function updateBentoMask() {
-      const wrapper = document.getElementById('bento-grid-wrapper');
-      if (!wrapper) return;
-      const wrapRect = wrapper.getBoundingClientRect();
-
-      for (let i = 1; i <= 4; i++) {
-        const card = document.getElementById('bento-card-' + i);
-        const clipRect = document.getElementById('bento-clip-' + i);
-        const maskRect = document.getElementById('bento-mask-' + i);
-        if (!card) continue;
-
-        const r = card.getBoundingClientRect();
-        const x = Math.round(r.left - wrapRect.left);
-        const y = Math.round(r.top - wrapRect.top);
-        const w = Math.round(r.width);
-        const h = Math.round(r.height);
-
-        if (clipRect) {
-          clipRect.setAttribute('x', x);
-          clipRect.setAttribute('y', y);
-          clipRect.setAttribute('width', w);
-          clipRect.setAttribute('height', h);
-          clipRect.setAttribute('rx', '12');
-          clipRect.setAttribute('ry', '12');
-        }
-        if (maskRect) {
-          maskRect.setAttribute('x', x);
-          maskRect.setAttribute('y', y);
-          maskRect.setAttribute('width', w);
-          maskRect.setAttribute('height', h);
-          maskRect.setAttribute('rx', '12');
-          maskRect.setAttribute('ry', '12');
-        }
-      }
-    }
-
-    window.addEventListener('load', updateBentoMask);
-    window.addEventListener('resize', updateBentoMask);
-    document.addEventListener('DOMContentLoaded', updateBentoMask);
-    if (window.ResizeObserver) {
-      const bentoObserver = new ResizeObserver(() => updateBentoMask());
-      const bentoWrapper = document.getElementById('bento-grid-wrapper');
-      if (bentoWrapper) bentoObserver.observe(bentoWrapper);
-      for (let i = 1; i <= 4; i++) {
-        const card = document.getElementById('bento-card-' + i);
-        if (card) bentoObserver.observe(card);
-      }
-    }
-    updateBentoMask();
-    setTimeout(updateBentoMask, 100);
-    setTimeout(updateBentoMask, 500);
   </script>
 </body>
 </html>
