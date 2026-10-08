@@ -260,8 +260,12 @@
       overflow: hidden;
       filter: blur(36px);
       transform: scale(1.06) translateZ(0);
-      opacity: 0.85;
+      opacity: 0;
+      transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform, opacity;
+    }
+    #shadergradient-hero.loaded {
+      opacity: 0.85;
     }
     #shadergradient-bento {
       position: absolute;
@@ -270,8 +274,8 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      filter: blur(28px);
-      opacity: 0.75;
+      opacity: 0;
+      transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
       clip-path: url(#bento-clip-path);
       -webkit-clip-path: url(#bento-clip-path);
       mask: url(#bento-cards-mask);
@@ -280,6 +284,21 @@
       z-index: 0;
       will-change: transform, opacity;
       transform: translateZ(0);
+    }
+    #shadergradient-bento.loaded {
+      opacity: 0.75;
+    }
+    #shadergradient-bento canvas {
+      filter: blur(28px);
+    }
+    #bento-card-1,
+    #bento-card-2,
+    #bento-card-3,
+    #bento-card-4 {
+      overflow: hidden;
+      border-radius: 0.75rem;
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+      isolation: isolate;
     }
   </style>
 </head>
@@ -515,9 +534,9 @@
 
           <div class="relative z-10 grid lg:grid-cols-12 gap-5 sm:gap-6">
             <!-- Card 01: Hero Bento Card -->
-            <div id="bento-card-1" class="lg:col-span-12 relative bg-[#000101]/60 border border-white/10 min-h-0 lg:min-h-[400px] overflow-hidden group transition-all duration-700 flex flex-col lg:flex-row rounded-xl hover:border-white/40">
+            <div id="bento-card-1" class="lg:col-span-12 relative bg-[#000101]/60 border border-white/10 min-h-0 lg:min-h-[400px] overflow-hidden rounded-xl group transition-all duration-700 flex flex-col lg:flex-row hover:border-white/40 isolate">
               <!-- Left Copy & Structure -->
-              <div class="relative flex-1 p-5 sm:p-8 lg:p-10 bg-black/15 z-10 flex flex-col justify-between">
+              <div class="relative flex-1 p-5 sm:p-8 lg:p-10 bg-black/15 z-10 flex flex-col justify-between overflow-hidden rounded-xl lg:rounded-r-none">
                 <div class="relative z-10">
                   <span class="font-mono text-xs sm:text-sm text-white/70">01</span>
                   <h3 class="text-2xl sm:text-3xl lg:text-4xl font-display mt-2 sm:mt-3 mb-3 sm:mb-4 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform duration-500 text-white">
@@ -611,7 +630,7 @@
                 </p>
               </div>
               <div class="pt-3.5 sm:pt-4 border-t border-white/10 flex items-baseline justify-between">
-                <span class="text-2xl sm:text-3xl font-display text-white">0</span>
+                <span class="text-2xl sm:text-3xl font-display text-white">0B</span>
                 <span class="text-xs font-mono text-muted-foreground">retained data logs</span>
               </div>
             </div>
@@ -883,9 +902,9 @@
           <!-- Card 1 -->
           <div class="p-5 sm:p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[180px] sm:h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
             <div>
-              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Evaluated Today</span>
-              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white" id="counter-threats">1,284,920</div>
-              <span class="text-[11px] sm:text-xs font-mono text-white/70 mt-0.5 sm:mt-1 block">ingress connection queries</span>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Throughput Benchmark</span>
+              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">120k+ rps</div>
+              <span class="text-[11px] sm:text-xs font-mono text-white/70 mt-0.5 sm:mt-1 block">stateless edge isolate capacity</span>
             </div>
             <div class="w-full">
               <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
@@ -920,8 +939,8 @@
           <div class="p-5 sm:p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[180px] sm:h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
             <div>
               <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Subscriber Logs Retained</span>
-              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">0</div>
-              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground mt-0.5 sm:mt-1 block">Zero-Log Volatile Memory</span>
+              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">0B</div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground mt-0.5 sm:mt-1 block">Zero-Log Volatile Memory Architecture</span>
             </div>
             <div class="w-full">
               <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
@@ -996,7 +1015,7 @@
         <!-- 4 Bento-Style Developer Windows (Fits screen in one clean row) -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 w-full">
           <!-- Window 01: TypeScript Native SDK -->
-          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
+          <div class="relative p-6 sm:p-7 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl h-full">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">01 / SDK</span>
@@ -1007,14 +1026,14 @@
                 Full type safety for risk evaluation, Autonomous System telemetry, and verdict enums across Node, Bun, and Deno.
               </p>
             </div>
-            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+            <div class="mt-6 pt-3.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
               <span class="text-zinc-400">@sentinel/edge</span>
               <span class="text-emerald-400">STRICT TYPES</span>
             </div>
           </div>
 
           <!-- Window 02: Streaming Verdicts -->
-          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
+          <div class="relative p-6 sm:p-7 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl h-full">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">02 / Gateway</span>
@@ -1025,14 +1044,14 @@
                 Inspect classification verdicts in volatile RAM before payload body consumption. Refuse proxy hops at the edge.
               </p>
             </div>
-            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+            <div class="mt-6 pt-3.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
               <span class="text-zinc-400">Pre-Body Isolate</span>
               <span class="text-emerald-400">&lt;0.25ms</span>
             </div>
           </div>
 
           <!-- Window 03: Carrier & Topology Intelligence -->
-          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
+          <div class="relative p-6 sm:p-7 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl h-full">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">03 / Telemetry</span>
@@ -1043,14 +1062,14 @@
                 Autonomous System classification and residential line validation injected directly into standard request headers.
               </p>
             </div>
-            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+            <div class="mt-6 pt-3.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
               <span class="text-zinc-400">X-Sentinel-Carrier</span>
               <span class="text-white/80">FTTH / 4G</span>
             </div>
           </div>
 
           <!-- Window 04: Sub-ms Overhead & Zero-Log Architecture -->
-          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
+          <div class="relative p-6 sm:p-7 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl h-full">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">04 / Volatile</span>
@@ -1061,7 +1080,7 @@
                 Zero database round-trips and zero disk persistence. Evaluated strictly in volatile memory isolate under 0.8ms.
               </p>
             </div>
-            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+            <div class="mt-6 pt-3.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
               <span class="text-zinc-400">Zero Disk Writes</span>
               <span class="text-white font-mono">&lt;0.8ms</span>
             </div>
@@ -1260,8 +1279,8 @@
         <!-- Enterprise Custom Banner -->
         <div class="mt-6 p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 hover:border-white/30 transition-all">
           <div class="max-w-2xl">
-            <div class="flex items-center gap-3 mb-2">
-              <span class="text-xs font-mono text-white/90 bg-white/10 px-2 py-0.5 rounded border border-white/20 uppercase tracking-wider">Custom Volume</span>
+            <div class="flex items-center gap-3 mb-2 flex-wrap sm:flex-nowrap">
+              <span class="text-xs font-mono text-white/90 bg-white/10 px-2.5 py-0.5 rounded border border-white/20 uppercase tracking-wider whitespace-nowrap shrink-0">Custom Volume</span>
               <span class="text-xs font-mono text-muted-foreground">Dedicated Infrastructure</span>
             </div>
             <h3 class="text-xl font-display text-white mb-1.5">Need 20M+ verifications or dedicated route reflectors?</h3>
@@ -1414,6 +1433,23 @@
   <!-- Official ruucm/shadergradient & Cobe Bundle -->
   <script src="js/shadergradient.bundle.js"></script>
   <script>
+    // Background Initial Load / Hydration Glitch (FOUC) Guard
+    function revealShaderBackgrounds() {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const hero = document.getElementById('shadergradient-hero');
+          if (hero) hero.classList.add('loaded');
+          const bento = document.getElementById('shadergradient-bento');
+          if (bento) bento.classList.add('loaded');
+        }, 120);
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', revealShaderBackgrounds);
+    } else {
+      revealShaderBackgrounds();
+    }
+
     // 0. Lenis Ultra-Smooth Scrolling Engine
     let lenis;
     if (typeof Lenis !== 'undefined') {
@@ -1793,7 +1829,7 @@ return next();`
       renderSpark();
     });
 
-    // Real-time Live Clock & Live Counter
+    // Real-time Live UTC Clock
     const clockEl = document.getElementById('live-utc-clock');
     function updateClock() {
       const d = new Date();
@@ -1801,13 +1837,6 @@ return next();`
     }
     setInterval(updateClock, 1000);
     updateClock();
-
-    let threatCount = 1284920;
-    const threatEl = document.getElementById('counter-threats');
-    setInterval(() => {
-      threatCount += Math.floor(Math.random() * 3) + 1;
-      threatEl.textContent = threatCount.toLocaleString();
-    }, 2400);
 
     // 7. Pricing Checkout Handler
 
