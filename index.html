@@ -21,19 +21,67 @@
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
 
-  <!-- Suppress Netlify Toolbar drawer reflows -->
+  <!-- Total Netlify Floating Element & Toolbar Suppression -->
   <script>
-    try {
-      new MutationObserver(function(m) {
-        m.forEach(function(rec) {
-          rec.addedNodes.forEach(function(n) {
-            if (n.id === 'netlify-drawer' || (n.tagName === 'IFRAME' && n.src && n.src.indexOf('netlify') !== -1)) {
-              n.remove();
-            }
+    (function() {
+      function purgeNetlify() {
+        const selectors = [
+          '#netlify-drawer',
+          'netlify-drawer',
+          '.netlify-badge',
+          '[id*="netlify" i]',
+          '[class*="netlify" i]',
+          'iframe[src*="netlify" i]',
+          'div[data-netlify]',
+          'a[href*="netlify.com" i]',
+          '[aria-label*="netlify" i]'
+        ];
+        document.querySelectorAll(selectors.join(',')).forEach(function(el) {
+          try { el.remove(); } catch(e) {}
+        });
+
+        document.querySelectorAll('div, a, span, button, aside').forEach(function(el) {
+          if (el.children.length <= 3 && /powered by netlify|deploys by netlify/i.test(el.textContent || '')) {
+            try { el.remove(); } catch(e) {}
+          }
+        });
+      }
+
+      try {
+        const obs = new MutationObserver(function(mutations) {
+          mutations.forEach(function(rec) {
+            rec.addedNodes.forEach(function(node) {
+              if (node.nodeType === 1) {
+                const id = node.id || '';
+                const tag = node.tagName || '';
+                const cls = (typeof node.className === 'string') ? node.className : '';
+                const src = node.getAttribute('src') || '';
+                const href = node.getAttribute('href') || '';
+                const text = node.textContent || '';
+                if (
+                  /netlify/i.test(id) ||
+                  /netlify/i.test(tag) ||
+                  /netlify/i.test(cls) ||
+                  /netlify/i.test(src) ||
+                  /netlify/i.test(href) ||
+                  /powered by netlify|deploys by netlify/i.test(text)
+                ) {
+                  try { node.remove(); } catch(e) {}
+                }
+              }
+            });
           });
         });
-      }).observe(document.documentElement, { childList: true, subtree: true });
-    } catch(e) {}
+        obs.observe(document.documentElement, { childList: true, subtree: true });
+      } catch(e) {}
+
+      if (typeof window !== 'undefined') {
+        window.addEventListener('DOMContentLoaded', purgeNetlify);
+        window.addEventListener('load', purgeNetlify);
+        const timer = setInterval(purgeNetlify, 150);
+        setTimeout(function() { clearInterval(timer); }, 10000);
+      }
+    })();
   </script>
 
   <!-- Google Fonts: Instrument Sans, JetBrains Mono -->
@@ -94,6 +142,31 @@
   </script>
 
   <style>
+    /* Complete Netlify Floating Badge & Toolbar Elimination */
+    #netlify-drawer,
+    netlify-drawer,
+    .netlify-badge,
+    [id*="netlify" i],
+    [class*="netlify" i],
+    iframe[src*="netlify" i],
+    div[data-netlify],
+    a[href*="netlify.com" i],
+    [aria-label*="netlify" i] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      position: absolute !important;
+      top: -9999px !important;
+      left: -9999px !important;
+      width: 0 !important;
+      height: 0 !important;
+      max-width: 0 !important;
+      max-height: 0 !important;
+      overflow: hidden !important;
+      z-index: -9999 !important;
+    }
+
     ::selection {
       background: #0ea5e9;
       color: #000101;
@@ -323,8 +396,8 @@
             <h1 class="text-left text-[clamp(2.3rem,6.8vw,7.5rem)] font-display leading-[0.98] sm:leading-[0.95] tracking-tight text-white">
               <span class="block sm:whitespace-nowrap">Sub-millisecond edge,</span>
               <span class="block sm:whitespace-nowrap">
-                defense that
-                <span class="relative inline-block ml-1.5 sm:ml-3 font-display text-cyan-400" id="hero-rotating-word">mitigates</span>
+                <span class="block sm:inline">defense that</span>
+                <span class="relative block sm:inline-block sm:ml-3 font-display text-cyan-400 min-h-[1.15em]" id="hero-rotating-word">mitigates</span>
               </span>
             </h1>
           </div>
