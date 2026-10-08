@@ -51,6 +51,9 @@
       darkMode: 'class',
       theme: {
         extend: {
+          screens: {
+            xs: '480px',
+          },
           colors: {
             background: '#000101',
             foreground: '#ecebe7',
@@ -249,18 +252,18 @@
     </nav>
 
     <!-- Mobile Drawer -->
-    <div id="mobile-menu" class="md:hidden fixed inset-0 bg-[#000101] z-40 transition-all duration-500 opacity-0 pointer-events-none flex flex-col justify-between p-8 pt-28">
-      <div class="flex flex-col gap-6">
-        <a href="#features" class="mobile-nav-link text-2xl font-display text-white">Capabilities</a>
-        <a href="#how-it-works" class="mobile-nav-link text-2xl font-display text-white">Architecture</a>
-        <a href="#infra" class="mobile-nav-link text-2xl font-display text-white">Threat Grid</a>
-        <a href="#metrics" class="mobile-nav-link text-2xl font-display text-white">Telemetry</a>
-        <a href="#integrations" class="mobile-nav-link text-2xl font-display text-white">Integrations</a>
-        <a href="#pricing" class="mobile-nav-link text-2xl font-display text-white">Pricing</a>
+    <div id="mobile-menu" class="md:hidden fixed inset-0 w-full h-full bg-[#000101]/95 backdrop-blur-2xl z-40 transition-all duration-300 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-8 pt-24 overflow-y-auto">
+      <div class="flex flex-col gap-5 sm:gap-6">
+        <a href="#features" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Capabilities</a>
+        <a href="#how-it-works" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Architecture</a>
+        <a href="#infra" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Threat Grid</a>
+        <a href="#metrics" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Telemetry</a>
+        <a href="#integrations" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Integrations</a>
+        <a href="#pricing" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Pricing</a>
       </div>
-      <div class="flex flex-col gap-4 pt-8 border-t border-white/10">
-        <a href="#developers" class="mobile-nav-link w-full py-3 text-center border border-white/20 rounded-full text-white font-mono text-sm">API Docs</a>
-        <a href="#pricing" class="mobile-nav-link w-full py-3 text-center bg-white text-black rounded-full font-medium text-sm">Deploy Edge</a>
+      <div class="flex flex-col gap-3 pt-6 border-t border-white/10 mt-6">
+        <a href="#developers" class="mobile-nav-link w-full py-2.5 text-center border border-white/20 rounded-full text-white font-mono text-xs sm:text-sm">API Docs</a>
+        <a href="#pricing" class="mobile-nav-link w-full py-2.5 text-center bg-white text-black rounded-full font-medium text-xs sm:text-sm">Deploy Edge</a>
       </div>
     </div>
   </header>
@@ -305,37 +308,37 @@
       </div>
 
       <!-- Hero Main Content -->
-      <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 py-32 lg:py-40">
+      <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 pt-28 pb-10 sm:pt-36 sm:pb-16 lg:py-40">
         <div class="lg:max-w-[65%]">
           <!-- Eyebrow Pill -->
-          <div class="mb-8" id="hero-tag">
-            <span class="inline-flex items-center gap-3 text-sm font-mono text-white/60">
-              <span class="w-8 h-px bg-cyan-500"></span>
+          <div class="mb-4 sm:mb-6 lg:mb-8" id="hero-tag">
+            <span class="inline-flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-mono text-white/60">
+              <span class="w-6 sm:w-8 h-px bg-cyan-500"></span>
               Autonomous Edge Intelligence & Proxy Defense
             </span>
           </div>
 
           <!-- Hero Headline with rotating word -->
-          <div class="mb-12">
-            <h1 class="text-left text-[clamp(2.1rem,6.8vw,7.5rem)] font-display leading-[0.95] tracking-tight text-white">
+          <div class="mb-6 sm:mb-8 lg:mb-12">
+            <h1 class="text-left text-[clamp(2.3rem,6.8vw,7.5rem)] font-display leading-[0.98] sm:leading-[0.95] tracking-tight text-white">
               <span class="block sm:whitespace-nowrap">Sub-millisecond edge,</span>
               <span class="block sm:whitespace-nowrap">
                 defense that
-                <span class="relative inline-block ml-2 sm:ml-3 font-display text-cyan-400" id="hero-rotating-word">mitigates</span>
+                <span class="relative inline-block ml-1.5 sm:ml-3 font-display text-cyan-400" id="hero-rotating-word">mitigates</span>
               </span>
             </h1>
           </div>
 
-          <p class="text-lg md:text-xl text-white/70 max-w-xl font-normal leading-relaxed mb-8">
+          <p class="text-base sm:text-lg md:text-xl text-white/70 max-w-xl font-normal leading-relaxed mb-6 sm:mb-8">
             Filter residential proxies, mitigate automated ingress anomalies, and classify carrier networks in under <span class="text-cyan-400 font-mono font-medium">0.8ms</span> with our Zero-Log Volatile Memory Architecture.
           </p>
 
-          <div class="flex flex-wrap items-center gap-4">
-            <button onclick="SentinelPricing.claimFreeKey()" class="h-12 px-8 rounded-full bg-white text-black font-medium text-sm inline-flex items-center gap-2 hover:bg-white/90 transition-all shadow-lg hover:shadow-white/10">
+          <div class="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 sm:gap-4">
+            <button onclick="SentinelPricing.claimFreeKey()" class="h-11 sm:h-12 px-6 sm:px-8 rounded-full bg-white text-black font-medium text-xs sm:text-sm inline-flex items-center justify-center gap-2 hover:bg-white/90 transition-all shadow-lg hover:shadow-white/10">
               Claim Free Key
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </button>
-            <a href="#how-it-works" class="h-12 px-8 rounded-full border border-white/20 text-white font-medium text-sm inline-flex items-center gap-2 hover:bg-white/5 transition-all">
+            <a href="#how-it-works" class="h-11 sm:h-12 px-6 sm:px-8 rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm inline-flex items-center justify-center gap-2 hover:bg-white/5 transition-all">
               Live Architecture
             </a>
           </div>
@@ -343,19 +346,19 @@
       </div>
 
       <!-- Bottom Metrics Ribbon -->
-      <div class="absolute bottom-12 left-0 right-0 px-6 lg:px-12 transition-all duration-700 delay-500">
-        <div class="max-w-[1400px] mx-auto flex items-start gap-10 lg:gap-24 border-t border-white/10 pt-8">
+      <div class="relative mt-8 sm:mt-12 lg:mt-0 lg:absolute lg:bottom-12 left-0 right-0 px-6 lg:px-12 transition-all duration-700 delay-500 pb-8 lg:pb-0">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-start gap-5 sm:gap-8 lg:gap-24 border-t border-white/10 pt-6 sm:pt-8">
           <div class="flex flex-col gap-1">
-            <span class="text-3xl lg:text-4xl font-display text-white">450M+</span>
-            <span class="text-xs text-white/50 font-mono leading-tight">threat vectors indexed</span>
+            <span class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">450M+</span>
+            <span class="text-[11px] sm:text-xs text-white/50 font-mono leading-tight">threat vectors indexed</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-3xl lg:text-4xl font-display text-white">99.9%</span>
-            <span class="text-xs text-white/50 font-mono leading-tight">carrier classification precision</span>
+            <span class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">99.9%</span>
+            <span class="text-[11px] sm:text-xs text-white/50 font-mono leading-tight">carrier classification precision</span>
           </div>
-          <div class="flex flex-col gap-1">
-            <span class="text-3xl lg:text-4xl font-display text-white">&lt;0.8ms</span>
-            <span class="text-xs text-white/50 font-mono leading-tight">edge evaluation latency</span>
+          <div class="flex flex-col gap-1 col-span-2 sm:col-span-1">
+            <span class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">&lt;0.8ms</span>
+            <span class="text-[11px] sm:text-xs text-white/50 font-mono leading-tight">edge evaluation latency</span>
           </div>
         </div>
       </div>
@@ -372,13 +375,13 @@
                 <span class="w-12 h-px bg-white/30"></span>
                 Capabilities
               </span>
-              <h2 class="text-5xl md:text-6xl lg:text-[90px] font-display tracking-tight leading-[0.95]">
+              <h2 class="text-3xl sm:text-4xl md:text-6xl lg:text-[90px] font-display tracking-tight leading-[0.98] sm:leading-[0.95]">
                 Intelligent<br>
                 <span class="text-muted-foreground">edge defense.</span>
               </h2>
             </div>
             <div class="lg:col-span-5 lg:pb-3">
-              <p class="text-lg text-muted-foreground leading-relaxed">
+              <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Deploy stateless threat classification across distributed edge nodes. Protect authentication gates, enterprise endpoints, and APIs without upstream bottlenecks.
               </p>
             </div>
@@ -409,24 +412,24 @@
           <!-- Shared Unified Bento Shader Layer (Masked to the 4 Cards) -->
           <div id="shadergradient-bento" aria-hidden="true"></div>
 
-          <div class="relative z-10 grid lg:grid-cols-12 gap-6">
+          <div class="relative z-10 grid lg:grid-cols-12 gap-5 sm:gap-6">
             <!-- Card 01: Hero Bento Card -->
-            <div id="bento-card-1" class="lg:col-span-12 relative bg-[#000101]/60 border border-white/10 min-h-[400px] overflow-hidden group transition-all duration-700 flex flex-col lg:flex-row rounded-xl hover:border-white/40">
+            <div id="bento-card-1" class="lg:col-span-12 relative bg-[#000101]/60 border border-white/10 min-h-0 lg:min-h-[400px] overflow-hidden group transition-all duration-700 flex flex-col lg:flex-row rounded-xl hover:border-white/40">
               <!-- Left Copy & Structure -->
-              <div class="relative flex-1 p-6 lg:p-10 bg-black/15 z-10 flex flex-col justify-between">
+              <div class="relative flex-1 p-5 sm:p-8 lg:p-10 bg-black/15 z-10 flex flex-col justify-between">
                 <div class="relative z-10">
-                  <span class="font-mono text-sm text-white/70">01</span>
-                  <h3 class="text-3xl lg:text-4xl font-display mt-3 mb-4 group-hover:translate-x-2 transition-transform duration-500 text-white">
+                  <span class="font-mono text-xs sm:text-sm text-white/70">01</span>
+                  <h3 class="text-2xl sm:text-3xl lg:text-4xl font-display mt-2 sm:mt-3 mb-3 sm:mb-4 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform duration-500 text-white">
                     Autonomous Ingress Classification
                   </h3>
-                  <p class="text-base text-muted-foreground leading-relaxed max-w-lg mb-6">
+                  <p class="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-lg mb-6">
                     Evaluate incoming packets in volatile memory before handshakes finalize. Distinguish verified consumer subscriber lines from distributed datacenter hops and residential proxies.
                   </p>
                 </div>
 
                 <div class="relative z-10 pt-4 border-t border-white/10">
-                  <span class="text-5xl lg:text-6xl font-display text-white">99.9%</span>
-                  <span class="block text-sm text-muted-foreground font-mono mt-2">classification precision &middot; zero human audit</span>
+                  <span class="text-4xl sm:text-5xl lg:text-6xl font-display text-white">99.9%</span>
+                  <span class="block text-xs sm:text-sm text-muted-foreground font-mono mt-1.5 sm:mt-2">classification precision &middot; zero human audit</span>
                 </div>
               </div>
 
@@ -468,46 +471,46 @@
             </div>
 
             <!-- Card 02: Carrier & Topology Intelligence -->
-            <div id="bento-card-2" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+            <div id="bento-card-2" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
               <div>
-                <span class="font-mono text-sm text-white/70">02</span>
-                <h3 class="text-xl lg:text-2xl font-display mt-3 mb-3 text-white">Carrier & Topology Intelligence</h3>
-                <p class="text-muted-foreground text-xs leading-relaxed mb-6">
+                <span class="font-mono text-xs sm:text-sm text-white/70">02</span>
+                <h3 class="text-lg sm:text-xl lg:text-2xl font-display mt-2 sm:mt-3 mb-2 sm:mb-3 text-white">Carrier & Topology Intelligence</h3>
+                <p class="text-muted-foreground text-xs leading-relaxed mb-5 sm:mb-6">
                   Resolve Autonomous System categorization dynamically. Distinguishes genuine mobile/fiber consumer carriers from cloud compute providers and VPS hops.
                 </p>
               </div>
-              <div class="pt-4 border-t border-white/10 flex items-baseline justify-between">
-                <span class="text-3xl font-display text-white">50+</span>
+              <div class="pt-3.5 sm:pt-4 border-t border-white/10 flex items-baseline justify-between">
+                <span class="text-2xl sm:text-3xl font-display text-white">50+</span>
                 <span class="text-xs font-mono text-muted-foreground">global edge regions</span>
               </div>
             </div>
 
             <!-- Card 03: Dynamic Tunnel & Gateway Anomaly Detection -->
-            <div id="bento-card-3" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+            <div id="bento-card-3" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
               <div>
-                <span class="font-mono text-sm text-white/70">03</span>
-                <h3 class="text-xl lg:text-2xl font-display mt-3 mb-3 text-white">Dynamic Tunnel Mitigation</h3>
-                <p class="text-muted-foreground text-xs leading-relaxed mb-6">
+                <span class="font-mono text-xs sm:text-sm text-white/70">03</span>
+                <h3 class="text-lg sm:text-xl lg:text-2xl font-display mt-2 sm:mt-3 mb-2 sm:mb-3 text-white">Dynamic Tunnel Mitigation</h3>
+                <p class="text-muted-foreground text-xs leading-relaxed mb-5 sm:mb-6">
                   Temporal and ingress consistency algorithms detect rotating residential proxies and covert egress tunnels before they can scrape or compromise endpoints.
                 </p>
               </div>
-              <div class="pt-4 border-t border-white/10 flex items-baseline justify-between">
-                <span class="text-3xl font-display text-white">&lt;0.8ms</span>
+              <div class="pt-3.5 sm:pt-4 border-t border-white/10 flex items-baseline justify-between">
+                <span class="text-2xl sm:text-3xl font-display text-white">&lt;0.8ms</span>
                 <span class="text-xs font-mono text-muted-foreground">sub-millisecond evaluation</span>
               </div>
             </div>
 
             <!-- Card 04: Zero-Log Volatile Memory Architecture -->
-            <div id="bento-card-4" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+            <div id="bento-card-4" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-5 sm:p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
               <div>
-                <span class="font-mono text-sm text-white/70">04</span>
-                <h3 class="text-xl lg:text-2xl font-display mt-3 mb-3 text-white">Zero-Log Memory Architecture</h3>
-                <p class="text-muted-foreground text-xs leading-relaxed mb-6">
+                <span class="font-mono text-xs sm:text-sm text-white/70">04</span>
+                <h3 class="text-lg sm:text-xl lg:text-2xl font-display mt-2 sm:mt-3 mb-2 sm:mb-3 text-white">Zero-Log Memory Architecture</h3>
+                <p class="text-muted-foreground text-xs leading-relaxed mb-5 sm:mb-6">
                   Packets and metadata are evaluated strictly in volatile RAM. No subscriber identities, queries, or access logs are ever persisted to disk.
                 </p>
               </div>
-              <div class="pt-4 border-t border-white/10 flex items-baseline justify-between">
-                <span class="text-3xl font-display text-white">0</span>
+              <div class="pt-3.5 sm:pt-4 border-t border-white/10 flex items-baseline justify-between">
+                <span class="text-2xl sm:text-3xl font-display text-white">0</span>
                 <span class="text-xs font-mono text-muted-foreground">retained data logs</span>
               </div>
             </div>
@@ -531,18 +534,18 @@
 
         <div class="grid lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
           <!-- Step Selectors (Left 5 Cols) -->
-          <div class="lg:col-span-5 flex flex-col justify-between gap-3">
+          <div class="lg:col-span-5 flex flex-col justify-between gap-2.5 sm:gap-3">
             <!-- Step 1 -->
-            <div id="step-btn-0" onclick="selectStep(0)" class="step-card p-4 sm:p-5 rounded-xl border border-white/60 bg-[#020204] cursor-pointer transition-all relative overflow-hidden hover:border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.06)] flex flex-col justify-between">
+            <div id="step-btn-0" onclick="selectStep(0)" class="step-card p-3.5 sm:p-4.5 lg:p-5 rounded-xl border border-white/60 bg-[#020204] cursor-pointer transition-all relative overflow-hidden hover:border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.06)] flex flex-col justify-between">
               <div>
-                <div class="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
-                  <span id="step-num-0" class="text-xl sm:text-2xl font-display text-white">01</span>
+                <div class="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                  <span id="step-num-0" class="text-lg sm:text-xl lg:text-2xl font-display text-white">01</span>
                   <div class="flex-1 h-px bg-white/10 overflow-hidden">
                     <div id="step-prog-0" class="h-full bg-white/80 animate-progress"></div>
                   </div>
                   <span class="text-[10px] font-mono text-white/50 uppercase tracking-wider">Setup</span>
                 </div>
-                <h3 class="text-base sm:text-lg font-display text-white mb-0.5 sm:mb-1">Initialize</h3>
+                <h3 class="text-sm sm:text-base lg:text-lg font-display text-white mb-0.5 sm:mb-1">Initialize</h3>
                 <span class="text-[11px] sm:text-xs font-mono text-white/70 block mb-1 sm:mb-1.5">SDK & API Credentials</span>
                 <p class="text-xs text-muted-foreground leading-relaxed">
                   Import `@sentinel/edge` and instantiate client credentials in any edge runtime.
@@ -552,16 +555,16 @@
             </div>
 
             <!-- Step 2 -->
-            <div id="step-btn-1" onclick="selectStep(1)" class="step-card p-4 sm:p-5 rounded-xl border border-white/10 bg-[#020204]/60 cursor-pointer transition-all relative overflow-hidden hover:border-white/40 flex flex-col justify-between">
+            <div id="step-btn-1" onclick="selectStep(1)" class="step-card p-3.5 sm:p-4.5 lg:p-5 rounded-xl border border-white/10 bg-[#020204]/60 cursor-pointer transition-all relative overflow-hidden hover:border-white/40 flex flex-col justify-between">
               <div>
-                <div class="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
-                  <span id="step-num-1" class="text-xl sm:text-2xl font-display text-white/30">02</span>
+                <div class="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                  <span id="step-num-1" class="text-lg sm:text-xl lg:text-2xl font-display text-white/30">02</span>
                   <div class="flex-1 h-px bg-white/10 overflow-hidden">
                     <div id="step-prog-1" class="h-full bg-white/80 hidden"></div>
                   </div>
                   <span class="text-[10px] font-mono text-white/30 uppercase tracking-wider">Telemetry</span>
                 </div>
-                <h3 class="text-base sm:text-lg font-display text-white mb-0.5 sm:mb-1">Evaluate</h3>
+                <h3 class="text-sm sm:text-base lg:text-lg font-display text-white mb-0.5 sm:mb-1">Evaluate</h3>
                 <span class="text-[11px] sm:text-xs font-mono text-white/40 block mb-1 sm:mb-1.5">Carrier & IP Intelligence</span>
                 <p class="text-xs text-muted-foreground leading-relaxed">
                   Deep ingress telemetry, residential line verification, and Autonomous System topology under 0.5ms.
@@ -571,16 +574,16 @@
             </div>
 
             <!-- Step 3 -->
-            <div id="step-btn-2" onclick="selectStep(2)" class="step-card p-4 sm:p-5 rounded-xl border border-white/10 bg-[#020204]/60 cursor-pointer transition-all relative overflow-hidden hover:border-white/40 flex flex-col justify-between">
+            <div id="step-btn-2" onclick="selectStep(2)" class="step-card p-3.5 sm:p-4.5 lg:p-5 rounded-xl border border-white/10 bg-[#020204]/60 cursor-pointer transition-all relative overflow-hidden hover:border-white/40 flex flex-col justify-between">
               <div>
-                <div class="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
-                  <span id="step-num-2" class="text-xl sm:text-2xl font-display text-white/30">03</span>
+                <div class="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                  <span id="step-num-2" class="text-lg sm:text-xl lg:text-2xl font-display text-white/30">03</span>
                   <div class="flex-1 h-px bg-white/10 overflow-hidden">
                     <div id="step-prog-2" class="h-full bg-white/80 hidden"></div>
                   </div>
                   <span class="text-[10px] font-mono text-white/30 uppercase tracking-wider">Verdict</span>
                 </div>
-                <h3 class="text-base sm:text-lg font-display text-white mb-0.5 sm:mb-1">Enforce</h3>
+                <h3 class="text-sm sm:text-base lg:text-lg font-display text-white mb-0.5 sm:mb-1">Enforce</h3>
                 <span class="text-[11px] sm:text-xs font-mono text-white/40 block mb-1 sm:mb-1.5">Sub-ms Edge Decision</span>
                 <p class="text-xs text-muted-foreground leading-relaxed">
                   Refuse proxy tunnels at the edge or forward verified subscribers with zero persisted logs.
@@ -644,55 +647,55 @@
             Global Threat Grid
           </span>
           <div class="grid lg:grid-cols-[auto_1fr] gap-8 items-end">
-            <h2 class="text-5xl md:text-6xl lg:text-[75px] font-display tracking-tight text-white leading-[0.95]">
+            <h2 class="text-3xl sm:text-4xl md:text-6xl lg:text-[75px] font-display tracking-tight text-white leading-[0.98] sm:leading-[0.95]">
               Distributed across<br>
               <span class="text-muted-foreground">50+ edge regions.</span>
             </h2>
           </div>
         </div>
 
-        <div class="grid lg:grid-cols-12 gap-6 items-center">
+        <div class="grid lg:grid-cols-12 gap-5 sm:gap-6 items-center">
           <!-- Regions List -->
-          <div class="lg:col-span-5 xl:col-span-5 flex flex-col gap-3.5">
-            <div id="region-card-0" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/60 bg-[#020204] flex items-center justify-between gap-4 transition-all hover:border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.06)]">
+          <div class="lg:col-span-5 xl:col-span-5 flex flex-col gap-2.5 sm:gap-3.5">
+            <div id="region-card-0" class="region-card p-3.5 sm:p-5 lg:p-6 rounded-xl border border-white/60 bg-[#020204] flex items-center justify-between gap-3 sm:gap-4 transition-all hover:border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.06)]">
               <div class="min-w-0 flex-1">
-                <h4 class="text-lg sm:text-xl font-display text-white mb-1">North America</h4>
-                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">12 Edge Nodes &middot; Anycast Ingress</span>
+                <h4 class="text-base sm:text-xl font-display text-white mb-0.5 sm:mb-1">North America</h4>
+                <span class="text-[11px] sm:text-[13px] font-mono text-muted-foreground block leading-normal">12 Edge Nodes &middot; Anycast Ingress</span>
               </div>
-              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+              <span class="shrink-0 flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-white/80 bg-white/5 px-2.5 sm:px-3 py-1 rounded-full border border-white/20">
                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                 operational
               </span>
             </div>
 
-            <div id="region-card-1" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-4 transition-all hover:border-white/40">
+            <div id="region-card-1" class="region-card p-3.5 sm:p-5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-3 sm:gap-4 transition-all hover:border-white/40">
               <div class="min-w-0 flex-1">
-                <h4 class="text-lg sm:text-xl font-display text-white mb-1">Europe</h4>
-                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">8 Edge Nodes &middot; Tier 1 Transit</span>
+                <h4 class="text-base sm:text-xl font-display text-white mb-0.5 sm:mb-1">Europe</h4>
+                <span class="text-[11px] sm:text-[13px] font-mono text-muted-foreground block leading-normal">8 Edge Nodes &middot; Tier 1 Transit</span>
               </div>
-              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+              <span class="shrink-0 flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-white/80 bg-white/5 px-2.5 sm:px-3 py-1 rounded-full border border-white/20">
                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                 operational
               </span>
             </div>
 
-            <div id="region-card-2" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-4 transition-all hover:border-white/40">
+            <div id="region-card-2" class="region-card p-3.5 sm:p-5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-3 sm:gap-4 transition-all hover:border-white/40">
               <div class="min-w-0 flex-1">
-                <h4 class="text-lg sm:text-xl font-display text-white mb-1">Asia Pacific</h4>
-                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">6 Edge Nodes &middot; Tokyo, Singapore, Sydney</span>
+                <h4 class="text-base sm:text-xl font-display text-white mb-0.5 sm:mb-1">Asia Pacific</h4>
+                <span class="text-[11px] sm:text-[13px] font-mono text-muted-foreground block leading-normal">6 Edge Nodes &middot; Tokyo, Singapore, Sydney</span>
               </div>
-              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+              <span class="shrink-0 flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-white/80 bg-white/5 px-2.5 sm:px-3 py-1 rounded-full border border-white/20">
                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                 operational
               </span>
             </div>
 
-            <div id="region-card-3" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-4 transition-all hover:border-white/40">
+            <div id="region-card-3" class="region-card p-3.5 sm:p-5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-3 sm:gap-4 transition-all hover:border-white/40">
               <div class="min-w-0 flex-1">
-                <h4 class="text-lg sm:text-xl font-display text-white mb-1">South America</h4>
-                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">3 Edge Nodes &middot; São Paulo, Santiago</span>
+                <h4 class="text-base sm:text-xl font-display text-white mb-0.5 sm:mb-1">South America</h4>
+                <span class="text-[11px] sm:text-[13px] font-mono text-muted-foreground block leading-normal">3 Edge Nodes &middot; São Paulo, Santiago</span>
               </div>
-              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+              <span class="shrink-0 flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-white/80 bg-white/5 px-2.5 sm:px-3 py-1 rounded-full border border-white/20">
                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                 operational
               </span>
@@ -700,15 +703,15 @@
           </div>
 
           <!-- Official Cobe 3D Threat Globe (Black & White Dot Matrix) -->
-          <div id="globe-card" class="lg:col-span-7 xl:col-span-7 relative h-[360px] sm:h-[420px] lg:h-[480px] flex items-center justify-center bg-[#020204] border border-white/10 rounded-xl overflow-hidden group select-none transition-colors hover:border-white/25">
+          <div id="globe-card" class="lg:col-span-7 xl:col-span-7 relative h-[320px] sm:h-[420px] lg:h-[480px] flex items-center justify-center bg-[#020204] border border-white/10 rounded-xl overflow-hidden group select-none transition-colors hover:border-white/25">
             <!-- Cobe WebGL Canvas -->
-            <canvas id="threat-globe-canvas" class="w-full h-full cursor-grab active:cursor-grabbing transition-opacity duration-700 opacity-0" style="contain: layout paint size;"></canvas>
+            <canvas id="threat-globe-canvas" class="w-full h-full cursor-grab active:cursor-grabbing transition-opacity duration-700 opacity-0" style="contain: layout paint size; touch-action: pan-y;"></canvas>
 
             <!-- Floating Country & POP Node Titles Overlay -->
             <div id="globe-markers-overlay" class="absolute inset-0 pointer-events-none overflow-hidden z-10"></div>
 
             <!-- Cyber HUD Top -->
-            <div class="absolute top-3 left-3 right-3 sm:top-4 sm:left-5 sm:right-5 flex items-center justify-between pointer-events-none z-20 font-mono text-xs">
+            <div class="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-5 sm:right-5 flex items-center justify-between pointer-events-none z-20 font-mono text-xs">
               <div class="flex items-center gap-1.5 sm:gap-2 text-white bg-black/70 px-2 sm:px-2.5 py-1 rounded border border-white/10 backdrop-blur-md text-[10px] sm:text-xs">
                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                 <span class="tracking-wide">SENTINEL THREAT NETWORK</span>
@@ -722,8 +725,9 @@
             </div>
 
             <!-- Drag Hint -->
-            <div id="globe-drag-hint" class="absolute top-12 sm:top-14 left-1/2 -translate-x-1/2 text-[9px] sm:text-[10px] font-mono text-white/50 pointer-events-none transition-opacity duration-500 bg-black/60 px-2.5 sm:px-3 py-0.5 rounded-full border border-white/10 backdrop-blur-sm whitespace-nowrap z-20">
-              DRAG TO ROTATE &middot; CLICK NODE OR REGION TO FOCUS
+            <div id="globe-drag-hint" class="absolute top-10 sm:top-14 left-1/2 -translate-x-1/2 text-[9px] sm:text-[10px] font-mono text-white/50 pointer-events-none transition-opacity duration-500 bg-black/60 px-2.5 sm:px-3 py-0.5 rounded-full border border-white/10 backdrop-blur-sm whitespace-nowrap z-20">
+              <span class="xs:hidden">DRAG TO ROTATE GLOBE</span>
+              <span class="hidden xs:inline">DRAG TO ROTATE &middot; CLICK NODE TO FOCUS</span>
             </div>
 
             <!-- Cyber HUD Bottom -->
@@ -766,7 +770,7 @@
               </span>
               <span id="live-utc-clock" class="text-xs font-mono text-muted-foreground">--:--:-- UTC</span>
             </div>
-            <h2 class="text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[0.95]">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[0.98] sm:leading-[0.95]">
               Real-time telemetry.<br>
               <span class="text-muted-foreground">Deterministic speed.</span>
             </h2>
@@ -774,52 +778,52 @@
         </div>
 
         <!-- 4 Metrics Cards with Sparkline Wave Canvas -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           <!-- Card 1 -->
-          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[180px] sm:h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
             <div>
-              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Evaluated Today</span>
-              <div class="text-3xl lg:text-4xl font-display text-white" id="counter-threats">1,284,920</div>
-              <span class="text-xs font-mono text-white/70 mt-1 block">ingress connection queries</span>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Evaluated Today</span>
+              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white" id="counter-threats">1,284,920</div>
+              <span class="text-[11px] sm:text-xs font-mono text-white/70 mt-0.5 sm:mt-1 block">ingress connection queries</span>
             </div>
             <div class="w-full">
-              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+              <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
             </div>
           </div>
 
           <!-- Card 2 -->
-          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[180px] sm:h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
             <div>
-              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Edge Availability</span>
-              <div class="text-3xl lg:text-4xl font-display text-white">99.99%</div>
-              <span class="text-xs font-mono text-muted-foreground mt-1 block">across all active edge points</span>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Edge Availability</span>
+              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">99.99%</div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground mt-0.5 sm:mt-1 block">across all active edge points</span>
             </div>
             <div class="w-full">
-              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+              <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
             </div>
           </div>
 
           <!-- Card 3 -->
-          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[180px] sm:h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
             <div>
-              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Evaluation Latency</span>
-              <div class="text-3xl lg:text-4xl font-display text-white">&lt;0.8ms</div>
-              <span class="text-xs font-mono text-muted-foreground mt-1 block">in-memory decision cycle</span>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Evaluation Latency</span>
+              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">&lt;0.8ms</div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground mt-0.5 sm:mt-1 block">in-memory decision cycle</span>
             </div>
             <div class="w-full">
-              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+              <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
             </div>
           </div>
 
           <!-- Card 4 -->
-          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[180px] sm:h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
             <div>
-              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Subscriber Logs Retained</span>
-              <div class="text-3xl lg:text-4xl font-display text-white">0</div>
-              <span class="text-xs font-mono text-muted-foreground mt-1 block">Zero-Log Volatile Memory</span>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Subscriber Logs Retained</span>
+              <div class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">0</div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground mt-0.5 sm:mt-1 block">Zero-Log Volatile Memory</span>
             </div>
             <div class="w-full">
-              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+              <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
             </div>
           </div>
         </div>
@@ -834,36 +838,36 @@
           Universal Compatibility
           <span class="w-12 h-px bg-white/30"></span>
         </span>
-        <h2 class="text-4xl md:text-5xl lg:text-[75px] font-display tracking-tight text-white leading-[0.95] mb-10">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[75px] font-display tracking-tight text-white leading-[0.98] sm:leading-[0.95] mb-8 sm:mb-10">
           Works everywhere<br>
           <span class="text-muted-foreground">traffic touches the edge.</span>
         </h2>
 
         <!-- Platforms Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3.5 max-w-5xl mx-auto mb-10">
-          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
-            <span class="font-mono text-base font-medium text-white">Cloudflare</span>
-            <span class="text-xs font-mono text-muted-foreground">Workers & Pages</span>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-3.5 max-w-5xl mx-auto mb-8 sm:mb-10">
+          <div class="p-3.5 sm:p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1 sm:gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-sm sm:text-base font-medium text-white">Cloudflare</span>
+            <span class="text-[11px] sm:text-xs font-mono text-muted-foreground">Workers & Pages</span>
           </div>
-          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
-            <span class="font-mono text-base font-medium text-white">Next.js</span>
-            <span class="text-xs font-mono text-muted-foreground">Edge Middleware</span>
+          <div class="p-3.5 sm:p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1 sm:gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-sm sm:text-base font-medium text-white">Next.js</span>
+            <span class="text-[11px] sm:text-xs font-mono text-muted-foreground">Edge Middleware</span>
           </div>
-          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
-            <span class="font-mono text-base font-medium text-white">Fastly</span>
-            <span class="text-xs font-mono text-muted-foreground">Compute@Edge</span>
+          <div class="p-3.5 sm:p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1 sm:gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-sm sm:text-base font-medium text-white">Fastly</span>
+            <span class="text-[11px] sm:text-xs font-mono text-muted-foreground">Compute@Edge</span>
           </div>
-          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
-            <span class="font-mono text-base font-medium text-white">Node.js</span>
-            <span class="text-xs font-mono text-muted-foreground">Express / Fastify</span>
+          <div class="p-3.5 sm:p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1 sm:gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-sm sm:text-base font-medium text-white">Node.js</span>
+            <span class="text-[11px] sm:text-xs font-mono text-muted-foreground">Express / Fastify</span>
           </div>
-          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
-            <span class="font-mono text-base font-medium text-white">NGINX / Envoy</span>
-            <span class="text-xs font-mono text-muted-foreground">Reverse Proxies</span>
+          <div class="p-3.5 sm:p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1 sm:gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-sm sm:text-base font-medium text-white">NGINX / Envoy</span>
+            <span class="text-[11px] sm:text-xs font-mono text-muted-foreground">Reverse Proxies</span>
           </div>
-          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
-            <span class="font-mono text-base font-medium text-white">Go & Rust</span>
-            <span class="text-xs font-mono text-muted-foreground">Native Crate & Mod</span>
+          <div class="p-3.5 sm:p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1 sm:gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-sm sm:text-base font-medium text-white">Go & Rust</span>
+            <span class="text-[11px] sm:text-xs font-mono text-muted-foreground">Native Crate & Mod</span>
           </div>
         </div>
       </div>
@@ -891,7 +895,7 @@
         <!-- 4 Bento-Style Developer Windows (Fits screen in one clean row) -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 w-full">
           <!-- Window 01: TypeScript Native SDK -->
-          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">01 / SDK</span>
@@ -904,12 +908,12 @@
             </div>
             <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
               <span class="text-zinc-400">@sentinel/edge</span>
-              <span class="text-emerald-400">0 ERRORS</span>
+              <span class="text-emerald-400">STRICT TYPES</span>
             </div>
           </div>
 
           <!-- Window 02: Streaming Verdicts -->
-          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">02 / Gateway</span>
@@ -927,7 +931,7 @@
           </div>
 
           <!-- Window 03: Carrier & Topology Intelligence -->
-          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">03 / Telemetry</span>
@@ -945,7 +949,7 @@
           </div>
 
           <!-- Window 04: Sub-ms Overhead & Zero-Log Architecture -->
-          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+          <div class="relative p-4.5 sm:p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[190px] sm:min-h-[220px]">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">04 / Volatile</span>
@@ -973,16 +977,16 @@
             <span class="w-12 h-px bg-white/30"></span>
             Transparent Tiers
           </span>
-          <h2 class="text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[0.95]">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[0.98] sm:leading-[0.95]">
             Predictable pricing.<br>
             <span class="text-muted-foreground">Zero hidden fees.</span>
           </h2>
         </div>
 
         <!-- 4 Pricing Cards -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           <!-- 01 Developer Free -->
-          <div class="p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <span class="font-mono text-xs uppercase text-muted-foreground tracking-wider">01 / Free Tier</span>
@@ -1011,7 +1015,7 @@
                 </li>
                 <li class="flex items-center gap-2.5">
                   <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span>Community Discord Support</span>
+                  <span>Community GitHub Support</span>
                 </li>
               </ul>
             </div>
@@ -1025,7 +1029,7 @@
           </div>
 
           <!-- 02 Starter -->
-          <div class="p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <span class="font-mono text-xs uppercase text-muted-foreground tracking-wider">02 / Production</span>
@@ -1066,8 +1070,8 @@
           </div>
 
           <!-- 03 Business (Featured) -->
-          <div class="p-6 lg:p-7 bg-[#020204] border-2 border-white rounded-xl flex flex-col justify-between relative shadow-2xl shadow-white/10 group">
-            <div class="absolute -top-3 right-6 bg-white text-black font-mono text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204] border-2 border-white rounded-xl flex flex-col justify-between relative shadow-2xl shadow-white/10 group">
+            <div class="absolute -top-3 right-4 sm:right-6 bg-white text-black font-mono text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">
               Most Popular
             </div>
 
@@ -1098,7 +1102,7 @@
                 </li>
                 <li class="flex items-center gap-2.5">
                   <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span>Priority Slack & Discord Sync</span>
+                  <span>Priority Technical Support</span>
                 </li>
               </ul>
             </div>
@@ -1111,7 +1115,7 @@
           </div>
 
           <!-- 04 Scale -->
-          <div class="p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
+          <div class="p-5 sm:p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <span class="font-mono text-xs uppercase text-muted-foreground tracking-wider">04 / High-Concurrency</span>
@@ -1174,7 +1178,7 @@
     <!-- ==================== 12. SPOTLIGHT CTA ==================== -->
     <section class="relative py-16 lg:py-24 overflow-hidden">
       <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-        <div id="cta-card" class="relative border border-white/15 rounded-3xl p-8 sm:p-12 lg:p-16 overflow-hidden text-center bg-[#000101]/60 backdrop-blur-xl group hover:border-white/40 transition-all duration-700 shadow-2xl">
+        <div id="cta-card" class="relative border border-white/15 rounded-3xl p-6 sm:p-12 lg:p-16 overflow-hidden text-center bg-[#000101]/60 backdrop-blur-xl group hover:border-white/40 transition-all duration-700 shadow-2xl">
           <!-- Ambient Bento-Style Blur Layer -->
           <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
             <div class="absolute -top-[30%] -left-[10%] w-[60%] h-[130%] bg-gradient-to-br from-cyan-500/25 via-sky-600/15 to-transparent rounded-full filter blur-[55px] opacity-75 transform -rotate-12"></div>
@@ -1185,27 +1189,27 @@
           <div id="cta-spotlight" class="absolute inset-0 pointer-events-none opacity-20 transition-opacity duration-300" style="background: radial-gradient(600px circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 40%);"></div>
 
           <div class="relative z-10 max-w-3xl mx-auto">
-            <span class="inline-flex items-center gap-3 text-sm font-mono text-white/80 mb-4 justify-center">
-              <span class="w-8 h-px bg-white/40"></span>
+            <span class="inline-flex items-center gap-3 text-xs sm:text-sm font-mono text-white/80 mb-3 sm:mb-4 justify-center">
+              <span class="w-6 sm:w-8 h-px bg-white/40"></span>
               Deploy In Minutes
-              <span class="w-8 h-px bg-white/40"></span>
+              <span class="w-6 sm:w-8 h-px bg-white/40"></span>
             </span>
 
-            <h2 class="text-4xl md:text-5xl lg:text-[70px] font-display text-white tracking-tight leading-[0.95] mb-5">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[70px] font-display text-white tracking-tight leading-[0.98] sm:leading-[0.95] mb-4 sm:mb-5">
               Start protecting your edge<br>
               <span class="text-muted-foreground">in under 0.8ms.</span>
             </h2>
 
-            <p class="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
+            <p class="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-6 sm:mb-8">
               Join leading platforms securing authentication and traffic at the network perimeter with zero data leakage.
             </p>
 
-            <div class="flex flex-wrap items-center justify-center gap-4">
-              <a href="#pricing" class="h-11 px-7 rounded-full bg-white text-black font-medium text-sm inline-flex items-center gap-2 hover:bg-white/90 transition-all shadow-xl hover:shadow-white/10">
+            <div class="flex flex-col xs:flex-row items-stretch xs:items-center justify-center gap-3 sm:gap-4">
+              <a href="#pricing" class="h-11 px-7 rounded-full bg-white text-black font-medium text-xs sm:text-sm inline-flex items-center justify-center gap-2 hover:bg-white/90 transition-all shadow-xl hover:shadow-white/10">
                 Get API Key
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
-              <a href="#developers" class="h-11 px-7 rounded-full border border-white/20 text-white font-medium text-sm inline-flex items-center gap-2 hover:bg-white/5 transition-all">
+              <a href="#developers" class="h-11 px-7 rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm inline-flex items-center justify-center gap-2 hover:bg-white/5 transition-all">
                 Developer Guide
               </a>
             </div>
@@ -1230,8 +1234,8 @@
       </div>
 
       <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
-        <div class="py-16 lg:py-20 border-b border-white/10">
-          <div class="grid grid-cols-2 md:grid-cols-6 gap-12 lg:gap-8">
+        <div class="py-12 sm:py-16 lg:py-20 border-b border-white/10">
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-8 sm:gap-10 lg:gap-8">
             <!-- Brand Column -->
             <div class="col-span-2">
               <a href="#" class="inline-flex items-center gap-2 mb-6">
@@ -1383,11 +1387,13 @@
     mobileBtn.addEventListener('click', () => {
       menuOpen = !menuOpen;
       if (menuOpen) {
+        document.body.style.overflow = 'hidden';
         mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
         mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
         hamburgerIcon.classList.add('hidden');
         closeIcon.classList.remove('hidden');
       } else {
+        document.body.style.overflow = '';
         mobileMenu.classList.add('opacity-0', 'pointer-events-none');
         mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
         hamburgerIcon.classList.remove('hidden');
@@ -1398,6 +1404,7 @@
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
       link.addEventListener('click', () => {
         menuOpen = false;
+        document.body.style.overflow = '';
         mobileMenu.classList.add('opacity-0', 'pointer-events-none');
         hamburgerIcon.classList.remove('hidden');
         closeIcon.classList.add('hidden');
@@ -2011,13 +2018,22 @@ return next();`
         velX = 0;
         velY = 0;
         if (dragHint) dragHint.style.opacity = '0';
-        canvas.setPointerCapture(e.pointerId);
+        if (e.pointerType !== 'touch') {
+          canvas.setPointerCapture(e.pointerId);
+        }
       });
 
       canvas.addEventListener('pointermove', (e) => {
         if (!isDragging) return;
         const dx = e.clientX - lastX;
         const dy = e.clientY - lastY;
+        if (e.pointerType === 'touch') {
+          // If vertical scroll gesture, release dragging so page scrolls naturally
+          if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) {
+            isDragging = false;
+            return;
+          }
+        }
         lastX = e.clientX;
         lastY = e.clientY;
         phi += dx * 0.005;
