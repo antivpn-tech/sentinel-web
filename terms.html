@@ -1,120 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service — Sentinel Edge Threat Intelligence</title>
-    <meta name="description" content="Terms of Service, limitation of liability, and usage conditions for Sentinel autonomous edge threat intelligence API and network defense infrastructure.">
-    <link rel="canonical" href="https://antivpn.tech/terms">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffb347'><path d='M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z'/></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=4.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — Sentinel</title>
+  <meta name="description" content="Terms of Service and usage agreement for Sentinel autonomous edge threat intelligence API and network defense infrastructure.">
+  <link rel="canonical" href="https://antivpn.tech/terms">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+
+  <!-- Fonts: Instrument Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#000101',
+            foreground: '#ecebe7',
+            card: '#040609',
+            border: '#15181e',
+            cyan: {
+              400: '#38bdf8',
+              500: '#0ea5e9',
+            }
+          },
+          fontFamily: {
+            sans: ['"Instrument Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::selection {
+      background: #0ea5e9;
+      color: #000101;
+    }
+    body {
+      background-color: #000101;
+      color: #ecebe7;
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .legal-prose p {
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+      color: #a8a396;
+      font-size: 0.975rem;
+    }
+    .legal-prose strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .legal-prose h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-top: 2.75rem;
+      margin-bottom: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .legal-prose ul {
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+      padding-left: 1.25rem;
+      list-style-type: disc;
+      color: #a8a396;
+      font-size: 0.975rem;
+      line-height: 1.75;
+    }
+    .legal-prose li {
+      margin-bottom: 0.45rem;
+    }
+    .legal-prose code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.825rem;
+      padding: 0.15rem 0.45rem;
+      background: rgba(14, 165, 233, 0.08);
+      border: 1px solid rgba(14, 165, 233, 0.2);
+      border-radius: 4px;
+      color: #38bdf8;
+    }
+  </style>
 </head>
-<body class="legal-standalone-page">
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="brand">
-                <span class="brand-diamond"></span>
-                <span class="brand-text">SENTINEL</span>
-            </a>
-            <div class="nav-right">
-                <a href="index.html#pricing" class="nav-cta">View Licensing</a>
-                <a href="privacy.html" class="nav-link-muted">Privacy Notice</a>
-            </div>
+<body class="min-h-screen bg-[#000101] text-[#ecebe7] antialiased">
+
+  <!-- ==================== CLEAN HEADER ==================== -->
+  <header class="border-b border-white/10 bg-[#000101]/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 text-white hover:text-cyan-400 transition-colors group">
+        <svg class="w-4 h-4 text-cyan-400 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        <div class="flex items-center gap-2">
+          <span class="font-bold tracking-tight text-base">SENTINEL</span>
+          <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20">LEGAL</span>
         </div>
-    </header>
+      </a>
 
-    <main class="container">
-        <div class="legal-page-card">
-            <div class="legal-page-header">
-                <span class="sentinel-modal-badge">Official Terms of Service</span>
-                <h1 style="font-size: 28px; font-weight: 800; color: #ffffff; margin: 12px 0 6px 0; letter-spacing: -0.5px;">Terms of Service & Usage Agreement</h1>
-                <p style="font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); margin: 0;">Effective & Last Revised: October 2026 · Global Anycast Network</p>
-            </div>
+      <div class="flex items-center gap-6 text-xs font-mono">
+        <span class="text-cyan-400 font-semibold border-b border-cyan-400 pb-0.5">Terms of Service</span>
+        <a href="privacy.html" class="text-white/60 hover:text-white transition-colors">Privacy Policy</a>
+      </div>
+    </div>
+  </header>
 
-            <div class="legal-section-block">
-                <div class="legal-callout-shield">
-                    <strong>LEGAL NOTICE & SUMMARY OF KEY TERMS:</strong><br>
-                    • Sentinel provides automated algorithmic threat screening indicators strictly for advisory defense purposes.<br>
-                    • No security tool can guarantee 100% detection or zero false positives; you retain sole responsibility for traffic enforcement decisions.<br>
-                    • To the maximum extent permitted by law, Sentinel's total cumulative liability is strictly capped at $100 USD or fees paid in the preceding one (1) month, with a complete waiver of consequential damages or lost profits.
-                </div>
+  <!-- ==================== WIDE DOCUMENT CONTAINER ==================== -->
+  <main class="max-w-5xl mx-auto px-6 lg:px-8 py-14 lg:py-20">
+    
+    <!-- Title & Metadata -->
+    <div class="mb-10 pb-8 border-b border-white/10">
+      <div class="flex flex-wrap items-center gap-3 mb-4 text-xs font-mono">
+        <span class="text-cyan-400 uppercase tracking-wider">Legal Framework</span>
+        <span class="text-white/20">&middot;</span>
+        <span class="text-white/50">Effective & Last Revised: October 2026</span>
+        <span class="text-white/20">&middot;</span>
+        <span class="text-cyan-400/80">Global Anycast Network</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-white mb-4">Terms of Service</h1>
+      <p class="text-base text-white/60 leading-relaxed max-w-3xl">
+        This agreement governs your access to and use of the Sentinel edge threat intelligence platform, runtime APIs, client SDKs, and billing services.
+      </p>
+    </div>
 
-                <h3>1. Acceptance of Terms</h3>
-                <p>These Terms of Service ("Terms") constitute a legally binding agreement between you or the entity you represent ("Customer", "you", or "your") and Sentinel ("Sentinel", "we", "us", or "our"), governing access to and usage of the Sentinel edge threat intelligence API (<code>api.antivpn.tech</code>), developer documentation, client SDKs, and associated dashboards (collectively, the "Service").</p>
-                <p>By accessing the API, generating a cryptographic API key, configuring integration middleware, or purchasing a subscription quota, you agree to be bound by these Terms. If you do not agree, do not access or integrate the Service.</p>
-
-                <h3>2. Advisory Screening & Threat Scoring Nature</h3>
-                <p>Sentinel evaluates IP addresses using automated heuristics, BGP autonomous system routing classifications, DNS-over-HTTPS reverse pointer telemetry, and globally synchronized threat intelligence feeds. All risk ratings (0–100), threat classifications (e.g., Commercial VPN, Datacenter VPS, Open Proxy, Tor Relay), and recommended verdicts are <strong>automated probabilistic estimates provided strictly for screening and informational purposes</strong>.</p>
-                <p>Sentinel does not make determinations regarding your end-users. Customer retains sole, exclusive, and ultimate authority over what automated or manual actions (such as session termination, captcha challenge, rate limiting, or allowance) are executed across Customer's systems and networks based on API responses.</p>
-
-                <h3>3. Disclaimer of Warranties ("AS IS")</h3>
-                <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SERVICE IS PROVIDED ON AN <strong>"AS IS"</strong> AND <strong>"AS AVAILABLE"</strong> BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, STATUTORY, OR IMPLIED. SENTINEL SPECIFICALLY DISCLAIMS ALL IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, TITLE, SYSTEM INTEGRATION, AND NON-INFRINGEMENT.</p>
-                <p>SENTINEL DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, TIMELY, IMMUNE FROM SERVICE ATTACKS, OR ERROR-FREE, NOR DOES SENTINEL WARRANT THAT EVERY PROXY, VPN, OR EVASION MECHANISM WILL BE DETECTED OR THAT FALSE POSITIVE CLASSIFICATIONS WILL NEVER OCCUR.</p>
-
-                <h3>4. Strict Limitation of Liability & Damage Waiver</h3>
-                <div class="legal-callout-shield">
-                    <strong>EXCLUSION OF CONSEQUENTIAL & INDIRECT DAMAGES:</strong><br>
-                    TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL SENTINEL, ITS FOUNDERS, OPERATORS, LICENSORS, OR INFRASTRUCTURE PROVIDERS BE LIABLE FOR ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR PUNITIVE DAMAGES (INCLUDING DAMAGES FOR LOSS OF BUSINESS, LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF PLAYERS OR CUSTOMERS, BUSINESS INTERRUPTION, PROCUREMENT OF SUBSTITUTE SERVICES, FRAUD LOSSES, CHARGEBACK LIABILITIES, OR REPUTATIONAL HARM), REGARDLESS OF THE CAUSE OF ACTION (WHETHER IN CONTRACT, TORT, STRICT LIABILITY, OR OTHERWISE), EVEN IF SENTINEL WAS ADVISED OF THE POSSIBILITY OF SUCH LOSSES.<br><br>
-                    <strong>CUMULATIVE LIABILITY CAP:</strong> IN NO EVENT SHALL SENTINEL'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THE SERVICE EXCEED THE GREATER OF <strong>ONE HUNDRED UNITED STATES DOLLARS ($100.00 USD)</strong> OR THE TOTAL SUBSCRIPTION FEES ACTUALLY PAID BY CUSTOMER TO SENTINEL IN THE ONE (1) MONTH IMMEDIATELY PRECEDING THE CLAIM.
-                </div>
-
-                <h3 id="aup">5. Acceptable Use Policy (AUP)</h3>
-                <p>Customer agrees to utilize the Service in compliance with all applicable cybercrime and telecommunications laws. Customer shall not:</p>
-                <ul>
-                    <li>Use the Service to facilitate offensive network probing, port scanning, or malicious exploitation against third-party systems.</li>
-                    <li>Reverse engineer, scrape, decompile, or systematically extract the underlying threat database or proprietary scoring heuristics.</li>
-                    <li>Resell, sublicense, syndicate, or redistribute raw API responses without an executed Enterprise Redistributor License.</li>
-                    <li>Bypass authentication mechanisms, spoof client headers, or forge quota parameters.</li>
-                    <li>Generate volumetric denial-of-service traffic intended to degrade Sentinel edge compute nodes.</li>
-                </ul>
-                <p>Sentinel reserves the right to immediately terminate or blacklist any API key, client identity, or IP address violating this AUP without refund or prior notice.</p>
-
-                <h3 id="billing">6. Merchant of Record & Billing Policy</h3>
-                <p>All subscription billing, currency conversion, invoice generation, and global sales tax / VAT remittance are managed and processed by <strong>Lemon Squeezy, LLC</strong> acting as Merchant of Record. By subscribing to a paid tier (Starter, Business, Scale), you authorize Lemon Squeezy to charge your designated payment method on a recurring monthly cycle.</p>
-                <p><strong>Cancellations:</strong> You may cancel recurring billing at any time via the self-serve Lemon Squeezy Customer Billing Portal provided in your receipt email. Cancellations take effect at the conclusion of the current prepaid billing period.</p>
-                <p><strong>Refund Policy:</strong> Because Sentinel licenses provide immediate digital key activation and instant access to distributed edge infrastructure, license fees are generally non-refundable once an API key is generated and utilized. A Free Developer Tier is provided to test API latency and accuracy prior to commercial purchase. Refund requests for technical defects attributable to Sentinel are evaluated on a case-by-case basis through Lemon Squeezy within 14 days of purchase.</p>
-
-                <h3 id="sla">7. Service Levels & Availability Targets</h3>
-                <p>Public edge infrastructure is engineered to target <strong>99.9% availability</strong> across global points of presence. This availability target is an operational design goal and does not constitute an express contractual warranty.</p>
-                <p>Uptime calculations explicitly exclude scheduled maintenance windows, third-party global cloud infrastructure outages (including Cloudflare network disruptions), internet backbone fiber severed routing events, and external volumetric DDoS attacks. Formal Service Level Agreements (SLAs) with defined Service Credit remedies require a separate, mutually executed Enterprise Master Services Agreement (MSA).</p>
-
-                <h3>8. Indemnification</h3>
-                <p>You agree to defend, indemnify, and hold harmless Sentinel, its operators, and infrastructure partners from and against any third-party claims, liabilities, damages, judgments, or legal expenses arising out of or related to your use of the Service, your application's enforcement actions, or your violation of these Terms.</p>
-
-                <h3>9. Nominative Trademark Fair Use</h3>
-                <p>All third-party trademarks, company names, and logos referenced on the Sentinel platform (including Cloudflare, Lemon Squeezy, ExitLag, WTFast, and others) belong to their respective owners and are used strictly for nominative identification and technical compatibility purposes. Sentinel is an independent technology platform and is not sponsored, endorsed, or affiliated with these entities.</p>
-
-                <h3 id="a11y">10. Digital Accessibility Commitment (ADA Title III & WCAG 2.1 AA)</h3>
-                <p>Sentinel is committed to ensuring full digital accessibility across our developer documentation and inspection tools for individuals with disabilities, in compliance with Title III of the Americans with Disabilities Act (ADA) and the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA. If you encounter an accessibility barrier or require assistance, contact <code>accessibility@antivpn.tech</code>.</p>
-
-                <h3 id="export">11. Trade Sanctions & Export Controls</h3>
-                <p>Customer certifies that Customer is not located in, under the control of, or a national or resident of any country or territory subject to United States or European Union comprehensive trade sanctions (including Cuba, Iran, North Korea, Syria, and the Crimea, Donetsk, and Luhansk regions of Ukraine), nor listed on any restricted party list maintained by the US Office of Foreign Assets Control (OFAC) or the US Department of Commerce. Customer agrees not to utilize the Service in violation of applicable export control laws.</p>
-
-                <h3>12. Minors & Age Capacity (COPPA)</h3>
-                <p>The Service is intended strictly for commercial software developers, IT administrators, and corporate entities. You must be at least eighteen (18) years of age or the legal age of majority in your jurisdiction to purchase subscriptions or enter into binding agreements. Sentinel does not knowingly solicit or collect personal information from children under the age of thirteen (13).</p>
-
-                <h3>13. DMCA Copyright Notice & Safe Harbor</h3>
-                <p>If you believe that any material available on or through the Service infringes upon any copyright you own or control, you may submit a formal notification pursuant to the Digital Millennium Copyright Act (17 U.S.C. § 512) to our designated copyright agent at: <code>dmca@antivpn.tech</code>.</p>
-
-                <h3>14. EU Consumer Digital Goods Withdrawal Waiver</h3>
-                <p>Pursuant to Directive 2011/83/EU on Consumer Rights, you expressly acknowledge and agree that digital delivery of the Service and cryptographic API key provisioning begins immediately upon purchase. You acknowledge that by receiving immediate access to the digital service, you expressly waive your statutory 14-day right of withdrawal.</p>
-
-                <h3>15. Contact Information</h3>
-                <p>For legal notices, contract inquiries, or Enterprise Master Services Agreements, contact: <code>legal@antivpn.tech</code>.</p>
-            </div>
+    <!-- Key Terms Summary Box (3 Columns) -->
+    <div class="p-6 rounded-xl bg-[#040609] border border-cyan-500/30 mb-12">
+      <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-3 font-semibold">Key Terms Summary</span>
+      <div class="grid md:grid-cols-3 gap-6 text-xs text-white/70 leading-relaxed">
+        <div class="space-y-1">
+          <strong class="text-white block font-sans text-sm">Advisory Defense</strong>
+          <p>Sentinel provides automated probabilistic screening indicators. You retain sole authority over all traffic enforcement actions.</p>
         </div>
-    </main>
-
-    <footer id="footer" style="margin-top: 60px;">
-        <div class="container footer-bottom-bar">
-            <div class="footer-copyright-row">
-                <span>&copy; 2026 Sentinel Security / AntiVPN Tech. All rights reserved.</span>
-                <span><a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy Notice</a> · <a href="index.html" style="color: var(--text-muted); text-decoration: none;">Return to Home</a></span>
-            </div>
+        <div class="space-y-1">
+          <strong class="text-white block font-sans text-sm">$100 USD Liability Cap</strong>
+          <p>To the maximum extent permitted by law, cumulative aggregate liability is strictly capped at $100.00 USD with a waiver of consequential damages.</p>
         </div>
-    </footer>
+        <div class="space-y-1">
+          <strong class="text-white block font-sans text-sm">Merchant of Record</strong>
+          <p>All subscription payments, invoicing, and tax handling are managed exclusively by Lemon Squeezy, LLC.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legal Articles -->
+    <article class="legal-prose">
+      
+      <h2>1. Acceptance of Terms</h2>
+      <p>
+        These Terms of Service ("Terms") constitute a legally binding agreement between you or the entity you represent ("Customer", "you", or "your") and Sentinel ("Sentinel", "we", "us", or "our"), governing access to and usage of the Sentinel edge threat intelligence API (<code>api.antivpn.tech</code>), developer documentation, client SDKs, and associated dashboards (collectively, the "Service").
+      </p>
+      <p>
+        By accessing the API, generating a cryptographic API key, configuring integration middleware, or purchasing a subscription quota, you agree to be bound by these Terms. If you do not agree, do not access or integrate the Service.
+      </p>
+
+      <h2>2. Advisory Screening & Threat Scoring Nature</h2>
+      <p>
+        Sentinel evaluates IP addresses using automated heuristics, Carrier & Topology Intelligence, Dynamic Tunnel & Gateway Behavioral Anomaly Detection, and the Sentinel Global Threat Grid. All risk ratings (0–100), threat classifications (e.g., Commercial VPN, Datacenter VPS, Open Proxy, Tor Relay), and recommended verdicts are <strong>automated probabilistic estimates provided strictly for screening and informational purposes</strong>.
+      </p>
+      <p>
+        Sentinel does not make determinations regarding your end-users. Customer retains sole, exclusive, and ultimate authority over what automated or manual actions (such as session termination, challenge, rate limiting, or allowance) are executed across Customer's systems and networks based on API responses.
+      </p>
+
+      <h2>3. Disclaimer of Warranties ("AS IS")</h2>
+      <p>
+        TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SERVICE IS PROVIDED ON AN <strong>"AS IS"</strong> AND <strong>"AS AVAILABLE"</strong> BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, STATUTORY, OR IMPLIED. SENTINEL SPECIFICALLY DISCLAIMS ALL IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, TITLE, SYSTEM INTEGRATION, AND NON-INFRINGEMENT.
+      </p>
+      <p>
+        SENTINEL DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, TIMELY, IMMUNE FROM SERVICE ATTACKS, OR ERROR-FREE, NOR DOES SENTINEL WARRANT THAT EVERY PROXY, VPN, OR EVASION MECHANISM WILL BE DETECTED OR THAT FALSE POSITIVE CLASSIFICATIONS WILL NEVER OCCUR.
+      </p>
+
+      <h2>4. Strict Limitation of Liability & Damage Waiver</h2>
+      <div class="p-5 rounded-lg bg-black border border-white/10 my-4 space-y-3 text-xs leading-relaxed">
+        <p>
+          <strong>EXCLUSION OF CONSEQUENTIAL DAMAGES:</strong> TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL SENTINEL, ITS FOUNDERS, OPERATORS, LICENSORS, OR INFRASTRUCTURE PROVIDERS BE LIABLE FOR ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR PUNITIVE DAMAGES (INCLUDING DAMAGES FOR LOSS OF BUSINESS, LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF PLAYERS OR CUSTOMERS, BUSINESS INTERRUPTION, PROCUREMENT OF SUBSTITUTE SERVICES, FRAUD LOSSES, CHARGEBACK LIABILITIES, OR REPUTATIONAL HARM), REGARDLESS OF THE CAUSE OF ACTION (WHETHER IN CONTRACT, TORT, STRICT LIABILITY, OR OTHERWISE), EVEN IF SENTINEL WAS ADVISED OF THE POSSIBILITY OF SUCH LOSSES.
+        </p>
+        <p>
+          <strong>CUMULATIVE LIABILITY CAP:</strong> IN NO EVENT SHALL SENTINEL'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THE SERVICE EXCEED THE GREATER OF <strong>ONE HUNDRED UNITED STATES DOLLARS ($100.00 USD)</strong> OR THE TOTAL SUBSCRIPTION FEES ACTUALLY PAID BY CUSTOMER TO SENTINEL IN THE ONE (1) MONTH IMMEDIATELY PRECEDING THE CLAIM.
+        </p>
+      </div>
+
+      <h2>5. Acceptable Use Policy (AUP)</h2>
+      <p>Customer agrees to utilize the Service in compliance with all applicable cybercrime and telecommunications laws. Customer shall not:</p>
+      <ul>
+        <li>Use the Service to facilitate offensive network probing, port scanning, or malicious exploitation against third-party systems.</li>
+        <li>Reverse engineer, scrape, decompile, or systematically extract the underlying threat database or proprietary scoring heuristics.</li>
+        <li>Resell, sublicense, syndicate, or redistribute raw API responses without an executed Enterprise Redistributor License.</li>
+        <li>Bypass authentication mechanisms, spoof client headers, or forge quota parameters.</li>
+        <li>Generate volumetric denial-of-service traffic intended to degrade Sentinel edge compute nodes.</li>
+      </ul>
+      <p>Sentinel reserves the right to immediately terminate or blacklist any API key, client identity, or IP address violating this AUP without refund or prior notice.</p>
+
+      <h2>6. Merchant of Record & Billing Policy</h2>
+      <p>
+        All subscription billing, currency conversion, invoice generation, and global sales tax / VAT remittance are managed and processed by <strong>Lemon Squeezy, LLC</strong> acting as Merchant of Record. By subscribing to a paid tier (Starter, Business, Scale, Enterprise), you authorize Lemon Squeezy to charge your designated payment method on a recurring monthly cycle.
+      </p>
+      <p>
+        <strong>Cancellations:</strong> You may cancel recurring billing at any time via the self-serve Lemon Squeezy Customer Billing Portal provided in your receipt email. Cancellations take effect at the conclusion of the current prepaid billing period.
+      </p>
+      <p>
+        <strong>Refund Policy:</strong> Because Sentinel licenses provide immediate digital key activation and instant access to distributed edge infrastructure, license fees are generally non-refundable once an API key is generated and utilized. A Free Developer Tier is provided to test API latency and accuracy prior to commercial purchase. Refund requests for technical defects attributable to Sentinel are evaluated on a case-by-case basis through Lemon Squeezy within 14 days of purchase.
+      </p>
+
+      <h2>7. Service Levels & Availability Targets</h2>
+      <p>
+        Public edge infrastructure is engineered to target <strong>99.9% availability</strong> across global points of presence. This availability target is an operational design goal and does not constitute an express contractual warranty.
+      </p>
+      <p>
+        Uptime calculations explicitly exclude scheduled maintenance windows, third-party global cloud infrastructure outages, internet backbone fiber severed routing events, and external volumetric DDoS attacks. Formal Service Level Agreements (SLAs) with defined Service Credit remedies require a separate, mutually executed Enterprise Master Services Agreement (MSA).
+      </p>
+
+      <h2>8. Indemnification</h2>
+      <p>
+        You agree to defend, indemnify, and hold harmless Sentinel, its operators, and infrastructure partners from and against any third-party claims, liabilities, damages, judgments, or legal expenses arising out of or related to your use of the Service, your application's enforcement actions, or your violation of these Terms.
+      </p>
+
+      <h2>9. Nominative Trademark Fair Use</h2>
+      <p>
+        All third-party trademarks, company names, and logos referenced on the Sentinel platform belong to their respective owners and are used strictly for nominative identification and technical compatibility purposes. Sentinel is an independent technology platform and is not sponsored, endorsed, or affiliated with these entities.
+      </p>
+
+      <h2>10. Digital Accessibility Commitment (ADA Title III & WCAG 2.1 AA)</h2>
+      <p>
+        Sentinel is committed to ensuring full digital accessibility across our developer documentation and inspection tools for individuals with disabilities, in compliance with Title III of the Americans with Disabilities Act (ADA) and the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA. If you encounter an accessibility barrier or require assistance, contact <code>accessibility@antivpn.tech</code>.
+      </p>
+
+      <h2>11. Trade Sanctions & Export Controls</h2>
+      <p>
+        Customer certifies that Customer is not located in, under the control of, or a national or resident of any country or territory subject to United States or European Union comprehensive trade sanctions, nor listed on any restricted party list maintained by the US Office of Foreign Assets Control (OFAC) or the US Department of Commerce. Customer agrees not to utilize the Service in violation of applicable export control laws.
+      </p>
+
+      <h2>12. Minors & Age Capacity (COPPA)</h2>
+      <p>
+        The Service is intended strictly for commercial software developers, IT administrators, and corporate entities. You must be at least eighteen (18) years of age or the legal age of majority in your jurisdiction to purchase subscriptions or enter into binding agreements. Sentinel does not knowingly solicit or collect personal information from children under the age of thirteen (13).
+      </p>
+
+      <h2>13. DMCA Copyright Notice & Safe Harbor</h2>
+      <p>
+        If you believe that any material available on or through the Service infringes upon any copyright you own or control, you may submit a formal notification pursuant to the Digital Millennium Copyright Act (17 U.S.C. § 512) to our designated copyright agent at: <code>dmca@antivpn.tech</code>.
+      </p>
+
+      <h2>14. EU Consumer Digital Goods Withdrawal Waiver</h2>
+      <p>
+        Pursuant to Directive 2011/83/EU on Consumer Rights, you expressly acknowledge and agree that digital delivery of the Service and cryptographic API key provisioning begins immediately upon purchase. You acknowledge that by receiving immediate access to the digital service, you expressly waive your statutory 14-day right of withdrawal.
+      </p>
+
+      <h2>15. Contact Information</h2>
+      <p>
+        For legal notices, contract inquiries, or Enterprise Master Services Agreements, contact: <code>legal@antivpn.tech</code>.
+      </p>
+
+    </article>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-white/10 py-12 text-xs font-mono text-white/50">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span>&copy; 2026 Sentinel Edge Intelligence. All rights reserved.</span>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="hover:text-white transition-colors">Return to Home</a>
+        <span>&middot;</span>
+        <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+        <span>&middot;</span>
+        <span class="text-white/40">Zero-Log Volatile Architecture</span>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>

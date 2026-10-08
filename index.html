@@ -1,906 +1,2228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentinel — High-Throughput Threat Intelligence & Anti-VPN Engine</title>
-    <meta name="description" content="Sub-millisecond edge threat intelligence and autonomous Anti-VPN proxy mitigation API engineered for high-concurrency infrastructure, cloud APIs, and gaming networks.">
-    <meta name="keywords" content="anti vpn api, proxy detection api, vpn detection, threat intelligence, residential proxy detection, bot mitigation, ip threat scoring">
-    <link rel="canonical" href="https://antivpn.tech/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentinel Anti VPN - Autonomous Edge Intelligence & Proxy Defense</title>
+  <meta name="description" content="Deploy autonomous threat intelligence at the edge. Sub-millisecond proxy detection, carrier network classification, and ingress anomaly mitigation with zero data persistence.">
+  <meta name="keywords" content="anti vpn api, proxy detection api, vpn detection, threat intelligence, residential proxy mitigation, bot defense, edge security">
+  <link rel="canonical" href="https://antivpn.tech/">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://antivpn.tech/">
-    <meta property="og:title" content="Sentinel — High-Throughput Threat Intelligence & Anti-VPN Engine">
-    <meta property="og:description" content="Autonomous edge threat mitigation and line-rate proxy detection across 300+ global edge locations. Evaluate connections before handshake.">
-    <meta property="og:site_name" content="Sentinel Security">
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://antivpn.tech/">
+  <meta property="og:title" content="Sentinel Anti VPN - Autonomous Edge Intelligence & Proxy Defense">
+  <meta property="og:description" content="Autonomous edge threat mitigation and line-rate proxy detection across 330+ Anycast edge locations. Evaluate connections before TCP handshake.">
+  <meta property="og:site_name" content="Sentinel Security">
 
-    <!-- Twitter Cards -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Sentinel — High-Throughput Threat Intelligence & Anti-VPN Engine">
-    <meta name="twitter:description" content="Sub-millisecond edge threat intelligence and autonomous proxy mitigation across global infrastructure.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Sentinel Anti VPN - Autonomous Edge Intelligence & Proxy Defense">
+  <meta name="twitter:description" content="Sub-millisecond Anycast edge threat intelligence and autonomous proxy mitigation across global infrastructure.">
 
-    <!-- JSON-LD Structured Data for Google -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Sentinel",
-      "operatingSystem": "All",
-      "applicationCategory": "SecurityApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "High-throughput edge threat intelligence and autonomous Anti-VPN proxy mitigation API for developers, high-concurrency gateways, and game networks.",
-      "url": "https://antivpn.tech",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Sentinel Security",
-        "url": "https://antivpn.tech"
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+
+  <!-- Suppress Netlify Toolbar drawer reflows -->
+  <script>
+    try {
+      new MutationObserver(function(m) {
+        m.forEach(function(rec) {
+          rec.addedNodes.forEach(function(n) {
+            if (n.id === 'netlify-drawer' || (n.tagName === 'IFRAME' && n.src && n.src.indexOf('netlify') !== -1)) {
+              n.remove();
+            }
+          });
+        });
+      }).observe(document.documentElement, { childList: true, subtree: true });
+    } catch(e) {}
+  </script>
+
+  <!-- Google Fonts: Instrument Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
+  <!-- Lenis Smooth Scrolling CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#000101',
+            foreground: '#ecebe7',
+            card: '#020204',
+            'card-foreground': '#ecebe7',
+            muted: '#040608',
+            'muted-foreground': '#757168',
+            border: '#101215',
+            cyan: {
+              300: '#67e8f9',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            },
+            blue: {
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+            }
+          },
+          fontFamily: {
+            sans: ['"Instrument Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"Instrument Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          animation: {
+            'fade-slide': 'fadeSlideIn 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeSlideIn: {
+              '0%': { opacity: '0', transform: 'translateX(20px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            }
+          }
+        }
       }
     }
-    </script>
-    <script>
-        // Suppress injected Netlify Drawer / HUD toolbar to eliminate iframe reflows and cross-origin polling
-        try {
-            new MutationObserver(function(m) {
-                m.forEach(function(rec) {
-                    rec.addedNodes.forEach(function(n) {
-                        if (n.id === 'nl-badge-frame' || n.id === 'nl-hud-frame' || (n.src && n.src.indexOf('/.netlify/scripts/hud') !== -1)) {
-                            n.remove();
-                        }
-                    });
-                });
-            }).observe(document.documentElement, { childList: true, subtree: true });
-        } catch (_) {}
-    </script>
-    <link rel="stylesheet" href="css/style.css?v=4.1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </script>
+
+  <style>
+    ::selection {
+      background: #0ea5e9;
+      color: #000101;
+    }
+    html {
+      scroll-padding-top: 5.5rem;
+      scroll-behavior: smooth;
+    }
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+    html, body {
+      background-color: #000101;
+      color: #ecebe7;
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+    .font-display {
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: -0.035em;
+      font-weight: 600;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    @keyframes progress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+    .animate-progress {
+      animation: progress 6s linear forwards;
+    }
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000101;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #101215;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #20242b;
+    }
+    /* Official ShaderGradient Elements */
+    #shadergradient-hero {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      filter: blur(36px);
+      transform: scale(1.06) translateZ(0);
+      opacity: 0.85;
+      will-change: transform, opacity;
+    }
+    #shadergradient-bento {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      filter: blur(28px);
+      opacity: 0.75;
+      clip-path: url(#bento-clip-path);
+      -webkit-clip-path: url(#bento-clip-path);
+      mask: url(#bento-cards-mask);
+      -webkit-mask: url(#bento-cards-mask);
+      -webkit-mask-image: url(#bento-cards-mask);
+      z-index: 0;
+      will-change: transform, opacity;
+      transform: translateZ(0);
+    }
+  </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#000101] text-foreground antialiased selection:bg-white selection:text-black">
 
-    <!-- Accessible Skip to Main Content Link (WCAG 2.1 AA) -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- ==================== 1. FLOATING NAVIGATION ==================== -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <nav id="nav-inner" class="mx-auto transition-all duration-500 bg-transparent max-w-[1400px]">
+      <div id="nav-container" class="flex items-center justify-between transition-all duration-500 px-6 lg:px-8 h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2.5 group">
+          <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/20 flex items-center justify-center text-white group-hover:scale-105 transition-transform">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span id="brand-title" class="font-display tracking-tight text-2xl text-white transition-all duration-500">SENTINEL</span>
+        </a>
 
-    <!-- Reading Progress Bar -->
-    <div id="scroll-progress"></div>
+        <!-- Desktop Links -->
+        <div class="hidden md:flex items-center gap-10">
+          <a href="#features" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Capabilities
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#how-it-works" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Architecture
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#infra" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Threat Grid
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#metrics" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Telemetry
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#integrations" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Integrations
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#pricing" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Pricing
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        </div>
 
-    <!-- Ambient background -->
-    <div class="aurora-wrapper" aria-hidden="true">
-        <div class="aurora-blade blade-1"></div>
-        <div class="aurora-blade blade-2"></div>
-        <div class="aurora-blade blade-3"></div>
-        <div class="aurora-plasma-orb"></div>
-        <div class="aurora-vignette"></div>
+        <!-- Desktop Action Buttons -->
+        <div class="hidden md:flex items-center gap-4">
+          <a href="#developers" id="sign-in-link" class="text-sm text-white/70 hover:text-white transition-all duration-500 font-mono">
+            API Docs
+          </a>
+          <a href="#pricing" id="cta-button" class="rounded-full bg-white hover:bg-white/90 text-black px-6 h-10 inline-flex items-center justify-center text-sm font-medium transition-all duration-500 shadow-sm hover:shadow-white/10">
+            Deploy Edge
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-white transition-colors duration-500" aria-label="Toggle Menu">
+          <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 bg-[#000101] z-40 transition-all duration-500 opacity-0 pointer-events-none flex flex-col justify-between p-8 pt-28">
+      <div class="flex flex-col gap-6">
+        <a href="#features" class="mobile-nav-link text-2xl font-display text-white">Capabilities</a>
+        <a href="#how-it-works" class="mobile-nav-link text-2xl font-display text-white">Architecture</a>
+        <a href="#infra" class="mobile-nav-link text-2xl font-display text-white">Threat Grid</a>
+        <a href="#metrics" class="mobile-nav-link text-2xl font-display text-white">Telemetry</a>
+        <a href="#integrations" class="mobile-nav-link text-2xl font-display text-white">Integrations</a>
+        <a href="#pricing" class="mobile-nav-link text-2xl font-display text-white">Pricing</a>
+      </div>
+      <div class="flex flex-col gap-4 pt-8 border-t border-white/10">
+        <a href="#developers" class="mobile-nav-link w-full py-3 text-center border border-white/20 rounded-full text-white font-mono text-sm">API Docs</a>
+        <a href="#pricing" class="mobile-nav-link w-full py-3 text-center bg-white text-black rounded-full font-medium text-sm">Deploy Edge</a>
+      </div>
     </div>
+  </header>
 
-    <!-- Navigation -->
-    <div class="nav-container">
-        <nav class="floating-pill-nav">
-            <a href="#" class="nav-brand">
-                <span class="brand-glyph" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <polygon points="12,2 22,12 12,22 2,12" fill="url(#warm-diamond)" />
-                        <defs>
-                            <linearGradient id="warm-diamond" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#ffb347" />
-                                <stop offset="50%" stop-color="#ff6b4a" />
-                                <stop offset="100%" stop-color="#ff2f3a" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </span>
-                <span class="brand-text">Sentinel</span>
-            </a>
+  <main class="relative min-h-screen overflow-x-hidden">
 
-            <div class="nav-links">
-                <a href="#inspector" class="nav-link">Telemetry</a>
-                <a href="#architecture" class="nav-link">Architecture</a>
-                <a href="#spectrum" class="nav-link">Game Ingress</a>
-                <a href="#developer" class="nav-link">Integration</a>
-                <a href="#benchmarks" class="nav-link">Benchmarks</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="#api-reference" class="nav-link">API Docs</a>
-            </div>
+    <!-- ==================== 2. HERO SECTION ==================== -->
+    <section class="relative min-h-screen flex flex-col justify-center items-start overflow-hidden bg-transparent">
+      <!-- Landing Page Official ShaderGradient Layer -->
+      <div id="shadergradient-hero" aria-hidden="true"></div>
 
-            <div class="nav-right">
-                <a href="#pricing" class="nav-pill-btn">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
-                    <span>Get API Key</span>
-                </a>
-            </div>
-        </nav>
-    </div>
+      <!-- Ambient Hero Vignettes -->
+      <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-black/15 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/60"></div>
+      </div>
 
-    <!-- Hero -->
-    <section id="main-content" class="hero-viewport">
-        <div class="hero-container">
-            <div class="eyebrow-chip">
-                <span class="eyebrow-dot"></span>
-                <span class="eyebrow-text">v1.2 · Enterprise Threat Intelligence</span>
-            </div>
+      <!-- Seamless Bottom Horizon Transition to Static Deep Black -->
+      <div class="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-b from-transparent via-[#000101]/60 to-[#000101] pointer-events-none z-[3]"></div>
 
-            <h1 class="hero-title">
-                Real-time threat defense,<br>
-                engineered for <span class="hero-highlight">scale</span>.
+      <!-- Tech Blueprint Grid Lines -->
+      <div class="absolute inset-0 z-[2] overflow-hidden pointer-events-none opacity-20">
+        <div class="absolute h-px bg-white/10" style="top: 12.5%; left: 0; right: 0;"></div>
+        <div class="absolute h-px bg-white/10" style="top: 25%; left: 0; right: 0;"></div>
+        <div class="absolute h-px bg-white/10" style="top: 37.5%; left: 0; right: 0;"></div>
+        <div class="absolute h-px bg-white/10" style="top: 50%; left: 0; right: 0;"></div>
+        <div class="absolute h-px bg-white/10" style="top: 62.5%; left: 0; right: 0;"></div>
+        <div class="absolute h-px bg-white/10" style="top: 75%; left: 0; right: 0;"></div>
+        <div class="absolute h-px bg-white/10" style="top: 87.5%; left: 0; right: 0;"></div>
+        
+        <div class="absolute w-px bg-white/10" style="left: 8.33%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 16.66%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 25%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 33.33%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 41.66%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 50%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 58.33%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 66.66%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 75%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 83.33%; top: 0; bottom: 0;"></div>
+        <div class="absolute w-px bg-white/10" style="left: 91.66%; top: 0; bottom: 0;"></div>
+      </div>
+
+      <!-- Hero Main Content -->
+      <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 py-32 lg:py-40">
+        <div class="lg:max-w-[65%]">
+          <!-- Eyebrow Pill -->
+          <div class="mb-8" id="hero-tag">
+            <span class="inline-flex items-center gap-3 text-sm font-mono text-white/60">
+              <span class="w-8 h-px bg-cyan-500"></span>
+              Autonomous Edge Intelligence & Proxy Defense
+            </span>
+          </div>
+
+          <!-- Hero Headline with rotating word -->
+          <div class="mb-12">
+            <h1 class="text-left text-[clamp(2.1rem,6.8vw,7.5rem)] font-display leading-[0.95] tracking-tight text-white">
+              <span class="block sm:whitespace-nowrap">Sub-millisecond edge,</span>
+              <span class="block sm:whitespace-nowrap">
+                defense that
+                <span class="relative inline-block ml-2 sm:ml-3 font-display text-cyan-400" id="hero-rotating-word">mitigates</span>
+              </span>
             </h1>
+          </div>
 
-            <p class="hero-subtitle">
-                Sentinel delivers line-rate proxy detection and autonomous threat intelligence across global infrastructure, stopping credential abuse and malicious traffic before connection acceptance.
+          <p class="text-lg md:text-xl text-white/70 max-w-xl font-normal leading-relaxed mb-8">
+            Filter residential proxies, mitigate automated ingress anomalies, and classify carrier networks in under <span class="text-cyan-400 font-mono font-medium">0.8ms</span> with our Zero-Log Volatile Memory Architecture.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button onclick="SentinelPricing.claimFreeKey()" class="h-12 px-8 rounded-full bg-white text-black font-medium text-sm inline-flex items-center gap-2 hover:bg-white/90 transition-all shadow-lg hover:shadow-white/10">
+              Claim Free Key
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+            <a href="#how-it-works" class="h-12 px-8 rounded-full border border-white/20 text-white font-medium text-sm inline-flex items-center gap-2 hover:bg-white/5 transition-all">
+              Live Architecture
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Metrics Ribbon -->
+      <div class="absolute bottom-12 left-0 right-0 px-6 lg:px-12 transition-all duration-700 delay-500">
+        <div class="max-w-[1400px] mx-auto flex items-start gap-10 lg:gap-24 border-t border-white/10 pt-8">
+          <div class="flex flex-col gap-1">
+            <span class="text-3xl lg:text-4xl font-display text-white">450M+</span>
+            <span class="text-xs text-white/50 font-mono leading-tight">threat vectors indexed</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-3xl lg:text-4xl font-display text-white">99.9%</span>
+            <span class="text-xs text-white/50 font-mono leading-tight">carrier classification precision</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-3xl lg:text-4xl font-display text-white">&lt;0.8ms</span>
+            <span class="text-xs text-white/50 font-mono leading-tight">edge evaluation latency</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. CAPABILITIES / FEATURES SECTION ==================== -->
+    <section id="features" class="relative py-16 lg:py-24 overflow-hidden">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <!-- Section Header -->
+        <div class="relative mb-12 lg:mb-16">
+          <div class="grid lg:grid-cols-12 gap-8 items-end">
+            <div class="lg:col-span-7">
+              <span class="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-4">
+                <span class="w-12 h-px bg-white/30"></span>
+                Capabilities
+              </span>
+              <h2 class="text-5xl md:text-6xl lg:text-[90px] font-display tracking-tight leading-[0.95]">
+                Intelligent<br>
+                <span class="text-muted-foreground">edge defense.</span>
+              </h2>
+            </div>
+            <div class="lg:col-span-5 lg:pb-3">
+              <p class="text-lg text-muted-foreground leading-relaxed">
+                Deploy stateless threat classification across distributed edge nodes. Protect authentication gates, enterprise endpoints, and APIs without upstream bottlenecks.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SVG Mask & Clip-Path for the 4 Bento Windows -->
+        <svg class="absolute w-0 h-0 overflow-hidden pointer-events-none" style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+          <defs>
+            <clipPath id="bento-clip-path" clipPathUnits="userSpaceOnUse">
+              <rect id="bento-clip-1" rx="12" ry="12" />
+              <rect id="bento-clip-2" rx="12" ry="12" />
+              <rect id="bento-clip-3" rx="12" ry="12" />
+              <rect id="bento-clip-4" rx="12" ry="12" />
+            </clipPath>
+            <mask id="bento-cards-mask" maskUnits="userSpaceOnUse">
+              <rect width="100%" height="100%" fill="black" />
+              <rect id="bento-mask-1" rx="12" ry="12" fill="white" />
+              <rect id="bento-mask-2" rx="12" ry="12" fill="white" />
+              <rect id="bento-mask-3" rx="12" ry="12" fill="white" />
+              <rect id="bento-mask-4" rx="12" ry="12" fill="white" />
+            </mask>
+          </defs>
+        </svg>
+
+        <!-- Bento Grid Cards Container -->
+        <div id="bento-grid-wrapper" class="relative">
+          <!-- Shared Unified Bento Shader Layer (Masked to the 4 Cards) -->
+          <div id="shadergradient-bento" aria-hidden="true"></div>
+
+          <div class="relative z-10 grid lg:grid-cols-12 gap-6">
+            <!-- Card 01: Hero Bento Card -->
+            <div id="bento-card-1" class="lg:col-span-12 relative bg-[#000101]/60 border border-white/10 min-h-[400px] overflow-hidden group transition-all duration-700 flex flex-col lg:flex-row rounded-xl hover:border-white/40">
+              <!-- Left Copy & Structure -->
+              <div class="relative flex-1 p-6 lg:p-10 bg-black/15 z-10 flex flex-col justify-between">
+                <div class="relative z-10">
+                  <span class="font-mono text-sm text-white/70">01</span>
+                  <h3 class="text-3xl lg:text-4xl font-display mt-3 mb-4 group-hover:translate-x-2 transition-transform duration-500 text-white">
+                    Autonomous Ingress Classification
+                  </h3>
+                  <p class="text-base text-muted-foreground leading-relaxed max-w-lg mb-6">
+                    Evaluate incoming packets in volatile memory before handshakes finalize. Distinguish verified consumer subscriber lines from distributed datacenter hops and residential proxies.
+                  </p>
+                </div>
+
+                <div class="relative z-10 pt-4 border-t border-white/10">
+                  <span class="text-5xl lg:text-6xl font-display text-white">99.9%</span>
+                  <span class="block text-sm text-muted-foreground font-mono mt-2">classification precision &middot; zero human audit</span>
+                </div>
+              </div>
+
+              <!-- Right Visual Graphic: Real-time Edge Ingress Classification Stream -->
+              <div class="hidden lg:flex relative w-[45%] shrink-0 flex-col justify-between p-8 bg-[#020306]/65 backdrop-blur-md border-l border-white/10 font-mono text-xs overflow-hidden z-10">
+                <div class="relative z-10">
+                  <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                    <span class="text-[11px] text-muted-foreground uppercase tracking-wider">Ingress Filter Gate</span>
+                    <span class="flex items-center gap-1.5 text-[10px] text-white bg-white/10 px-2 py-0.5 rounded border border-white/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                      ACTIVE
+                    </span>
+                  </div>
+                  <div class="flex flex-col gap-2.5 text-[11px]">
+                    <div class="p-2.5 rounded bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                      <span class="text-white/80">ASN Classification</span>
+                      <span class="text-emerald-400">RESIDENTIAL_ISP</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                      <span class="text-white/80">Tunnel & Proxy Check</span>
+                      <span class="text-emerald-400">CLEAN_PASS</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                      <span class="text-white/80">Memory State</span>
+                      <span class="text-white/90">ZERO_PERSISTENCE</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                      <span class="text-white/80">Ingress Evaluation</span>
+                      <span class="text-white/90">&lt; 0.42 ms</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-[10px] text-muted-foreground">
+                  <span>VOLATILE RAM ISOLATE</span>
+                  <span class="text-white/80 font-mono">ANYCAST_EDGE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 02: Carrier & Topology Intelligence -->
+            <div id="bento-card-2" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+              <div>
+                <span class="font-mono text-sm text-white/70">02</span>
+                <h3 class="text-xl lg:text-2xl font-display mt-3 mb-3 text-white">Carrier & Topology Intelligence</h3>
+                <p class="text-muted-foreground text-xs leading-relaxed mb-6">
+                  Resolve Autonomous System categorization dynamically. Distinguishes genuine mobile/fiber consumer carriers from cloud compute providers and VPS hops.
+                </p>
+              </div>
+              <div class="pt-4 border-t border-white/10 flex items-baseline justify-between">
+                <span class="text-3xl font-display text-white">50+</span>
+                <span class="text-xs font-mono text-muted-foreground">global edge regions</span>
+              </div>
+            </div>
+
+            <!-- Card 03: Dynamic Tunnel & Gateway Anomaly Detection -->
+            <div id="bento-card-3" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+              <div>
+                <span class="font-mono text-sm text-white/70">03</span>
+                <h3 class="text-xl lg:text-2xl font-display mt-3 mb-3 text-white">Dynamic Tunnel Mitigation</h3>
+                <p class="text-muted-foreground text-xs leading-relaxed mb-6">
+                  Temporal and ingress consistency algorithms detect rotating residential proxies and covert egress tunnels before they can scrape or compromise endpoints.
+                </p>
+              </div>
+              <div class="pt-4 border-t border-white/10 flex items-baseline justify-between">
+                <span class="text-3xl font-display text-white">&lt;0.8ms</span>
+                <span class="text-xs font-mono text-muted-foreground">sub-millisecond evaluation</span>
+              </div>
+            </div>
+
+            <!-- Card 04: Zero-Log Volatile Memory Architecture -->
+            <div id="bento-card-4" class="lg:col-span-4 bg-[#000101]/60 border border-white/10 p-6 lg:p-7 rounded-xl relative group overflow-hidden hover:border-white/40 transition-all flex flex-col justify-between">
+              <div>
+                <span class="font-mono text-sm text-white/70">04</span>
+                <h3 class="text-xl lg:text-2xl font-display mt-3 mb-3 text-white">Zero-Log Memory Architecture</h3>
+                <p class="text-muted-foreground text-xs leading-relaxed mb-6">
+                  Packets and metadata are evaluated strictly in volatile RAM. No subscriber identities, queries, or access logs are ever persisted to disk.
+                </p>
+              </div>
+              <div class="pt-4 border-t border-white/10 flex items-baseline justify-between">
+                <span class="text-3xl font-display text-white">0</span>
+                <span class="text-xs font-mono text-muted-foreground">retained data logs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. HOW IT WORKS / ARCHITECTURE ==================== -->
+    <section id="how-it-works" class="relative py-14 lg:py-20 bg-[#040608]/70 border-y border-white/5">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div class="mb-8 lg:mb-10">
+          <span class="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-3">
+            <span class="w-12 h-px bg-white/30"></span>
+            Architecture
+          </span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[1.05] sm:leading-[1]">
+            Three steps. <span class="text-muted-foreground">Sub-millisecond defense.</span>
+          </h2>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
+          <!-- Step Selectors (Left 5 Cols) -->
+          <div class="lg:col-span-5 flex flex-col justify-between gap-3">
+            <!-- Step 1 -->
+            <div id="step-btn-0" onclick="selectStep(0)" class="step-card p-4 sm:p-5 rounded-xl border border-white/60 bg-[#020204] cursor-pointer transition-all relative overflow-hidden hover:border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.06)] flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
+                  <span id="step-num-0" class="text-xl sm:text-2xl font-display text-white">01</span>
+                  <div class="flex-1 h-px bg-white/10 overflow-hidden">
+                    <div id="step-prog-0" class="h-full bg-white/80 animate-progress"></div>
+                  </div>
+                  <span class="text-[10px] font-mono text-white/50 uppercase tracking-wider">Setup</span>
+                </div>
+                <h3 class="text-base sm:text-lg font-display text-white mb-0.5 sm:mb-1">Initialize</h3>
+                <span class="text-[11px] sm:text-xs font-mono text-white/70 block mb-1 sm:mb-1.5">SDK & API Credentials</span>
+                <p class="text-xs text-muted-foreground leading-relaxed">
+                  Import `@sentinel/edge` and instantiate client credentials in any edge runtime.
+                </p>
+              </div>
+              <div id="step-bar-0" class="absolute bottom-0 left-0 right-0 h-1 bg-white transition-transform origin-left scale-x-100"></div>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="step-btn-1" onclick="selectStep(1)" class="step-card p-4 sm:p-5 rounded-xl border border-white/10 bg-[#020204]/60 cursor-pointer transition-all relative overflow-hidden hover:border-white/40 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
+                  <span id="step-num-1" class="text-xl sm:text-2xl font-display text-white/30">02</span>
+                  <div class="flex-1 h-px bg-white/10 overflow-hidden">
+                    <div id="step-prog-1" class="h-full bg-white/80 hidden"></div>
+                  </div>
+                  <span class="text-[10px] font-mono text-white/30 uppercase tracking-wider">Telemetry</span>
+                </div>
+                <h3 class="text-base sm:text-lg font-display text-white mb-0.5 sm:mb-1">Evaluate</h3>
+                <span class="text-[11px] sm:text-xs font-mono text-white/40 block mb-1 sm:mb-1.5">Carrier & IP Intelligence</span>
+                <p class="text-xs text-muted-foreground leading-relaxed">
+                  Deep ingress telemetry, residential line verification, and Autonomous System topology under 0.5ms.
+                </p>
+              </div>
+              <div id="step-bar-1" class="absolute bottom-0 left-0 right-0 h-1 bg-white transition-transform origin-left scale-x-0"></div>
+            </div>
+
+            <!-- Step 3 -->
+            <div id="step-btn-2" onclick="selectStep(2)" class="step-card p-4 sm:p-5 rounded-xl border border-white/10 bg-[#020204]/60 cursor-pointer transition-all relative overflow-hidden hover:border-white/40 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
+                  <span id="step-num-2" class="text-xl sm:text-2xl font-display text-white/30">03</span>
+                  <div class="flex-1 h-px bg-white/10 overflow-hidden">
+                    <div id="step-prog-2" class="h-full bg-white/80 hidden"></div>
+                  </div>
+                  <span class="text-[10px] font-mono text-white/30 uppercase tracking-wider">Verdict</span>
+                </div>
+                <h3 class="text-base sm:text-lg font-display text-white mb-0.5 sm:mb-1">Enforce</h3>
+                <span class="text-[11px] sm:text-xs font-mono text-white/40 block mb-1 sm:mb-1.5">Sub-ms Edge Decision</span>
+                <p class="text-xs text-muted-foreground leading-relaxed">
+                  Refuse proxy tunnels at the edge or forward verified subscribers with zero persisted logs.
+                </p>
+              </div>
+              <div id="step-bar-2" class="absolute bottom-0 left-0 right-0 h-1 bg-white transition-transform origin-left scale-x-0"></div>
+            </div>
+          </div>
+
+          <!-- Code Preview Box (Right 7 Cols) -->
+          <div class="lg:col-span-7 bg-[#020204] border border-white/15 rounded-xl overflow-hidden shadow-2xl flex flex-col justify-between h-full">
+            <!-- Window Bar -->
+            <div class="flex items-center justify-between px-3.5 sm:px-5 py-3 border-b border-white/10 bg-black/60">
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/50 border border-red-500/70"></div>
+                <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/50 border border-yellow-500/70"></div>
+                <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/50 border border-emerald-500/70"></div>
+                <div class="ml-2 sm:ml-3 flex items-center gap-1.5 bg-white/5 border border-white/10 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[11px] sm:text-xs font-mono text-white/90">
+                  <svg class="w-3.5 h-3.5 text-white/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  <span id="code-filename">sentinel.ts</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="copySnippet()" id="btn-copy-code" class="text-[11px] font-mono text-white/60 hover:text-white px-2.5 py-1 rounded border border-white/10 hover:border-white/30 bg-white/5 transition-all flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                  <span id="btn-copy-text">Copy</span>
+                </button>
+                <span class="font-mono text-[10px] text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/20 hidden sm:inline">Zero-Log Edge</span>
+              </div>
+            </div>
+
+            <!-- Code Content with Line Numbers & Keyword Blue Syntax Highlighting -->
+            <div class="flex-1 p-3.5 sm:p-5 lg:p-6 font-mono text-[11px] sm:text-xs lg:text-[13px] leading-relaxed bg-[#010203] flex items-start overflow-x-auto min-h-[220px] sm:min-h-[260px]">
+              <div id="code-line-numbers" class="select-none text-white/20 pr-3 sm:pr-4 text-right border-r border-white/10 space-y-0.5 shrink-0 text-[11px] sm:text-xs lg:text-[13px]">
+                <!-- Line numbers rendered dynamically -->
+              </div>
+              <pre class="pl-3 sm:pl-4 overflow-x-auto w-full leading-relaxed"><code id="code-snippet" class="block"></code></pre>
+            </div>
+
+            <!-- Execution Status Tray (Monochrome Neutral) -->
+            <div class="px-3.5 sm:px-5 py-2 sm:py-2.5 border-t border-white/10 bg-black/60 flex items-center justify-between text-[11px] sm:text-xs font-mono">
+              <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
+                <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white shrink-0 animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.7)]"></span>
+                <span class="text-white/80 font-semibold text-[10px] sm:text-[11px] uppercase tracking-wider shrink-0">Live Edge Isolate</span>
+                <span class="text-white/20 shrink-0">&middot;</span>
+                <span id="code-output-text" class="text-white/70 text-[10px] sm:text-[11px] truncate"></span>
+              </div>
+              <span class="text-white/40 text-[10px] uppercase font-mono tracking-wider hidden sm:inline shrink-0">RAM Execution &lt;0.5ms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. GLOBAL THREAT GRID / INFRASTRUCTURE ==================== -->
+    <section id="infra" class="relative py-14 lg:py-20 overflow-hidden">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div class="mb-8 lg:mb-10">
+          <span class="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-3">
+            <span class="w-12 h-px bg-white/30"></span>
+            Global Threat Grid
+          </span>
+          <div class="grid lg:grid-cols-[auto_1fr] gap-8 items-end">
+            <h2 class="text-5xl md:text-6xl lg:text-[75px] font-display tracking-tight text-white leading-[0.95]">
+              Distributed across<br>
+              <span class="text-muted-foreground">50+ edge regions.</span>
+            </h2>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-6 items-center">
+          <!-- Regions List -->
+          <div class="lg:col-span-5 xl:col-span-5 flex flex-col gap-3.5">
+            <div id="region-card-0" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/60 bg-[#020204] flex items-center justify-between gap-4 transition-all hover:border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.06)]">
+              <div class="min-w-0 flex-1">
+                <h4 class="text-lg sm:text-xl font-display text-white mb-1">North America</h4>
+                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">12 Edge Nodes &middot; Anycast Ingress</span>
+              </div>
+              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                operational
+              </span>
+            </div>
+
+            <div id="region-card-1" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-4 transition-all hover:border-white/40">
+              <div class="min-w-0 flex-1">
+                <h4 class="text-lg sm:text-xl font-display text-white mb-1">Europe</h4>
+                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">8 Edge Nodes &middot; Tier 1 Transit</span>
+              </div>
+              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                operational
+              </span>
+            </div>
+
+            <div id="region-card-2" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-4 transition-all hover:border-white/40">
+              <div class="min-w-0 flex-1">
+                <h4 class="text-lg sm:text-xl font-display text-white mb-1">Asia Pacific</h4>
+                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">6 Edge Nodes &middot; Tokyo, Singapore, Sydney</span>
+              </div>
+              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                operational
+              </span>
+            </div>
+
+            <div id="region-card-3" class="region-card p-5 sm:p-5.5 lg:p-6 rounded-xl border border-white/10 bg-[#020204]/60 flex items-center justify-between gap-4 transition-all hover:border-white/40">
+              <div class="min-w-0 flex-1">
+                <h4 class="text-lg sm:text-xl font-display text-white mb-1">South America</h4>
+                <span class="text-xs sm:text-[13px] font-mono text-muted-foreground block leading-normal">3 Edge Nodes &middot; São Paulo, Santiago</span>
+              </div>
+              <span class="shrink-0 flex items-center gap-1.5 text-xs font-mono text-white/80 bg-white/5 px-3 py-1 rounded-full border border-white/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                operational
+              </span>
+            </div>
+          </div>
+
+          <!-- Official Cobe 3D Threat Globe (Black & White Dot Matrix) -->
+          <div id="globe-card" class="lg:col-span-7 xl:col-span-7 relative h-[360px] sm:h-[420px] lg:h-[480px] flex items-center justify-center bg-[#020204] border border-white/10 rounded-xl overflow-hidden group select-none transition-colors hover:border-white/25">
+            <!-- Cobe WebGL Canvas -->
+            <canvas id="threat-globe-canvas" class="w-full h-full cursor-grab active:cursor-grabbing transition-opacity duration-700 opacity-0" style="contain: layout paint size;"></canvas>
+
+            <!-- Floating Country & POP Node Titles Overlay -->
+            <div id="globe-markers-overlay" class="absolute inset-0 pointer-events-none overflow-hidden z-10"></div>
+
+            <!-- Cyber HUD Top -->
+            <div class="absolute top-3 left-3 right-3 sm:top-4 sm:left-5 sm:right-5 flex items-center justify-between pointer-events-none z-20 font-mono text-xs">
+              <div class="flex items-center gap-1.5 sm:gap-2 text-white bg-black/70 px-2 sm:px-2.5 py-1 rounded border border-white/10 backdrop-blur-md text-[10px] sm:text-xs">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                <span class="tracking-wide">SENTINEL THREAT NETWORK</span>
+                <span class="text-[9px] sm:text-[10px] text-muted-foreground uppercase px-1.5 py-0.2 rounded bg-white/5 border border-white/10 hidden xs:inline">50+ POPs</span>
+              </div>
+              <div class="hidden sm:flex items-center gap-3 text-[11px] text-muted-foreground bg-black/70 px-3 py-1 rounded border border-white/10 backdrop-blur-md">
+                <span id="globe-telemetry-rot">ROT: 280.0°</span>
+                <span class="text-white/20">|</span>
+                <span class="text-white font-mono">ANYCAST: OPERATIONAL</span>
+              </div>
+            </div>
+
+            <!-- Drag Hint -->
+            <div id="globe-drag-hint" class="absolute top-12 sm:top-14 left-1/2 -translate-x-1/2 text-[9px] sm:text-[10px] font-mono text-white/50 pointer-events-none transition-opacity duration-500 bg-black/60 px-2.5 sm:px-3 py-0.5 rounded-full border border-white/10 backdrop-blur-sm whitespace-nowrap z-20">
+              DRAG TO ROTATE &middot; CLICK NODE OR REGION TO FOCUS
+            </div>
+
+            <!-- Cyber HUD Bottom -->
+            <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-5 sm:right-5 flex items-center justify-between pointer-events-auto z-20 font-mono text-[10px] sm:text-[11px]">
+              <div class="text-muted-foreground flex items-center gap-2 sm:gap-3 bg-black/70 px-2.5 sm:px-3 py-1 rounded border border-white/10 backdrop-blur-md text-[10px] sm:text-[11px]">
+                <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-white inline-block shadow-[0_0_8px_rgba(255,255,255,0.9)]"></span> Edge POP</span>
+                <span class="inline-flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-white/40 inline-block"></span> Micro Node</span>
+                <span class="hidden sm:inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5 bg-[#64748b] inline-block rounded-full"></span> Silver Arc</span>
+                <span id="globe-node-telemetry" class="hidden md:inline-flex items-center gap-1.5 border-l border-white/15 pl-3 text-white/80 font-mono text-[10px]">
+                  <span class="text-white/40">INSPECT:</span> CLICK OR HOVER ANY REGION NODE
+                </span>
+              </div>
+
+              <!-- Engine Badge -->
+              <div class="hidden xs:flex items-center gap-2 bg-black/70 backdrop-blur-md border border-white/10 rounded-lg px-2 sm:px-2.5 py-1 text-muted-foreground text-[10px] sm:text-[11px]">
+                <span class="w-1 h-1 rounded-full bg-white"></span>
+                <span>COBE &middot; 60 FPS</span>
+              </div>
+            </div>
+
+            <!-- Subtle monochrome radial glow behind globe -->
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.04),transparent_70%)]"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 6. TELEMETRY & METRICS ==================== -->
+    <section id="metrics" class="relative py-14 lg:py-20 overflow-hidden bg-black">
+      <!-- Grid Canvas with Scanline -->
+      <canvas id="metrics-grid-canvas" class="absolute inset-0 pointer-events-none w-full h-full"></canvas>
+
+      <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div class="grid lg:grid-cols-12 gap-8 mb-8 lg:mb-10">
+          <div class="lg:col-span-8">
+            <div class="flex items-center gap-4 mb-3">
+              <span class="flex items-center gap-2 px-3 py-1 bg-white/5 text-white/90 text-xs font-mono border border-white/20 rounded">
+                <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                Live Grid Stream
+              </span>
+              <span id="live-utc-clock" class="text-xs font-mono text-muted-foreground">--:--:-- UTC</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[0.95]">
+              Real-time telemetry.<br>
+              <span class="text-muted-foreground">Deterministic speed.</span>
+            </h2>
+          </div>
+        </div>
+
+        <!-- 4 Metrics Cards with Sparkline Wave Canvas -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Card 1 -->
+          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+            <div>
+              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Evaluated Today</span>
+              <div class="text-3xl lg:text-4xl font-display text-white" id="counter-threats">1,284,920</div>
+              <span class="text-xs font-mono text-white/70 mt-1 block">ingress connection queries</span>
+            </div>
+            <div class="w-full">
+              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+            <div>
+              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Edge Availability</span>
+              <div class="text-3xl lg:text-4xl font-display text-white">99.99%</div>
+              <span class="text-xs font-mono text-muted-foreground mt-1 block">across all active edge points</span>
+            </div>
+            <div class="w-full">
+              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+            <div>
+              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Evaluation Latency</span>
+              <div class="text-3xl lg:text-4xl font-display text-white">&lt;0.8ms</div>
+              <span class="text-xs font-mono text-muted-foreground mt-1 block">in-memory decision cycle</span>
+            </div>
+            <div class="w-full">
+              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="p-6 lg:p-7 bg-[#020204]/80 border border-white/10 rounded-xl flex flex-col justify-between h-[220px] relative overflow-hidden group hover:border-white/30 transition-all">
+            <div>
+              <span class="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1.5">Subscriber Logs Retained</span>
+              <div class="text-3xl lg:text-4xl font-display text-white">0</div>
+              <span class="text-xs font-mono text-muted-foreground mt-1 block">Zero-Log Volatile Memory</span>
+            </div>
+            <div class="w-full">
+              <canvas class="sparkline-canvas w-full h-8 block" data-color="white"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7. INTEGRATIONS ==================== -->
+    <section id="integrations" class="relative py-14 lg:py-20 overflow-hidden border-t border-white/5">
+      <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
+        <span class="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-4 justify-center">
+          <span class="w-12 h-px bg-white/30"></span>
+          Universal Compatibility
+          <span class="w-12 h-px bg-white/30"></span>
+        </span>
+        <h2 class="text-4xl md:text-5xl lg:text-[75px] font-display tracking-tight text-white leading-[0.95] mb-10">
+          Works everywhere<br>
+          <span class="text-muted-foreground">traffic touches the edge.</span>
+        </h2>
+
+        <!-- Platforms Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3.5 max-w-5xl mx-auto mb-10">
+          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-base font-medium text-white">Cloudflare</span>
+            <span class="text-xs font-mono text-muted-foreground">Workers & Pages</span>
+          </div>
+          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-base font-medium text-white">Next.js</span>
+            <span class="text-xs font-mono text-muted-foreground">Edge Middleware</span>
+          </div>
+          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-base font-medium text-white">Fastly</span>
+            <span class="text-xs font-mono text-muted-foreground">Compute@Edge</span>
+          </div>
+          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-base font-medium text-white">Node.js</span>
+            <span class="text-xs font-mono text-muted-foreground">Express / Fastify</span>
+          </div>
+          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-base font-medium text-white">NGINX / Envoy</span>
+            <span class="text-xs font-mono text-muted-foreground">Reverse Proxies</span>
+          </div>
+          <div class="p-5 bg-[#020204] border border-white/10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:border-white/40 transition-colors">
+            <span class="font-mono text-base font-medium text-white">Go & Rust</span>
+            <span class="text-xs font-mono text-muted-foreground">Native Crate & Mod</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 9. DEVELOPERS SECTION ==================== -->
+    <section id="developers" class="relative py-12 lg:py-16 overflow-hidden border-t border-white/5">
+      <!-- Ambient Bento-Style Blur Layer -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div class="absolute -top-[10%] left-[10%] w-[55%] h-[75%] bg-gradient-to-br from-cyan-500/15 via-sky-600/10 to-transparent rounded-full filter blur-[50px] opacity-70"></div>
+        <div class="absolute -bottom-[15%] right-[5%] w-[50%] h-[70%] bg-gradient-to-tl from-blue-600/15 via-cyan-500/10 to-transparent rounded-full filter blur-[50px] opacity-65"></div>
+      </div>
+
+      <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div class="mb-8 lg:mb-10">
+          <span class="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-2">
+            <span class="w-12 h-px bg-white/30"></span>
+            Developer First
+          </span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[60px] font-display tracking-tight text-white leading-[1.05]">
+            Engineered for speed. <span class="text-muted-foreground">Built for developers.</span>
+          </h2>
+        </div>
+
+        <!-- 4 Bento-Style Developer Windows (Fits screen in one clean row) -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 w-full">
+          <!-- Window 01: TypeScript Native SDK -->
+          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">01 / SDK</span>
+                <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">Zero-Dep</span>
+              </div>
+              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">TypeScript Native</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Full type safety for risk evaluation, Autonomous System telemetry, and verdict enums across Node, Bun, and Deno.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+              <span class="text-zinc-400">@sentinel/edge</span>
+              <span class="text-emerald-400">0 ERRORS</span>
+            </div>
+          </div>
+
+          <!-- Window 02: Streaming Verdicts -->
+          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">02 / Gateway</span>
+                <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">Real-Time</span>
+              </div>
+              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">Streaming Verdicts</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Inspect classification verdicts in volatile RAM before payload body consumption. Refuse proxy hops at the edge.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+              <span class="text-zinc-400">Pre-Body Isolate</span>
+              <span class="text-emerald-400">&lt;0.25ms</span>
+            </div>
+          </div>
+
+          <!-- Window 03: Carrier & Topology Intelligence -->
+          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">03 / Telemetry</span>
+                <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">50+ POPs</span>
+              </div>
+              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">Carrier Intelligence</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Autonomous System classification and residential line validation injected directly into standard request headers.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+              <span class="text-zinc-400">X-Sentinel-Carrier</span>
+              <span class="text-white/80">FTTH / 4G</span>
+            </div>
+          </div>
+
+          <!-- Window 04: Sub-ms Overhead & Zero-Log Architecture -->
+          <div class="relative p-5 lg:p-6 bg-[#000101]/60 backdrop-blur-xl border border-white/10 hover:border-white/40 rounded-xl group transition-all duration-300 flex flex-col justify-between shadow-xl min-h-[220px]">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">04 / Volatile</span>
+                <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">RAM Only</span>
+              </div>
+              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">Sub-ms Overhead</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Zero database round-trips and zero disk persistence. Evaluated strictly in volatile memory isolate under 0.8ms.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+              <span class="text-zinc-400">Zero Disk Writes</span>
+              <span class="text-white font-mono">&lt;0.8ms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 11. PRICING SECTION ==================== -->
+    <section id="pricing" class="relative py-14 lg:py-20">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div class="mb-8 lg:mb-10">
+          <span class="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-3">
+            <span class="w-12 h-px bg-white/30"></span>
+            Transparent Tiers
+          </span>
+          <h2 class="text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[0.95]">
+            Predictable pricing.<br>
+            <span class="text-muted-foreground">Zero hidden fees.</span>
+          </h2>
+        </div>
+
+        <!-- 4 Pricing Cards -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- 01 Developer Free -->
+          <div class="p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="font-mono text-xs uppercase text-muted-foreground tracking-wider">01 / Free Tier</span>
+                <span class="text-[10px] font-mono text-white/80 bg-white/5 px-2 py-0.5 rounded border border-white/15">GitHub Auth</span>
+              </div>
+              <h3 class="text-2xl font-display text-white mb-2">Developer</h3>
+              <p class="text-xs text-muted-foreground mb-6 min-h-[36px]">For independent developers, prototyping & evaluation.</p>
+              
+              <div class="mb-6">
+                <span class="text-4xl font-display text-white">$0</span>
+                <span class="text-xs font-mono text-muted-foreground"> / month</span>
+              </div>
+
+              <ul class="flex flex-col gap-2.5 text-xs text-muted-foreground border-t border-white/10 pt-6 mb-6">
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>5,000 Edge Checks / mo</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Instant GitHub Key Provisioning</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Global Anycast Network</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Community Discord Support</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="pt-2">
+              <button onclick="SentinelPricing.claimFreeKey()" class="w-full py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-center font-medium text-xs transition-colors border border-white/10 flex items-center justify-center gap-2">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                Claim 5k Key (GitHub)
+              </button>
+            </div>
+          </div>
+
+          <!-- 02 Starter -->
+          <div class="p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="font-mono text-xs uppercase text-muted-foreground tracking-wider">02 / Production</span>
+              </div>
+              <h3 class="text-2xl font-display text-white mb-2">Starter</h3>
+              <p class="text-xs text-muted-foreground mb-6 min-h-[36px]">For mid-sized gaming networks and production SaaS flows.</p>
+              
+              <div class="mb-6">
+                <span id="price-starter" class="text-4xl font-display text-white">$29</span>
+                <span class="text-xs font-mono text-muted-foreground"> / month</span>
+              </div>
+
+              <ul class="flex flex-col gap-2.5 text-xs text-muted-foreground border-t border-white/10 pt-6 mb-6">
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>150,000 Edge Checks / mo</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Origin Domain Whitelisting</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Edge Telemetry & Response Headers</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Threat Grid Real-time Sync</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="pt-2">
+              <button onclick="SentinelPricing.checkout('starter')" class="w-full py-3 rounded-full border border-white/20 hover:border-white text-white text-center font-medium text-xs transition-colors">
+                Deploy Starter
+              </button>
+            </div>
+          </div>
+
+          <!-- 03 Business (Featured) -->
+          <div class="p-6 lg:p-7 bg-[#020204] border-2 border-white rounded-xl flex flex-col justify-between relative shadow-2xl shadow-white/10 group">
+            <div class="absolute -top-3 right-6 bg-white text-black font-mono text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">
+              Most Popular
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="font-mono text-xs uppercase text-white tracking-wider">03 / Advanced Engine</span>
+              </div>
+              <h3 class="text-2xl font-display text-white mb-2">Business</h3>
+              <p class="text-xs text-muted-foreground mb-6 min-h-[36px]">For high-traffic gaming hubs and fintech checkout security.</p>
+              
+              <div class="mb-6">
+                <span id="price-business" class="text-4xl font-display text-white">$99</span>
+                <span class="text-xs font-mono text-muted-foreground"> / month</span>
+              </div>
+
+              <ul class="flex flex-col gap-2.5 text-xs text-white/90 border-t border-white/10 pt-6 mb-6">
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>1,000,000 Edge Checks / mo</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Dynamic Tunnel Anomaly Detection</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Carrier & Autonomous Route Validation</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Priority Slack & Discord Sync</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="pt-2">
+              <button onclick="SentinelPricing.checkout('business')" class="w-full py-3 rounded-full bg-white hover:bg-white/90 text-black text-center font-medium text-xs transition-all shadow-md">
+                Deploy Business
+              </button>
+            </div>
+          </div>
+
+          <!-- 04 Scale -->
+          <div class="p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-xl flex flex-col justify-between group hover:border-white/25 transition-all">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="font-mono text-xs uppercase text-muted-foreground tracking-wider">04 / High-Concurrency</span>
+              </div>
+              <h3 class="text-2xl font-display text-white mb-2">Scale</h3>
+              <p class="text-xs text-muted-foreground mb-6 min-h-[36px]">For multi-region game clusters and fraud prevention gateways.</p>
+              
+              <div class="mb-6">
+                <span id="price-scale" class="text-4xl font-display text-white">$299</span>
+                <span class="text-xs font-mono text-muted-foreground"> / month</span>
+              </div>
+
+              <ul class="flex flex-col gap-2.5 text-xs text-muted-foreground border-t border-white/10 pt-6 mb-6">
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>5,000,000 Edge Checks / mo</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Multi-Key Team Provisioning</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Dedicated Priority Isolate Routing</span>
+                </li>
+                <li class="flex items-center gap-2.5">
+                  <svg class="w-3.5 h-3.5 text-white/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Priority Support & 99.9% Target Uptime</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="pt-2">
+              <button onclick="SentinelPricing.checkout('scale')" class="w-full py-3 rounded-full border border-white/20 hover:border-white text-white text-center font-medium text-xs transition-colors">
+                Deploy Scale
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enterprise Custom Banner -->
+        <div class="mt-6 p-6 lg:p-7 bg-[#020204] border border-white/10 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 hover:border-white/30 transition-all">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-mono text-white/90 bg-white/10 px-2 py-0.5 rounded border border-white/20 uppercase tracking-wider">Custom Volume</span>
+              <span class="text-xs font-mono text-muted-foreground">Dedicated Infrastructure</span>
+            </div>
+            <h3 class="text-xl font-display text-white mb-1.5">Need 20M+ verifications or dedicated route reflectors?</h3>
+            <p class="text-xs text-muted-foreground leading-relaxed">
+              Enterprise plans include dedicated Anycast isolate reflectors, custom ASN weighting, and custom contractual SLAs under negotiated agreements.
+            </p>
+          </div>
+          <a href="mailto:enterprise@antivpn.tech?subject=Sentinel%20Enterprise%20Licensing%20Inquiry" class="shrink-0 h-11 px-7 rounded-full border border-white/20 hover:border-white text-white font-medium text-xs inline-flex items-center gap-2 transition-colors">
+            Contact Enterprise Engineering &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 12. SPOTLIGHT CTA ==================== -->
+    <section class="relative py-16 lg:py-24 overflow-hidden">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div id="cta-card" class="relative border border-white/15 rounded-3xl p-8 sm:p-12 lg:p-16 overflow-hidden text-center bg-[#000101]/60 backdrop-blur-xl group hover:border-white/40 transition-all duration-700 shadow-2xl">
+          <!-- Ambient Bento-Style Blur Layer -->
+          <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+            <div class="absolute -top-[30%] -left-[10%] w-[60%] h-[130%] bg-gradient-to-br from-cyan-500/25 via-sky-600/15 to-transparent rounded-full filter blur-[55px] opacity-75 transform -rotate-12"></div>
+            <div class="absolute -bottom-[30%] -right-[10%] w-[60%] h-[130%] bg-gradient-to-tl from-blue-600/20 via-cyan-500/15 to-transparent rounded-full filter blur-[55px] opacity-70 transform rotate-12"></div>
+          </div>
+
+          <!-- Spotlight follower glow -->
+          <div id="cta-spotlight" class="absolute inset-0 pointer-events-none opacity-20 transition-opacity duration-300" style="background: radial-gradient(600px circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 40%);"></div>
+
+          <div class="relative z-10 max-w-3xl mx-auto">
+            <span class="inline-flex items-center gap-3 text-sm font-mono text-white/80 mb-4 justify-center">
+              <span class="w-8 h-px bg-white/40"></span>
+              Deploy In Minutes
+              <span class="w-8 h-px bg-white/40"></span>
+            </span>
+
+            <h2 class="text-4xl md:text-5xl lg:text-[70px] font-display text-white tracking-tight leading-[0.95] mb-5">
+              Start protecting your edge<br>
+              <span class="text-muted-foreground">in under 0.8ms.</span>
+            </h2>
+
+            <p class="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
+              Join leading platforms securing authentication and traffic at the network perimeter with zero data leakage.
             </p>
 
-            <div class="keycap-btn-row">
-                <a href="#inspector" class="keycap-btn">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="keycap-glyph" aria-hidden="true">
-                        <polyline points="4 17 10 11 4 5"></polyline>
-                        <line x1="12" y1="19" x2="20" y2="19"></line>
-                    </svg>
-                    <span>Query Edge API</span>
-                </a>
-
-                <a href="#spectrum" class="keycap-btn">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="keycap-glyph" aria-hidden="true">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                    </svg>
-                    <span>Game Engine & TCP Ingress</span>
-                </a>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+              <a href="#pricing" class="h-11 px-7 rounded-full bg-white text-black font-medium text-sm inline-flex items-center gap-2 hover:bg-white/90 transition-all shadow-xl hover:shadow-white/10">
+                Get API Key
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <a href="#developers" class="h-11 px-7 rounded-full border border-white/20 text-white font-medium text-sm inline-flex items-center gap-2 hover:bg-white/5 transition-all">
+                Developer Guide
+              </a>
             </div>
-
-            <div class="install-caption">
-                <code>curl -s "https://api.antivpn.tech/v1/check?ip=185.213.154.20"</code>
-                <button id="hero-copy-btn" class="caption-copy" title="Copy cURL command" aria-label="Copy cURL command">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </button>
-            </div>
-
-            <!-- Query bar demo -->
-            <div class="command-bar-wrapper">
-                <div class="command-bar-panel">
-                    <div class="command-input-row">
-                        <svg class="search-glyph" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <div class="typed-query-box">
-                            <span class="typed-query">sentinel evaluate 185.213.154.20</span>
-                            <span class="blinking-caret"></span>
-                        </div>
-                        <span class="command-mode-pill">API Mode</span>
-                    </div>
-
-                    <div class="command-results">
-                        <div class="command-row active-row" data-ip="185.213.154.20">
-                            <div class="row-left">
-                                <span class="row-icon shield-icon">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                </span>
-                                <span class="row-label">Mullvad WireGuard Endpoint</span>
-                                <span class="row-arg">BLOCK · Risk 95/100 · AS206016</span>
-                            </div>
-                            <span class="row-shortcut">Cmd+Enter</span>
-                        </div>
-
-                        <div class="command-row" data-ip="78.46.12.34">
-                            <div class="row-left">
-                                <span class="row-icon server-icon">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-                                </span>
-                                <span class="row-label">Hetzner Cloud VPS Node</span>
-                                <span class="row-arg">BLOCK · Risk 90/100 · AS24940</span>
-                            </div>
-                            <span class="row-shortcut">Cmd+H</span>
-                        </div>
-
-                        <div class="command-row" data-ip="185.220.101.5">
-                            <div class="row-left">
-                                <span class="row-icon onion-icon">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
-                                </span>
-                                <span class="row-label">Tor Consensus Exit Relay</span>
-                                <span class="row-arg">BLOCK · Risk 100/100 · AS208294</span>
-                            </div>
-                            <span class="row-shortcut">Cmd+T</span>
-                        </div>
-
-                        <div class="command-row" data-ip="24.130.12.8">
-                            <div class="row-left">
-                                <span class="row-icon home-icon">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                                </span>
-                                <span class="row-label">Residential Subscriber Subnet</span>
-                                <span class="row-arg">ALLOW · Risk 0/100 · AS7922</span>
-                            </div>
-                            <span class="row-shortcut">Cmd+R</span>
-                        </div>
-                    </div>
-
-                    <div class="command-footer">
-                        <div class="footer-hints">
-                            <span>↑↓ navigate</span>
-                            <span>·</span>
-                            <span>↵ execute check</span>
-                            <span>·</span>
-                            <span>esc dismiss</span>
-                        </div>
-                        <span class="footer-brand">Sentinel Engine · api.antivpn.tech</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ghost-pill-wrapper">
-                <a href="#inspector" class="ghost-pill">
-                    <span>Explore live connection telemetry</span>
-                    <span class="ghost-arrow">→</span>
-                </a>
-            </div>
+          </div>
         </div>
-
-        <div class="floating-badge">
-            <div class="badge-status-dot"></div>
-            <div class="badge-content">
-                <span class="badge-title">Edge Network Active</span>
-                <span class="badge-desc" id="hero-badge-latency">Sub-5ms response</span>
-            </div>
-        </div>
+      </div>
     </section>
 
-    <!-- Telemetry Inspector -->
-    <section id="inspector" class="container dev-section">
-        <div class="section-label">Live Telemetry Inspector</div>
-        <h2 class="section-title">Test Any IP Against the Edge Network</h2>
-        <p class="section-desc">
-            Direct real-time query executed against the live Sentinel Edge API across global distributed points of presence.
-        </p>
-
-        <div class="inspector-panel">
-            <!-- Toolbar -->
-            <div class="panel-toolbar">
-                <div class="toolbar-left">
-                    <span class="panel-title">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                        Connection Telemetry Inspector
-                    </span>
-                    <span id="edge-timing" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">
-                        Edge Latency: <strong id="latency-stat" style="color: var(--text-primary);">Pinging Edge...</strong>
-                    </span>
-                </div>
-                <div class="toolbar-tabs">
-                    <button id="tab-visual" class="tab-btn active">Visual</button>
-                    <button id="tab-json" class="tab-btn">JSON Payload</button>
-                </div>
-            </div>
-
-            <!-- Query Input Bar -->
-            <div class="query-bar">
-                <div class="ip-field-wrap">
-                    <input type="text" id="ip-input" class="ip-field" placeholder="Enter IPv4 or IPv6 target (e.g., 78.46.12.34 or 185.213.154.20)..." autocomplete="off" spellcheck="false" aria-label="Target IP address or domain to evaluate">
-                    <button type="button" id="btn-toggle-ip" class="btn-eye-toggle" aria-label="Toggle IP visibility" title="Reveal IP address">
-                        <svg class="eye-icon eye-show" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        <svg class="eye-icon eye-hide" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: none;">
-                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                            <line x1="1" y1="1" x2="23" y2="23"></line>
-                        </svg>
-                    </button>
-                </div>
-                <button id="btn-scan" class="btn-inspect">
-                    <span>Inspect Target</span>
-                </button>
-            </div>
-
-            <!-- Presets Strip -->
-            <div class="presets-strip">
-                <span class="presets-label">Reference Targets:</span>
-                <div id="presets-container" style="display: flex; gap: 8px;"></div>
-            </div>
-
-            <!-- Panel Body -->
-            <div class="panel-body">
-                <!-- Visual Mode -->
-                <div id="visual-view">
-                    <!-- Verdict Banner -->
-                    <div id="verdict-banner" class="verdict-banner clean">
-                        <div class="verdict-left">
-                            <span id="verdict-badge" class="verdict-badge verdict-clean-badge">ALLOWED</span>
-                            <span id="verdict-desc" class="verdict-desc">Analyzing incoming connection headers...</span>
-                        </div>
-                        <div class="verdict-score-wrap">
-                            <span class="score-num" id="meter-value">0</span>
-                            <span class="score-max">/ 100 Risk</span>
-                        </div>
-                    </div>
-
-                    <!-- Risk Score Progress Bar -->
-                    <div class="score-bar-track">
-                        <div id="score-bar-fill" class="score-bar-fill"></div>
-                    </div>
-
-                    <!-- Telemetry Data Grid -->
-                    <div class="telemetry-grid">
-                        <div class="data-cell data-cell-ip">
-                            <div class="cell-label-row">
-                                <span class="cell-label">IP Address</span>
-                                <button type="button" id="btn-toggle-cell-ip" class="btn-cell-eye" aria-label="Toggle IP visibility" title="Reveal IP address">
-                                    <svg class="eye-icon eye-show" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg>
-                                    <svg class="eye-icon eye-hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                                        <line x1="1" y1="1" x2="23" y2="23"></line>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div id="tel-ip" class="cell-value">--</div>
-                        </div>
-                        <div class="data-cell">
-                            <div class="cell-label">Reverse DNS Hostname (rDNS)</div>
-                            <div id="tel-hostname" class="cell-value" style="font-size: 13px; word-break: break-all;">--</div>
-                        </div>
-                        <div class="data-cell">
-                            <div class="cell-label">Autonomous System (ASN)</div>
-                            <div id="tel-asn" class="cell-value">--</div>
-                        </div>
-                        <div class="data-cell">
-                            <div class="cell-label">Routing Carrier / Org</div>
-                            <div id="tel-provider" class="cell-value">--</div>
-                        </div>
-                        <div class="data-cell">
-                            <div class="cell-label">Classification & Region</div>
-                            <div id="tel-type" class="cell-value">--</div>
-                        </div>
-                        <div class="data-cell">
-                            <div class="cell-label">Execution Latency</div>
-                            <div id="tel-time" class="cell-value">-- ms</div>
-                        </div>
-                    </div>
-
-                    <!-- Diagnosis Box -->
-                    <div class="diagnosis-container">
-                        <div class="diagnosis-header">Telemetry Diagnosis</div>
-                        <div id="reasons-text">Evaluating network connection against Sentinel Global Threat Grid...</div>
-                        <div class="diagnosis-footer">
-                            <span>Evaluated by Sentinel Global Edge Network</span>
-                            <span>Endpoint: <code class="tel-endpoint-tag" id="tel-request">GET /v1/check</code></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- JSON Mode -->
-                <div id="json-view-wrap" style="display: none; position: relative;">
-                    <button id="btn-copy-json" class="btn-copy" style="position: absolute; top: 12px; right: 12px;">Copy JSON</button>
-                    <pre id="json-view"><code>Loading payload...</code></pre>
-                </div>
-            </div>
+    <!-- ==================== 13. FOOTER ==================== -->
+    <footer class="relative bg-black border-t border-white/10">
+      <!-- Ambient Edge Architecture Transition Banner -->
+      <div class="relative w-full h-[160px] md:h-[220px] overflow-hidden border-b border-white/5 flex items-center justify-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#000101]/60 to-black pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col items-center text-center px-6">
+          <span class="text-xs font-mono text-white/80 bg-white/10 px-3 py-1 rounded-full border border-white/20 mb-3">
+            ZERO-LOG VOLATILE MEMORY ARCHITECTURE
+          </span>
+          <p class="text-xs md:text-sm text-muted-foreground font-mono">
+            Sub-millisecond ingress defense across 50+ Anycast edge regions worldwide.
+          </p>
         </div>
-    </section>
+      </div>
 
-    <!-- Trust & Privacy Assurance Banner -->
-    <section class="container" style="margin-top: 10px; margin-bottom: 24px;">
-        <div class="trust-banner">
-            <div class="trust-badge-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <path d="m9 12 2 2 4-4"/>
-                </svg>
+      <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div class="py-16 lg:py-20 border-b border-white/10">
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-12 lg:gap-8">
+            <!-- Brand Column -->
+            <div class="col-span-2">
+              <a href="#" class="inline-flex items-center gap-2 mb-6">
+                <span class="font-display text-2xl text-white">SENTINEL</span>
+              </a>
+              <p class="text-sm text-muted-foreground leading-relaxed max-w-sm mb-6">
+                Stateless edge threat intelligence & proxy mitigation. Powered by the Sentinel Global Threat Grid with Zero-Log Volatile Memory Architecture.
+              </p>
+              <div class="flex items-center gap-2 text-xs font-mono text-white/80">
+                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                Global Threat Network Operational
+              </div>
             </div>
-            <div class="trust-banner-text">
-                <div class="trust-title">
-                    <span>Zero-Log Volatile Memory Architecture</span>
-                </div>
-                <div class="trust-desc">
-                    Inspected client IP addresses are evaluated strictly in volatile edge isolate RAM. Zero persistent disk logging, zero query telemetry tracking, and zero third-party data sharing.
-                </div>
-            </div>
-            <div class="trust-pill">Stateless Edge Processing</div>
-        </div>
-    </section>
 
-    <!-- Architecture -->
-    <section id="architecture" class="container dev-section">
-        <div class="section-label">Platform Architecture</div>
-        <h2 class="section-title">Multi-Stage Threat Inspection Pipeline</h2>
-        <p class="section-desc">
-            How Sentinel evaluates connections at line rate to neutralize malicious traffic before session authorization.
-        </p>
+            <!-- Product -->
+            <div>
+              <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Product</span>
+              <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+                <li><a href="#features" class="hover:text-white transition-colors">Capabilities</a></li>
+                <li><a href="#how-it-works" class="hover:text-white transition-colors">Architecture</a></li>
+                <li><a href="#infra" class="hover:text-white transition-colors">Global Threat Grid</a></li>
+                <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+              </ul>
+            </div>
 
-        <div class="arch-flow-grid">
-            <div class="flow-card">
-                <div class="flow-step">01</div>
-                <div class="flow-title">Edge Ingress & Origin Resolution</div>
-                <div class="flow-desc">
-                    Intercepts inbound connections at the network boundary, seamlessly resolving true client origins across enterprise reverse proxies and load balancers without exposing internal topology.
-                </div>
+            <!-- Developers -->
+            <div>
+              <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Developers</span>
+              <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+                <li><a href="#developers" class="hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="#integrations" class="hover:text-white transition-colors">Edge Middleware</a></li>
+                <li><a href="#how-it-works" class="hover:text-white transition-colors">TypeScript SDK</a></li>
+                <li><a href="#metrics" class="hover:text-white transition-colors">API Reference</a></li>
+              </ul>
             </div>
-            <div class="flow-card">
-                <div class="flow-step">02</div>
-                <div class="flow-title">Autonomous Threat Correlation</div>
-                <div class="flow-desc">
-                    Performs sub-millisecond classification against the proprietary Sentinel Global Threat Grid, instantly isolating commercial VPN pools, Tor relays, SOCKS4/SOCKS5 open proxies, and bulletproof hosting subnets.
-                </div>
-            </div>
-            <div class="flow-card">
-                <div class="flow-step">03</div>
-                <div class="flow-title">Heuristic Risk Scoring</div>
-                <div class="flow-desc">
-                    Synthesizes routing anomalies, carrier reputation, and connection behavior into an instantaneous risk score, enabling dynamic automated enforcement policies.
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- High-concurrency ingress -->
-    <section id="spectrum" class="container dev-section">
-        <div class="section-label">High-Throughput Ingress</div>
-        <h2 class="section-title">Reverse-Proxy Compatibility & Game Ingress Defense</h2>
-        <p class="section-desc">
-            Engineered for high-concurrency multiplayer platforms and real-time TCP applications. Sentinel preserves true client visibility through enterprise reverse proxies and edge layers, preventing bot floods and automated abuse without introducing latency.
-        </p>
+            <!-- Security & Legal -->
+            <div>
+              <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Trust & Legal</span>
+              <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+                <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#features" class="hover:text-white transition-colors">Zero-Log Architecture</a></li>
+                <li><a href="privacy.html" class="hover:text-white transition-colors">Data Processing</a></li>
+              </ul>
+            </div>
 
-        <div class="spectrum-grid">
-            <div class="spectrum-card">
-                <div class="spectrum-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <div class="spectrum-title">Transparent Proxy Ingress</div>
-                <div class="spectrum-desc">
-                    Preserves genuine client visibility across enterprise reverse proxies and edge load balancers, ensuring accurate enforcement without network masking.
-                </div>
+            <!-- Connect -->
+            <div>
+              <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Connect</span>
+              <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+                <li><a href="https://github.com/antivpn-tech" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1.5">
+                  GitHub
+                  <svg class="w-3.5 h-3.5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a></li>
+              </ul>
             </div>
-            <div class="spectrum-card">
-                <div class="spectrum-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                </div>
-                <div class="spectrum-title">Zero-Stall Async Verification</div>
-                <div class="spectrum-desc">
-                    High-throughput asynchronous connection hooks evaluate inbound sessions before authentication, maintaining smooth server performance even during intense traffic surges.
-                </div>
-            </div>
-            <div class="spectrum-card">
-                <div class="spectrum-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                </div>
-                <div class="spectrum-title">Ultra-Low-Latency Memory Cache</div>
-                <div class="spectrum-desc">
-                    Intelligent local state management resolves repeat connections instantly, eliminating redundant network round-trips under high concurrency.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Developer integration -->
-    <section id="developer" class="container dev-section">
-        <div class="section-label">Developer First</div>
-        <h2 class="section-title">Drop-in Integration Across Any Stack</h2>
-        <p class="section-desc">
-            Integrate via standard REST endpoints, edge middleware, or native SDK connectors with minimal lines of code.
-        </p>
-
-        <div class="code-card">
-            <div class="code-header">
-                <div class="code-tabs">
-                    <button class="code-tab-btn active" data-tab="curl">cURL</button>
-                    <button class="code-tab-btn" data-tab="node">Node.js / Fetch</button>
-                    <button class="code-tab-btn" data-tab="python">Python</button>
-                    <button class="code-tab-btn" data-tab="go">Go Middleware</button>
-                    <button class="code-tab-btn" data-tab="mc">Game SDK (Java/Netty)</button>
-                </div>
-                <button id="btn-copy-code" class="btn-copy">Copy</button>
-            </div>
-            <div class="code-content">
-                <pre id="code-display"><code># Query the live Sentinel Edge API with Universal License Key
-curl -s -X GET "https://api.antivpn.tech/v1/check?ip=185.213.154.20" \
-  -H "Authorization: Bearer stl_live_your_api_key_here"
-
-# Edge Telemetry Response Headers (&lt;0.5ms):
-# &lt; X-Sentinel-Tier: business
-# &lt; X-Sentinel-Quota-Limit: 1000000
-# &lt; X-Sentinel-Quota-Remaining: 984520
-# &lt; X-Sentinel-Status: active
-#
-# {
-#   "ip": "185.213.154.20",
-#   "action": "BLOCK",
-#   "risk_score": 95,
-#   "threat_type": "Commercial VPN",
-#   "asn": 206016,
-#   "provider": "Mullvad VPN",
-#   "country": "SE",
-#   "reasons": ["Carrier Network Classification: Commercial VPN (Mullvad VPN)"],
-#   "duration_ms": 1
-# }</code></pre>
-            </div>
+          </div>
         </div>
 
-        <div class="code-tip-card">
-            <span class="code-tip-badge">Pro-Tip</span>
-            <span class="code-tip-text">
-                Implement a local in-memory cache (e.g., Caffeine/Guava in Java, or <code>sync.Map</code> with TTL in Go) with a 6–12 hour window to achieve 0ms local evaluations for repeat players without consuming API round-trips.
-            </span>
+        <div class="py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+          <span>&copy; 2026 Sentinel Edge Intelligence. All rights reserved.</span>
+          <div class="flex items-center gap-6">
+            <span>Volatile Memory Processing</span>
+            <span>&middot;</span>
+            <span>Stateless Verification</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Performance benchmarks -->
-    <section id="benchmarks" class="container dev-section">
-        <div class="section-label">Technical Benchmarks</div>
-        <h2 class="section-title">Engineered to Eliminate Latency Bottlenecks</h2>
-        <p class="section-desc">
-            Performance comparison across line-rate execution, infrastructure overhead, and proxy transparency.
-        </p>
-
-        <div class="table-card">
-            <table class="benchmarks-table">
-                <thead>
-                    <tr>
-                        <th>Metric / Capability</th>
-                        <th style="color: var(--brand-warm-amber);">Sentinel Engine</th>
-                        <th>Enterprise Cloud APIs</th>
-                        <th>Traditional Edge Rules</th>
-                        <th>Static Blocklists</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Edge Engine Execution</td>
-                        <td class="td-highlight">&lt; 1 ms <span class="badge-metric">Isolate RAM</span></td>
-                        <td>40 – 120 ms</td>
-                        <td>80 – 200 ms</td>
-                        <td>150 – 500 ms</td>
-                    </tr>
-                    <tr>
-                        <td>Global Network Ingress</td>
-                        <td class="td-highlight">300+ Anycast PoPs <span class="badge-metric">Sub-15ms</span></td>
-                        <td>Centralized Origin (80–250ms)</td>
-                        <td>Origin Bound</td>
-                        <td>Host Bound</td>
-                    </tr>
-                    <tr>
-                        <td>Memory Overhead</td>
-                        <td class="td-highlight">Ultra-Low Overhead <span class="badge-metric">Optimized</span></td>
-                        <td>High</td>
-                        <td>Medium</td>
-                        <td>Medium</td>
-                    </tr>
-                    <tr>
-                        <td>Layer 4 / TCP Reverse Proxies</td>
-                        <td class="td-highlight">Native Support <span class="badge-metric">Transparent</span></td>
-                        <td>Requires Add-on</td>
-                        <td>Fails (Masked)</td>
-                        <td>Incompatible</td>
-                    </tr>
-                    <tr>
-                        <td>Threat Classification</td>
-                        <td class="td-highlight">Autonomous Ingestion</td>
-                        <td>Proprietary Sync</td>
-                        <td>Manual Maintenance</td>
-                        <td>Stale Lists</td>
-                    </tr>
-                    <tr>
-                        <td>Dual-Stack Support</td>
-                        <td class="td-highlight">IPv4 & IPv6 Parity</td>
-                        <td>Supported</td>
-                        <td>IPv4 Only</td>
-                        <td>Inconsistent</td>
-                    </tr>
-                    <tr>
-                        <td>Deployment Model</td>
-                        <td class="td-highlight">Global Managed Edge <span class="badge-metric">High Availability</span></td>
-                        <td>Cloud Dependent</td>
-                        <td>Manual Maintenance</td>
-                        <td>Manual Maintenance</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- Universal Pricing & Licensing -->
-    <section id="pricing" class="container pricing-wide-container dev-section">
-        <div class="section-label">Universal Licensing</div>
-        <h2 class="section-title">Transparent, High-Volume Threat Ingress Pricing</h2>
-        <p class="section-desc">
-            One universal API key (<code>stl_live_...</code>). Zero cold starts. Deploy across game servers, cloud APIs, and web gateways with sub-millisecond global verification.
-        </p>
-
-        <div class="pricing-grid">
-            <!-- Developer Tier -->
-            <div class="pricing-card">
-                <div class="pricing-tier-header">
-                    <span class="pricing-tier-name">Developer</span>
-                    <span class="pricing-tier-tag">Free Tier</span>
-                </div>
-                <div class="pricing-price-row">
-                    <span class="pricing-currency">$</span>
-                    <span class="pricing-amount">0</span>
-                    <span class="pricing-period">/ month</span>
-                </div>
-                <p class="pricing-tier-desc">For localhost development, CI/CD testing, and small private servers.</p>
-                <div class="pricing-quota-badge">
-                    <strong>5,000</strong> checks / mo
-                </div>
-                <div class="pricing-overage-note">1 key per verified GitHub account</div>
-                <ul class="pricing-feature-list">
-                    <li><span class="feat-check">✓</span> Sub-millisecond Edge Ingress (&lt;0.5ms)</li>
-                    <li><span class="feat-check">✓</span> Commercial VPN & Tor Exit Relay Defense</li>
-                    <li><span class="feat-check">✓</span> Global Datacenter & Hosting Classifier</li>
-                    <li><span class="feat-check">✓</span> Universal Ingress (Headers & Query)</li>
-                    <li><span class="feat-check">✓</span> Instant Sandbox Key (<code>stl_test_...</code>)</li>
-                </ul>
-                <div class="pricing-card-footer">
-                    <button class="pricing-cta-btn btn-primary" onclick="SentinelPricing.claimFreeKey()">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                        </svg>
-                        <span>Claim 5k Key (GitHub)</span>
-                    </button>
-                    <button class="pricing-sub-link" onclick="SentinelPricing.getSandboxKey()" title="Copy zero-login test key">
-                        <span>Or copy sandbox key (50/day)</span>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Starter Tier -->
-            <div class="pricing-card">
-                <div class="pricing-tier-header">
-                    <span class="pricing-tier-name">Starter</span>
-                    <span class="pricing-tier-tag">Indie & Mid-Size</span>
-                </div>
-                <div class="pricing-price-row">
-                    <span class="pricing-currency">$</span>
-                    <span class="pricing-amount">29</span>
-                    <span class="pricing-period">/ month</span>
-                </div>
-                <p class="pricing-tier-desc">For mid-sized gaming networks (100–300 CCU) and SaaS login flows.</p>
-                <div class="pricing-quota-badge">
-                    <strong>150,000</strong> checks / mo
-                </div>
-                <div class="pricing-overage-note">$0.25 per 1,000 overage checks</div>
-                <ul class="pricing-feature-list">
-                    <li><span class="feat-check">✓</span> Everything in Developer</li>
-                    <li><span class="feat-check">✓</span> Origin Domain Whitelisting (Anti-Theft)</li>
-                    <li><span class="feat-check">✓</span> Edge Telemetry & Quota Response Headers</li>
-                    <li><span class="feat-check">✓</span> High-Velocity Threat Grid Synchronization</li>
-                </ul>
-                <div class="pricing-card-footer">
-                    <button class="pricing-cta-btn btn-secondary" onclick="SentinelPricing.checkout('starter')">Deploy Starter</button>
-                    <div class="pricing-footer-spacer"></div>
-                </div>
-            </div>
-
-            <!-- Business Tier (Featured) -->
-            <div class="pricing-card pricing-card-featured">
-                <div class="pricing-featured-badge">MOST POPULAR</div>
-                <div class="pricing-tier-header">
-                    <span class="pricing-tier-name">Business</span>
-                    <span class="pricing-tier-tag highlight">Advanced Engine</span>
-                </div>
-                <div class="pricing-price-row">
-                    <span class="pricing-currency">$</span>
-                    <span class="pricing-amount">99</span>
-                    <span class="pricing-period">/ month</span>
-                </div>
-                <p class="pricing-tier-desc">For high-traffic gaming hubs (500–2,000 CCU) and fintech checkout security.</p>
-                <div class="pricing-quota-badge featured">
-                    <strong>1,000,000</strong> checks / mo
-                </div>
-                <div class="pricing-overage-note">$0.15 per 1,000 overage checks</div>
-                <ul class="pricing-feature-list">
-                    <li><span class="feat-check">✓</span> Everything in Starter</li>
-                    <li><span class="feat-check feat-highlight">✓</span> <strong>Autonomous Residential Proxy Defense</strong></li>
-                    <li><span class="feat-check feat-highlight">✓</span> <strong>Carrier & Autonomous Route Validation</strong></li>
-                    <li><span class="feat-check feat-highlight">✓</span> <strong>Synthetic Client Anomaly Engine</strong></li>
-                    <li><span class="feat-check">✓</span> Multi-Region Edge Routing (300+ PoPs)</li>
-                </ul>
-                <div class="pricing-card-footer">
-                    <button class="pricing-cta-btn btn-primary" onclick="SentinelPricing.checkout('business')">Deploy Business</button>
-                    <div class="pricing-footer-spacer"></div>
-                </div>
-            </div>
-
-            <!-- Scale Tier -->
-            <div class="pricing-card">
-                <div class="pricing-tier-header">
-                    <span class="pricing-tier-name">Scale</span>
-                    <span class="pricing-tier-tag">High-Concurrency</span>
-                </div>
-                <div class="pricing-price-row">
-                    <span class="pricing-currency">$</span>
-                    <span class="pricing-amount">299</span>
-                    <span class="pricing-period">/ month</span>
-                </div>
-                <p class="pricing-tier-desc">For multi-region game clusters and enterprise fraud protection gateways.</p>
-                <div class="pricing-quota-badge">
-                    <strong>5,000,000</strong> checks / mo
-                </div>
-                <div class="pricing-overage-note">$0.10 per 1,000 overage checks</div>
-                <ul class="pricing-feature-list">
-                    <li><span class="feat-check">✓</span> Everything in Business</li>
-                    <li><span class="feat-check">✓</span> Multi-Key Team Provisioning</li>
-                    <li><span class="feat-check">✓</span> Dedicated Priority Isolate Routing</li>
-                    <li><span class="feat-check">✓</span> Priority Engineering Support & 99.9% Target Uptime</li>
-                </ul>
-                <div class="pricing-card-footer">
-                    <button class="pricing-cta-btn btn-secondary" onclick="SentinelPricing.checkout('scale')">Deploy Scale</button>
-                    <div class="pricing-footer-spacer"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enterprise Banner -->
-        <div class="enterprise-banner">
-            <div class="enterprise-info">
-                <span class="enterprise-pill">Custom Volume</span>
-                <h3>Need 20M+ verifications or dedicated route reflectors?</h3>
-                <p>Enterprise plans include dedicated Cloudflare isolate reflectors, custom ASN weighting, and custom contractual SLAs available under negotiated agreements.</p>
-            </div>
-            <a href="mailto:enterprise@antivpn.tech?subject=Sentinel%20Enterprise%20Licensing%20Inquiry" class="btn-enterprise">Contact Enterprise Engineering</a>
-        </div>
-    </section>
-
-    <!-- REST API reference -->
-    <section id="api-reference" class="container dev-section">
-        <div class="section-label">REST API Specifications</div>
-        <h2 class="section-title">Global Serverless Edge Endpoints</h2>
-        <p class="section-desc">
-            Hosted across distributed serverless edge infrastructure at <code>api.antivpn.tech</code> with zero cold starts.
-        </p>
-
-        <div class="api-grid">
-            <div class="api-card">
-                <div class="api-endpoint-header">
-                    <span class="method-badge">GET</span>
-                    <span class="api-path">/v1/check?ip={target_ip}</span>
-                </div>
-                <div class="api-summary">
-                    Evaluates an explicit target IP address against proprietary threat intelligence and network routing classifications. Supports authentication via <code>Authorization: Bearer stl_live_...</code>, <code>X-Sentinel-Key</code>, or <code>?key=stl_live_...</code>.
-                </div>
-                <div class="api-headers-info">
-                    <strong>Telemetry Response Headers:</strong><br>
-                    <code>X-Sentinel-Tier: business</code><br>
-                    <code>X-Sentinel-Quota-Limit: 1000000</code><br>
-                    <code>X-Sentinel-Quota-Remaining: 984520</code><br>
-                    <code>X-Sentinel-Status: active</code>
-                </div>
-            </div>
-
-            <div class="api-card">
-                <div class="api-endpoint-header">
-                    <span class="method-badge">GET</span>
-                    <span class="api-path">/v1/license/status</span>
-                </div>
-                <div class="api-summary">
-                    Inspects your active license quota, current monthly usage, cycle renewal date, and enabled heuristic features directly from edge memory cache.
-                </div>
-            </div>
-
-            <div class="api-card">
-                <div class="api-endpoint-header">
-                    <span class="method-badge">GET</span>
-                    <span class="api-path">/v1/tiers</span>
-                </div>
-                <div class="api-summary">
-                    Public service discovery endpoint returning machine-readable packaging, tier limits, feature matrix, and ingress protocol specifications.
-                </div>
-            </div>
-
-            <div class="api-card">
-                <div class="api-endpoint-header">
-                    <span class="method-badge">GET</span>
-                    <span class="api-path">/healthz</span>
-                </div>
-                <div class="api-summary">
-                    Service health check endpoint for uptime monitors, load balancers, and heartbeat liveness probes. Returns <code>status: "operational"</code> with current timestamp.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="footer">
-        <div class="container footer-grid">
-            <div class="footer-brand-col">
-                <div class="footer-brand-title">
-                    <span class="footer-logo-dot"></span>
-                    SENTINEL
-                </div>
-                <p class="footer-brand-tagline">
-                    Autonomous edge threat mitigation and high-concurrency network defense. Sub-millisecond global risk classification across distributed edge locations.
-                </p>
-                <div class="footer-status-pill">
-                    <span class="pulse-dot"></span>
-                    <span>Edge Systems Operational · <code>api.antivpn.tech</code></span>
-                </div>
-            </div>
-
-            <div class="footer-links-col">
-                <div class="footer-col-heading">Platform</div>
-                <ul class="footer-nav-list">
-                    <li><a href="#threat-demo">Live Inspector</a></li>
-                    <li><a href="#architecture">Architecture</a></li>
-                    <li><a href="#integration">Integrations</a></li>
-                    <li><a href="#pricing">Licensing</a></li>
-                    <li><a href="#api-reference">REST API Docs</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links-col">
-                <div class="footer-col-heading">Legal & Compliance</div>
-                <ul class="footer-nav-list">
-                    <li><a href="terms.html" onclick="SentinelLegal.open('terms'); return false;">Terms of Service</a></li>
-                    <li><a href="privacy.html" onclick="SentinelLegal.open('privacy'); return false;">Privacy Notice (GDPR/CCPA)</a></li>
-                    <li><a href="terms.html#a11y" onclick="SentinelLegal.open('a11y'); return false;">Accessibility (WCAG 2.1 AA)</a></li>
-                    <li><a href="terms.html#aup" onclick="SentinelLegal.open('aup'); return false;">Acceptable Use Policy</a></li>
-                    <li><a href="terms.html#billing" onclick="SentinelLegal.open('billing'); return false;">Merchant & Refund Policy</a></li>
-                    <li><a href="terms.html#export" onclick="SentinelLegal.open('export'); return false;">Trade Sanctions & Export</a></li>
-                    <li><a href="terms.html#sla" onclick="SentinelLegal.open('sla'); return false;">Service Level Target</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="container footer-bottom-bar">
-            <div class="footer-disclaimers">
-                <p class="footer-disclaimer-text">
-                    <strong>Merchant of Record Notice:</strong> All subscription billing, global sales tax compliance, and payment processing operations are securely conducted by Lemon Squeezy as Merchant of Record.
-                </p>
-                <p class="footer-disclaimer-text">
-                    <strong>Advisory Screening Notice:</strong> Threat classifications and risk scores are algorithmic screening assessments provided strictly for informational and security evaluation purposes. Customers retain sole discretion over connection filtering actions. All third-party trademarks referenced (including Cloudflare, Lemon Squeezy, and others) belong to their respective owners and are used solely for nominative identification.
-                </p>
-            </div>
-            <div class="footer-copyright-row">
-                <span>&copy; 2026 Sentinel Security / AntiVPN Tech. All rights reserved.</span>
-                <span>Global Anycast Threat Network</span>
-            </div>
-        </div>
+      </div>
     </footer>
 
-    <!-- Interactive Legal & Compliance Center Modal -->
-    <div id="sentinel-legal-modal" class="sentinel-modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title">
-        <div class="sentinel-modal-card sentinel-legal-modal-card">
-            <div class="legal-modal-header">
-                <div class="legal-header-meta">
-                    <span class="sentinel-modal-badge">Compliance Center</span>
-                    <h2 class="sentinel-modal-title" id="legal-modal-title">Terms of Service</h2>
-                </div>
-                <button type="button" class="legal-modal-close" onclick="SentinelLegal.close()" aria-label="Close compliance dialog">&times;</button>
-            </div>
+  </main>
 
-            <!-- Tab Switcher -->
-            <div class="legal-tabs-nav">
-                <button type="button" class="legal-tab-btn active" data-tab="terms" onclick="SentinelLegal.switchTab('terms')">Terms of Service</button>
-                <button type="button" class="legal-tab-btn" data-tab="privacy" onclick="SentinelLegal.switchTab('privacy')">Privacy Notice</button>
-                <button type="button" class="legal-tab-btn" data-tab="a11y" onclick="SentinelLegal.switchTab('a11y')">Accessibility</button>
-                <button type="button" class="legal-tab-btn" data-tab="aup" onclick="SentinelLegal.switchTab('aup')">Acceptable Use</button>
-                <button type="button" class="legal-tab-btn" data-tab="billing" onclick="SentinelLegal.switchTab('billing')">Merchant & Billing</button>
-                <button type="button" class="legal-tab-btn" data-tab="export" onclick="SentinelLegal.switchTab('export')">Trade Compliance</button>
-                <button type="button" class="legal-tab-btn" data-tab="sla" onclick="SentinelLegal.switchTab('sla')">Service Levels</button>
-            </div>
+  <!-- ==================== JAVASCRIPT ENGINE ==================== -->
+  <!-- Official ruucm/shadergradient & Cobe Bundle -->
+  <script src="js/shadergradient.bundle.js"></script>
+  <script>
+    // 0. Lenis Ultra-Smooth Scrolling Engine
+    let lenis;
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 0.95,
+        touchMultiplier: 1.5,
+        infinite: false,
+      });
 
-            <!-- Modal Body Content Pane -->
-            <div class="legal-modal-body" id="legal-modal-body">
-                <!-- Content injected dynamically by SentinelLegal.switchTab -->
-            </div>
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
 
-            <div class="legal-modal-footer">
-                <span class="legal-footer-note">Last revised: October 2026 · Sentinel Security</span>
-                <button type="button" class="sentinel-modal-close-btn" onclick="SentinelLegal.close()">Close Document</button>
-            </div>
-        </div>
-    </div>
+      // Smooth navigation for internal anchor links with fixed header offset
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId !== '#') {
+            const target = document.querySelector(targetId);
+            if (target) {
+              e.preventDefault();
+              lenis.scrollTo(target, { offset: -80 });
+            }
+          }
+        });
+      });
+    }
 
-    <!-- Scripts -->
-    <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
-    <script src="js/dataset.js?v=2.8"></script>
-    <script src="js/app.js?v=3.8"></script>
+    // 1. Navigation Scroll Effect
+    const mainHeader = document.getElementById('main-header');
+    const navInner = document.getElementById('nav-inner');
+    const navContainer = document.getElementById('nav-container');
+    const brandTitle = document.getElementById('brand-title');
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 20;
+      if (scrolled) {
+        mainHeader.classList.remove('top-0', 'left-0', 'right-0');
+        mainHeader.classList.add('top-4', 'left-4', 'right-4');
+        navInner.classList.remove('bg-transparent', 'max-w-[1400px]');
+        navInner.classList.add('bg-[#000101]/85', 'backdrop-blur-xl', 'border', 'border-white/10', 'rounded-2xl', 'shadow-2xl', 'max-w-[1200px]');
+        navContainer.classList.remove('h-20');
+        navContainer.classList.add('h-14');
+        brandTitle.classList.remove('text-2xl');
+        brandTitle.classList.add('text-xl');
+      } else {
+        mainHeader.classList.add('top-0', 'left-0', 'right-0');
+        mainHeader.classList.remove('top-4', 'left-4', 'right-4');
+        navInner.classList.add('bg-transparent', 'max-w-[1400px]');
+        navInner.classList.remove('bg-[#000101]/85', 'backdrop-blur-xl', 'border', 'border-white/10', 'rounded-2xl', 'shadow-2xl', 'max-w-[1200px]');
+        navContainer.classList.add('h-20');
+        navContainer.classList.remove('h-14');
+        brandTitle.classList.add('text-2xl');
+        brandTitle.classList.remove('text-xl');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+    let menuOpen = false;
+
+    mobileBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      if (menuOpen) {
+        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+        hamburgerIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      } else {
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      }
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      });
+    });
+
+    // 2. Rotating Hero Words with Character Blur Dissolve
+    const rotatingWords = ["mitigates", "classifies", "neutralizes", "secures"];
+    const rotatingWordEl = document.getElementById('hero-rotating-word');
+    let wordIndex = 0;
+
+    function renderAnimatedWord(word) {
+      rotatingWordEl.innerHTML = '';
+      const letters = word.split('');
+      letters.forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.style.display = 'inline-block';
+        span.style.opacity = '0';
+        span.style.filter = 'blur(16px)';
+        span.style.transition = 'opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease';
+        span.style.transform = 'translateY(4px)';
+        rotatingWordEl.appendChild(span);
+
+        setTimeout(() => {
+          span.style.opacity = '1';
+          span.style.filter = 'blur(0px)';
+          span.style.transform = 'translateY(0)';
+        }, i * 45);
+      });
+    }
+
+    renderAnimatedWord(rotatingWords[0]);
+    setInterval(() => {
+      wordIndex = (wordIndex + 1) % rotatingWords.length;
+      renderAnimatedWord(rotatingWords[wordIndex]);
+    }, 2800);
+
+
+
+    // 4. How It Works Steps & Code Switcher (Deep Professional Blue Syntax Highlighting)
+    const stepSnippets = [
+`// 01 Initialize Sentinel Edge SDK
+import { Sentinel } from '@sentinel/edge';
+
+export const guard = new Sentinel({
+  apiKey: process.env.SENTINEL_EDGE_KEY,
+  environment: 'production',
+  zeroLog: true, // Volatile memory isolate
+  timeoutMs: 800
+});
+
+// Anycast edge isolate initialized (<0.2ms)`,
+`// 02 Deep Topology & Ingress Telemetry (<0.5ms)
+const telemetry = await guard.evaluateDeep({
+  ip: clientIP,
+  requireCleanResidential: true,
+  maxRiskScore: 65
+});
+
+// Carrier Network Classification verdict
+if (telemetry.isProxy || telemetry.riskScore > 65) {
+  return guard.refuseIngress('UNTRUSTED_GATEWAY');
+}`,
+`// 03 Stateless Edge Enforcement in Volatile Memory
+const verdict = await guard.inspect(clientIP);
+
+if (verdict.action === 'BLOCK') {
+  return new Response('Ingress Denied: Untrusted Ingress', {
+    status: 403,
+    headers: { 'X-Sentinel-Verdict': 'REJECTED' }
+  });
+}
+
+// Pass authenticated subscriber with zero persisted logs
+return next();`
+    ];
+
+    const stepSnippetsHtml = [
+`<span class="text-zinc-500 italic">// 01 Initialize Sentinel Edge SDK</span>
+<span class="text-blue-400 font-semibold">import</span> { Sentinel } <span class="text-blue-400 font-semibold">from</span> <span class="text-zinc-300">'@sentinel/edge'</span>;
+
+<span class="text-blue-400 font-semibold">export const</span> guard = <span class="text-blue-400 font-semibold">new</span> Sentinel({
+  apiKey: process.env.SENTINEL_EDGE_KEY,
+  environment: <span class="text-zinc-300">'production'</span>,
+  zeroLog: true, <span class="text-zinc-500 italic">// Volatile memory isolate</span>
+  timeoutMs: 800
+});
+
+<span class="text-zinc-500 italic">// Anycast edge isolate initialized (&lt;0.2ms)</span>`,
+`<span class="text-zinc-500 italic">// 02 Deep Topology & Ingress Telemetry (&lt;0.5ms)</span>
+<span class="text-blue-400 font-semibold">const</span> telemetry = <span class="text-blue-400 font-semibold">await</span> guard.evaluateDeep({
+  ip: clientIP,
+  requireCleanResidential: true,
+  maxRiskScore: 65
+});
+
+<span class="text-zinc-500 italic">// Carrier Network Classification verdict</span>
+<span class="text-blue-400 font-semibold">if</span> (telemetry.isProxy || telemetry.riskScore &gt; 65) {
+  <span class="text-blue-400 font-semibold">return</span> guard.refuseIngress(<span class="text-zinc-300">'UNTRUSTED_GATEWAY'</span>);
+}`,
+`<span class="text-zinc-500 italic">// 03 Stateless Edge Enforcement in Volatile Memory</span>
+<span class="text-blue-400 font-semibold">const</span> verdict = <span class="text-blue-400 font-semibold">await</span> guard.inspect(clientIP);
+
+<span class="text-blue-400 font-semibold">if</span> (verdict.action === <span class="text-zinc-300">'BLOCK'</span>) {
+  <span class="text-blue-400 font-semibold">return new</span> Response(<span class="text-zinc-300">'Ingress Denied: Untrusted Ingress'</span>, {
+    status: 403,
+    headers: { <span class="text-zinc-300">'X-Sentinel-Verdict'</span>: <span class="text-zinc-300">'REJECTED'</span> }
+  });
+}
+
+<span class="text-zinc-500 italic">// Pass authenticated subscriber with zero persisted logs</span>
+<span class="text-blue-400 font-semibold">return</span> next();`
+    ];
+
+    const stepFilenames = [
+      'sentinel.ts',
+      'telemetry.edge.ts',
+      'enforce.middleware.ts'
+    ];
+
+    const stepOutputs = [
+      'STATUS: READY &middot; 0.22ms &middot; VOLATILE RAM ISOLATE INITIALIZED',
+      'STATUS: EVALUATED &middot; 0.41ms &middot; RESIDENTIAL ISP &middot; RISK: 04/100',
+      'STATUS: VERDICT: 200 OK &middot; 0.18ms &middot; ZERO PERSISTED LOGS'
+    ];
+
+    let currentStep = 0;
+    let stepTimer = null;
+
+    function selectStep(idx) {
+      currentStep = idx;
+      for (let i = 0; i < 3; i++) {
+        const btn = document.getElementById(`step-btn-${i}`);
+        const num = document.getElementById(`step-num-${i}`);
+        const prog = document.getElementById(`step-prog-${i}`);
+        const bar = document.getElementById(`step-bar-${i}`);
+
+        if (btn && num && prog && bar) {
+          if (i === idx) {
+            btn.classList.add('border-white/60', 'bg-[#020204]');
+            btn.classList.remove('border-white/10', 'bg-[#020204]/60');
+            num.classList.add('text-white');
+            num.classList.remove('text-white/30');
+            prog.classList.remove('hidden');
+            bar.classList.add('scale-x-100');
+            bar.classList.remove('scale-x-0');
+          } else {
+            btn.classList.remove('border-white/60', 'bg-[#020204]');
+            btn.classList.add('border-white/10', 'bg-[#020204]/60');
+            num.classList.remove('text-white');
+            num.classList.add('text-white/30');
+            prog.classList.add('hidden');
+            bar.classList.remove('scale-x-100');
+            bar.classList.add('scale-x-0');
+          }
+        }
+      }
+
+      const codeSnippetEl = document.getElementById('code-snippet');
+      if (codeSnippetEl) codeSnippetEl.innerHTML = stepSnippetsHtml[idx];
+      const filenameEl = document.getElementById('code-filename');
+      if (filenameEl) filenameEl.textContent = stepFilenames[idx];
+      const outputEl = document.getElementById('code-output-text');
+      if (outputEl) outputEl.innerHTML = stepOutputs[idx];
+
+      const lines = stepSnippets[idx].trim().split('\n').length;
+      let lineNumsHtml = '';
+      for (let l = 1; l <= lines; l++) {
+        lineNumsHtml += `<div>${String(l).padStart(2, '0')}</div>`;
+      }
+      const lineNumEl = document.getElementById('code-line-numbers');
+      if (lineNumEl) lineNumEl.innerHTML = lineNumsHtml;
+
+      resetStepTimer();
+    }
+
+    function copySnippet() {
+      const code = stepSnippets[currentStep];
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code).then(() => {
+          const btnText = document.getElementById('btn-copy-text');
+          if (btnText) {
+            btnText.textContent = 'Copied!';
+            setTimeout(() => { btnText.textContent = 'Copy'; }, 2000);
+          }
+        });
+      }
+    }
+
+    function resetStepTimer() {
+      if (stepTimer) clearInterval(stepTimer);
+      stepTimer = setInterval(() => {
+        selectStep((currentStep + 1) % 3);
+      }, 6000);
+    }
+    selectStep(0);
+
+    // 5. Global Threat Grid Region Auto-Rotate
+    let activeRegion = 0;
+    setInterval(() => {
+      activeRegion = (activeRegion + 1) % 4;
+      for (let i = 0; i < 4; i++) {
+        const rc = document.getElementById(`region-card-${i}`);
+        if (i === activeRegion) {
+          rc.classList.add('border-white/60', 'bg-[#020204]');
+          rc.classList.remove('border-white/10', 'bg-[#020204]/60');
+        } else {
+          rc.classList.remove('border-white/60', 'bg-[#020204]');
+          rc.classList.add('border-white/10', 'bg-[#020204]/60');
+        }
+      }
+    }, 3200);
+
+    // 6. Metrics Canvas Grid & Scanline
+    const metricsGrid = document.getElementById('metrics-grid-canvas');
+    if (metricsGrid) {
+      const mctx = metricsGrid.getContext('2d');
+      let mw, mh;
+      function resizeMetricsGrid() {
+        const rect = metricsGrid.getBoundingClientRect();
+        mw = rect.width;
+        mh = rect.height;
+        metricsGrid.width = mw;
+        metricsGrid.height = mh;
+      }
+      resizeMetricsGrid();
+      window.addEventListener('resize', resizeMetricsGrid);
+
+      let gridTime = 0;
+      function animateMetricsGrid() {
+        mctx.clearRect(0, 0, mw, mh);
+        for (let x = 0; x < mw; x += 60) {
+          for (let y = 0; y < mh; y += 60) {
+            const rad = 1 + 1.5 * (0.5 * Math.sin(0.01 * x + 0.01 * y + gridTime) + 0.5);
+            mctx.beginPath();
+            mctx.arc(x, y, rad, 0, Math.PI * 2);
+            mctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+            mctx.fill();
+          }
+        }
+        const scanY = (30 * gridTime) % mh;
+        mctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        mctx.lineWidth = 1;
+        mctx.beginPath();
+        mctx.moveTo(0, scanY);
+        mctx.lineTo(mw, scanY);
+        mctx.stroke();
+
+        gridTime += 0.02;
+        requestAnimationFrame(animateMetricsGrid);
+      }
+      animateMetricsGrid();
+    }
+
+    // Sparkline wave canvases
+    document.querySelectorAll('.sparkline-canvas').forEach((c, idx) => {
+      const sctx = c.getContext('2d');
+      const isCyan = c.dataset.color === 'cyan';
+      let offset = Math.random() * 100;
+
+      function renderSpark() {
+        const w = c.offsetWidth || 200;
+        const h = 32;
+        c.width = w;
+        c.height = h;
+        sctx.clearRect(0, 0, w, h);
+        const steps = Math.floor(w / 8);
+
+        for (let i = 0; i < steps; i++) {
+          const norm = Math.max(0, Math.min(1, 0.3 + 0.5 * Math.sin(i * 0.35 + offset) * Math.cos(i * 0.12 + offset * 0.7)));
+          const py = h - 4 - norm * (h - 8);
+          const px = 8 * i + 4;
+          const alpha = 0.2 + 0.6 * norm;
+          const radius = 1.2 + 1.2 * norm;
+
+          sctx.beginPath();
+          sctx.arc(px, py, radius, 0, Math.PI * 2);
+          sctx.fillStyle = isCyan ? `rgba(56, 189, 248, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
+          sctx.fill();
+        }
+        offset += 0.025;
+        requestAnimationFrame(renderSpark);
+      }
+      renderSpark();
+    });
+
+    // Real-time Live Clock & Live Counter
+    const clockEl = document.getElementById('live-utc-clock');
+    function updateClock() {
+      const d = new Date();
+      clockEl.textContent = d.toISOString().substring(11, 19) + ' UTC';
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    let threatCount = 1284920;
+    const threatEl = document.getElementById('counter-threats');
+    setInterval(() => {
+      threatCount += Math.floor(Math.random() * 3) + 1;
+      threatEl.textContent = threatCount.toLocaleString();
+    }, 2400);
+
+    // 7. Pricing Checkout Handler
+
+    window.SentinelPricing = {
+      claimFreeKey() {
+        window.location.href = 'https://api.antivpn.tech/v1/auth/github/login';
+      },
+
+      checkout(tier) {
+        const checkouts = {
+          starter: 'https://antivpn.lemonsqueezy.com/checkout/buy/369af5b1-bf17-4125-8db2-e0b5196706e6',
+          business: 'https://antivpn.lemonsqueezy.com/checkout/buy/54472a37-beba-4bc1-9f81-cf12d3148152',
+          scale: 'https://antivpn.lemonsqueezy.com/checkout/buy/c05af8ab-b4c9-46b7-a24d-fa0c7bc46c76',
+          enterprise: 'mailto:enterprise@antivpn.tech?subject=Sentinel%20Enterprise%20Licensing%20Inquiry'
+        };
+        const baseUrl = checkouts[tier];
+        if (!baseUrl) return;
+        if (baseUrl.startsWith('mailto:')) {
+          window.location.href = baseUrl;
+          return;
+        }
+
+        const rand = crypto.getRandomValues(new Uint8Array(24));
+        const sessionId = 'stl_sec_' + Array.from(rand).map(b => b.toString(16).padStart(2, '0')).join('');
+        try {
+          sessionStorage.setItem('sentinel_active_session', sessionId);
+          sessionStorage.setItem('sentinel_checkout_tier', tier);
+        } catch(e) {}
+
+        const sep = baseUrl.includes('?') ? '&' : '?';
+        const targetUrl = `${baseUrl}${sep}checkout[custom][session_id]=${sessionId}`;
+
+        if (window.LemonSqueezy && window.LemonSqueezy.Url) {
+          window.LemonSqueezy.Url.Open(targetUrl);
+        } else {
+          window.open(targetUrl, '_blank');
+        }
+      },
+
+      showToast(message) {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+          container = document.createElement('div');
+          container.id = 'toast-container';
+          container.className = 'fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none';
+          document.body.appendChild(container);
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'flex items-center gap-3 px-4 py-3 bg-[#0a0d14]/90 backdrop-blur-md border border-white/30 rounded-xl text-white text-xs font-mono shadow-2xl pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0';
+        toast.innerHTML = `
+          <svg class="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>${message}</span>
+        `;
+        container.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.classList.remove('translate-y-2', 'opacity-0');
+        });
+
+        setTimeout(() => {
+          toast.classList.add('translate-y-2', 'opacity-0');
+          setTimeout(() => toast.remove(), 300);
+        }, 4500);
+      }
+    };
+
+    // 9. CTA Spotlight Tracking
+    const ctaCard = document.getElementById('cta-card');
+    const ctaSpotlight = document.getElementById('cta-spotlight');
+    if (ctaCard && ctaSpotlight) {
+      ctaCard.addEventListener('mousemove', (e) => {
+        const rect = ctaCard.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        ctaSpotlight.style.background = `radial-gradient(600px circle at ${x}% ${y}%, rgba(255, 255, 255, 0.12), transparent 40%)`;
+      });
+    }
+
+    // 10. Official Cobe 3D Threat Globe (Black & White Dot Matrix)
+    let threatGlobeInitialized = false;
+    function initThreatGlobe() {
+      if (threatGlobeInitialized) return;
+      const canvas = document.getElementById('threat-globe-canvas');
+      const card = document.getElementById('globe-card');
+      const rotEl = document.getElementById('globe-telemetry-rot');
+      const dragHint = document.getElementById('globe-drag-hint');
+      const markersOverlay = document.getElementById('globe-markers-overlay');
+      const telemetryEl = document.getElementById('globe-node-telemetry');
+      if (!canvas || !card) return;
+
+      if (typeof window.createGlobe !== 'function') {
+        setTimeout(initThreatGlobe, 50);
+        return;
+      }
+      threatGlobeInitialized = true;
+
+      let width = card.clientWidth || 500;
+      let height = card.clientHeight || 500;
+      // Start at rotation 280 degrees
+      let phi = 280 * Math.PI / 180;
+      let theta = 0.22;
+      let targetPhi = null;
+      let targetTheta = null;
+      let isDragging = false;
+      let lastX = 0, lastY = 0;
+      let velX = 0.0018, velY = 0;
+      let isHovered = false;
+      let isVisible = true;
+      let animFrameId = null;
+
+      // Global Edge POP Nodes with Country & City Metadata
+      const popNodes = [
+        // North America (starts centered here)
+        { id: 'ash', name: 'Ashburn', country: 'United States', region: 'North America', type: 'Core Anycast POP', location: [38.9072, -77.0369], size: 0.055, phi: 0.08, theta: 0.22, showBadge: true },
+        { id: 'sjc', name: 'San Jose', country: 'United States', region: 'North America', type: 'Edge POP', location: [37.7749, -122.4194], size: 0.055, phi: 0.08, theta: 0.22, showBadge: true },
+        { id: 'chi', name: 'Chicago', country: 'United States', region: 'North America', type: 'Ingress Node', location: [41.8781, -87.6298], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'dfw', name: 'Dallas', country: 'United States', region: 'North America', type: 'Edge POP', location: [32.7767, -96.7970], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'mia', name: 'Miami', country: 'United States', region: 'North America', type: 'Ingress Node', location: [25.7617, -80.1918], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'sea', name: 'Seattle', country: 'United States', region: 'North America', type: 'Edge POP', location: [47.6062, -122.3321], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'den', name: 'Denver', country: 'United States', region: 'North America', type: 'Ingress Node', location: [39.7392, -104.9903], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'atl', name: 'Atlanta', country: 'United States', region: 'North America', type: 'Ingress Node', location: [33.7490, -84.3880], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'yvr', name: 'Vancouver', country: 'Canada', region: 'North America', type: 'Edge POP', location: [49.2827, -123.1207], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'yyz', name: 'Toronto', country: 'Canada', region: 'North America', type: 'Edge POP', location: [43.6532, -79.3832], size: 0.016, phi: 0.08, theta: 0.22 },
+        { id: 'mex', name: 'Mexico City', country: 'Mexico', region: 'North America', type: 'Edge POP', location: [19.4326, -99.1332], size: 0.016, phi: 0.08, theta: 0.22 },
+
+        // Europe
+        { id: 'lon', name: 'London', country: 'United Kingdom', region: 'Europe', type: 'Tier 1 Transit Hub', location: [51.5074, -0.1278], size: 0.055, phi: 4.63, theta: 0.35, showBadge: true },
+        { id: 'fra', name: 'Frankfurt', country: 'Germany', region: 'Europe', type: 'Carrier Gateway', location: [50.1109, 8.6821], size: 0.055, phi: 4.63, theta: 0.35, showBadge: true },
+        { id: 'ams', name: 'Amsterdam', country: 'Netherlands', region: 'Europe', type: 'Edge POP', location: [52.3676, 4.9041], size: 0.016, phi: 4.63, theta: 0.35 },
+        { id: 'cdg', name: 'Paris', country: 'France', region: 'Europe', type: 'Edge POP', location: [48.8566, 2.3522], size: 0.016, phi: 4.63, theta: 0.35 },
+        { id: 'mad', name: 'Madrid', country: 'Spain', region: 'Europe', type: 'Edge POP', location: [40.4168, -3.7038], size: 0.016, phi: 4.63, theta: 0.35 },
+        { id: 'arn', name: 'Stockholm', country: 'Sweden', region: 'Europe', type: 'Nordic Ingress', location: [59.3293, 18.0686], size: 0.016, phi: 4.63, theta: 0.35 },
+        { id: 'zrh', name: 'Zurich', country: 'Switzerland', region: 'Europe', type: 'Edge POP', location: [47.3769, 8.5417], size: 0.016, phi: 4.63, theta: 0.35 },
+        { id: 'mil', name: 'Milan', country: 'Italy', region: 'Europe', type: 'Edge POP', location: [45.4642, 9.1900], size: 0.016, phi: 4.63, theta: 0.35 },
+        { id: 'dub', name: 'Dublin', country: 'Ireland', region: 'Europe', type: 'Edge POP', location: [53.3498, -6.2603], size: 0.016, phi: 4.63, theta: 0.35 },
+
+        // Asia Pacific
+        { id: 'tyo', name: 'Tokyo', country: 'Japan', region: 'Asia Pacific', type: 'Core Ingress Hub', location: [35.6762, 139.6503], size: 0.055, phi: 2.70, theta: 0.20, showBadge: true },
+        { id: 'sin', name: 'Singapore', country: 'Singapore', region: 'Asia Pacific', type: 'Regional Gateway', location: [1.3521, 103.8198], size: 0.055, phi: 2.70, theta: 0.20, showBadge: true },
+        { id: 'syd', name: 'Sydney', country: 'Australia', region: 'Asia Pacific', type: 'Oceania Backbone', location: [-33.8688, 151.2093], size: 0.055, phi: 2.70, theta: 0.20, showBadge: true },
+        { id: 'hkg', name: 'Hong Kong', country: 'Hong Kong', region: 'Asia Pacific', type: 'Edge POP', location: [22.3193, 114.1694], size: 0.016, phi: 2.70, theta: 0.20 },
+        { id: 'sel', name: 'Seoul', country: 'South Korea', region: 'Asia Pacific', type: 'Edge POP', location: [37.5665, 126.9780], size: 0.016, phi: 2.70, theta: 0.20 },
+        { id: 'bom', name: 'Mumbai', country: 'India', region: 'Asia Pacific', type: 'Edge POP', location: [19.0760, 72.8777], size: 0.016, phi: 2.70, theta: 0.20 },
+        { id: 'osa', name: 'Osaka', country: 'Japan', region: 'Asia Pacific', type: 'Edge POP', location: [34.6937, 135.5023], size: 0.016, phi: 2.70, theta: 0.20 },
+        { id: 'tpe', name: 'Taipei', country: 'Taiwan', region: 'Asia Pacific', type: 'Edge POP', location: [25.0330, 121.5654], size: 0.016, phi: 2.70, theta: 0.20 },
+        { id: 'akl', name: 'Auckland', country: 'New Zealand', region: 'Asia Pacific', type: 'Edge POP', location: [-36.8485, 174.7633], size: 0.016, phi: 2.70, theta: 0.20 },
+
+        // South America
+        { id: 'gru', name: 'São Paulo', country: 'Brazil', region: 'South America', type: 'Regional Core POP', location: [-23.5505, -46.6333], size: 0.055, phi: 5.76, theta: -0.15, showBadge: true },
+        { id: 'scl', name: 'Santiago', country: 'Chile', region: 'South America', type: 'Edge POP', location: [-33.4489, -70.6693], size: 0.016, phi: 5.76, theta: -0.15 },
+        { id: 'eze', name: 'Buenos Aires', country: 'Argentina', region: 'South America', type: 'Edge POP', location: [-34.6037, -58.3816], size: 0.016, phi: 5.76, theta: -0.15 },
+        { id: 'bog', name: 'Bogotá', country: 'Colombia', region: 'South America', type: 'Edge POP', location: [4.7110, -74.0721], size: 0.016, phi: 5.76, theta: -0.15 },
+        { id: 'lim', name: 'Lima', country: 'Peru', region: 'South America', type: 'Edge POP', location: [-12.0464, -77.0428], size: 0.016, phi: 5.76, theta: -0.15 },
+        { id: 'rio', name: 'Rio de Janeiro', country: 'Brazil', region: 'South America', type: 'Edge POP', location: [-22.9068, -43.1729], size: 0.016, phi: 5.76, theta: -0.15 }
+      ];
+
+      // Curated Anycast backbone connections in subtle metallic silver
+      const arcs = [
+        { from: [38.9072, -77.0369], to: [51.5074, -0.1278] },   // Ashburn <-> London
+        { from: [51.5074, -0.1278], to: [50.1109, 8.6821] },     // London <-> Frankfurt
+        { from: [37.7749, -122.4194], to: [38.9072, -77.0369] }, // San Jose <-> Ashburn
+        { from: [37.7749, -122.4194], to: [35.6762, 139.6503] }, // San Jose <-> Tokyo
+        { from: [35.6762, 139.6503], to: [1.3521, 103.8198] },   // Tokyo <-> Singapore
+        { from: [1.3521, 103.8198], to: [-33.8688, 151.2093] },  // Singapore <-> Sydney
+        { from: [38.9072, -77.0369], to: [-23.5505, -46.6333] }, // Ashburn <-> São Paulo
+        { from: [50.1109, 8.6821], to: [1.3521, 103.8198] }      // Frankfurt <-> Singapore
+      ];
+
+      const markers = popNodes.map(n => ({
+        location: n.location,
+        size: n.showBadge ? 0.055 : 0.016,
+        color: n.showBadge ? [1, 1, 1] : [0.36, 0.38, 0.44]
+      }));
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      // Create Cobe instance in pure black and white with subtle metallic silver arcs
+      const globe = window.createGlobe(canvas, {
+        devicePixelRatio: dpr,
+        width: width * dpr,
+        height: height * dpr,
+        phi: phi,
+        theta: theta,
+        dark: 1,
+        diffuse: 1.25,
+        mapSamples: 18000,
+        mapBrightness: 2.8,
+        mapBaseBrightness: 0,              // 0 = Zero dots in oceans, strictly land masses
+        baseColor: [0.08, 0.08, 0.1],      // Dark charcoal body
+        markerColor: [1, 1, 1],             // Pure white markers
+        glowColor: [0.22, 0.22, 0.25],       // Subtle silver glow halo
+        markers: markers,
+        arcs: arcs,
+        arcColor: [0.32, 0.36, 0.42],       // Refined metallic silver tracer
+        arcWidth: 0.38,                      // Hairline-thin laser trace
+        arcHeight: 0.18,                     // Low, elegant curvature hugging the globe
+        scale: 1.05
+      });
+
+      // Smooth fade-in
+      canvas.style.opacity = '1';
+
+      // Build Marker Badge Elements
+      const activeBadges = [];
+      if (markersOverlay) {
+        markersOverlay.innerHTML = '';
+        popNodes.forEach(node => {
+          if (!node.showBadge) return;
+          const badgeEl = document.createElement('div');
+          badgeEl.className = 'absolute top-0 left-0 pointer-events-auto cursor-pointer select-none transition-opacity duration-150 group/tag';
+          badgeEl.style.willChange = 'transform, opacity';
+          badgeEl.style.opacity = '0';
+          badgeEl.innerHTML = `
+            <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/85 border border-white/20 backdrop-blur-md text-[10px] font-mono text-white/90 shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-all group-hover/tag:border-white group-hover/tag:bg-black group-hover/tag:scale-105">
+              <span class="w-1.5 h-1.5 rounded-full bg-white group-hover/tag:shadow-[0_0_8px_#ffffff]"></span>
+              <span class="font-medium text-white">${node.name}</span>
+              <span class="text-[9px] text-white/50 border-l border-white/15 pl-1.5">${node.country}</span>
+            </div>
+            <div class="w-px h-1.5 bg-white/40 mx-auto"></div>
+          `;
+
+          badgeEl.addEventListener('mouseenter', () => {
+            if (telemetryEl) {
+              telemetryEl.innerHTML = `<span class="text-white font-semibold">${node.name}, ${node.country}</span> &middot; <span class="text-white/70">${node.type} &middot; Zero-Log Volatile Memory</span>`;
+            }
+          });
+
+          badgeEl.addEventListener('mouseleave', () => {
+            if (telemetryEl) {
+              telemetryEl.innerHTML = `<span class="text-white/40">INSPECT:</span> CLICK OR HOVER ANY REGION NODE`;
+            }
+          });
+
+          badgeEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const twoPi = Math.PI * 2;
+            const currentRevs = Math.floor(phi / twoPi);
+            targetPhi = currentRevs * twoPi + node.phi;
+            if (Math.abs(targetPhi - phi) > Math.PI) {
+              if (targetPhi > phi) targetPhi -= twoPi;
+              else targetPhi += twoPi;
+            }
+            targetTheta = node.theta;
+            velX = 0;
+            velY = 0;
+            if (telemetryEl) {
+              telemetryEl.innerHTML = `<span class="text-white font-semibold">${node.name}, ${node.country}</span> &middot; <span class="text-white font-mono">LOCKED TO TARGET</span>`;
+            }
+          });
+
+          markersOverlay.appendChild(badgeEl);
+          activeBadges.push({ node, el: badgeEl });
+        });
+      }
+
+      const PI = Math.PI;
+      const ee = 0.8;
+      const markerElevation = 0.05;
+
+      function projectToScreen(lat, lon) {
+        const rLat = lat * PI / 180;
+        const rLon = lon * PI / 180 - PI;
+        const cosLat = Math.cos(rLat);
+        const t0 = -cosLat * Math.cos(rLon);
+        const t1 = Math.sin(rLat);
+        const t2 = cosLat * Math.sin(rLon);
+
+        const rRadius = ee + markerElevation;
+        const vx = t0 * rRadius;
+        const vy = t1 * rRadius;
+        const vz = t2 * rRadius;
+
+        const cosTheta = Math.cos(theta);
+        const sinTheta = Math.sin(theta);
+        const cosPhi = Math.cos(phi);
+        const sinPhi = Math.sin(phi);
+
+        const c = cosPhi * vx + sinPhi * vz;
+        const s = sinPhi * sinTheta * vx + cosTheta * vy - cosPhi * sinTheta * vz;
+        const depth = -sinPhi * cosTheta * vx + sinTheta * vy + cosPhi * cosTheta * vz;
+
+        const aspect = width / height;
+        const scale = 1.05;
+        const screenX = ((c / aspect * scale + 1) / 2) * width;
+        const screenY = ((-s * scale + 1) / 2) * height;
+
+        return { x: screenX, y: screenY, depth };
+      }
+
+      function onResize() {
+        if (!card) return;
+        width = card.clientWidth;
+        height = card.clientHeight;
+        globe.update({
+          width: width * dpr,
+          height: height * dpr
+        });
+      }
+      window.addEventListener('resize', onResize);
+
+      // Mouse / Touch Drag Interactivity
+      canvas.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        targetPhi = null;
+        targetTheta = null;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        velX = 0;
+        velY = 0;
+        if (dragHint) dragHint.style.opacity = '0';
+        canvas.setPointerCapture(e.pointerId);
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        phi += dx * 0.005;
+        theta = Math.max(-0.6, Math.min(0.6, theta - dy * 0.005));
+        velX = dx * 0.002;
+        velY = -dy * 0.002;
+        globe.update({ phi, theta });
+      });
+
+      function onPointerUp() {
+        isDragging = false;
+      }
+      canvas.addEventListener('pointerup', onPointerUp);
+      canvas.addEventListener('pointercancel', onPointerUp);
+
+      canvas.addEventListener('mouseenter', () => { isHovered = true; });
+      canvas.addEventListener('mouseleave', () => { isHovered = false; });
+      canvas.addEventListener('dblclick', () => {
+        targetPhi = 280 * Math.PI / 180;
+        targetTheta = 0.22;
+        velX = 0;
+        velY = 0;
+      });
+
+      // Region Card Click to Rotate Globe
+      const regionTargets = [
+        { phi: 0.08, theta: 0.22, name: 'North America (12 Edge Nodes)' },
+        { phi: 4.63, theta: 0.35, name: 'Europe (8 Edge Nodes)' },
+        { phi: 2.70, theta: 0.20, name: 'Asia Pacific (6 Edge Nodes)' },
+        { phi: 5.76, theta: -0.15, name: 'South America (3 Edge Nodes)' }
+      ];
+
+      for (let i = 0; i < 4; i++) {
+        const rc = document.getElementById('region-card-' + i);
+        if (rc) {
+          rc.classList.add('cursor-pointer');
+          rc.addEventListener('click', () => {
+            const target = regionTargets[i];
+            if (target) {
+              const twoPi = Math.PI * 2;
+              const currentRevs = Math.floor(phi / twoPi);
+              targetPhi = currentRevs * twoPi + target.phi;
+              if (Math.abs(targetPhi - phi) > Math.PI) {
+                if (targetPhi > phi) targetPhi -= twoPi;
+                else targetPhi += twoPi;
+              }
+              targetTheta = target.theta;
+              velX = 0;
+              velY = 0;
+
+              if (telemetryEl) {
+                telemetryEl.innerHTML = `<span class="text-white font-semibold">${target.name}</span> &middot; <span class="text-white/60">Anycast Ingress Active</span>`;
+              }
+
+              for (let j = 0; j < 4; j++) {
+                const c = document.getElementById('region-card-' + j);
+                if (c) {
+                  if (j === i) {
+                    c.classList.remove('border-white/10', 'bg-[#020204]/60');
+                    c.classList.add('border-white/60', 'bg-[#020204]');
+                  } else {
+                    c.classList.remove('border-white/60', 'bg-[#020204]');
+                    c.classList.add('border-white/10', 'bg-[#020204]/60');
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+
+      // Render Loop (Controlled by requestAnimationFrame)
+      function render() {
+        if (!isVisible) return;
+
+        if (!isDragging) {
+          if (targetPhi !== null && targetTheta !== null) {
+            phi += (targetPhi - phi) * 0.08;
+            theta += (targetTheta - theta) * 0.08;
+            if (Math.abs(targetPhi - phi) < 0.002 && Math.abs(targetTheta - theta) < 0.002) {
+              targetPhi = null;
+              targetTheta = null;
+              velX = 0.0018;
+            }
+          } else {
+            phi += velX * (isHovered ? 0.35 : 1);
+            theta += velY;
+            velY *= 0.95;
+            velX = velX * 0.96 + (0.0018) * 0.04;
+          }
+          globe.update({ phi, theta });
+        }
+
+        // Update DOM Marker Badges in real-time
+        for (let i = 0; i < activeBadges.length; i++) {
+          const item = activeBadges[i];
+          const pos = projectToScreen(item.node.location[0], item.node.location[1]);
+          if (pos.depth > 0.35) {
+            const op = Math.min(1, Math.max(0, (pos.depth - 0.35) * 3));
+            item.el.style.opacity = op.toFixed(2);
+            item.el.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -100%)`;
+            item.el.style.pointerEvents = 'auto';
+          } else {
+            item.el.style.opacity = '0';
+            item.el.style.pointerEvents = 'none';
+          }
+        }
+
+        if (rotEl) {
+          const deg = ((((phi * 180 / Math.PI) % 360) + 360) % 360).toFixed(1);
+          rotEl.textContent = `ROT: ${deg}°`;
+        }
+
+        animFrameId = requestAnimationFrame(render);
+      }
+
+      // Viewport Visibility Observer (Halts Cobe when off-screen)
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            if (!isVisible) {
+              isVisible = true;
+              animFrameId = requestAnimationFrame(render);
+            }
+          } else {
+            isVisible = false;
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+          }
+        }, { threshold: 0.05 });
+        observer.observe(card);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          isVisible = false;
+          if (animFrameId) cancelAnimationFrame(animFrameId);
+        } else {
+          const rect = card.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            isVisible = true;
+            animFrameId = requestAnimationFrame(render);
+          }
+        }
+      });
+
+      animFrameId = requestAnimationFrame(render);
+    }
+
+    // Initialize Threat Globe on load
+    window.addEventListener('load', initThreatGlobe);
+    document.addEventListener('DOMContentLoaded', initThreatGlobe);
+    setTimeout(initThreatGlobe, 100);
+
+    // 11. Unified Bento Grid Mask & Clip-Path Synchronizer
+    function updateBentoMask() {
+      const wrapper = document.getElementById('bento-grid-wrapper');
+      if (!wrapper) return;
+      const wrapRect = wrapper.getBoundingClientRect();
+
+      for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById('bento-card-' + i);
+        const clipRect = document.getElementById('bento-clip-' + i);
+        const maskRect = document.getElementById('bento-mask-' + i);
+        if (!card) continue;
+
+        const r = card.getBoundingClientRect();
+        const x = Math.round(r.left - wrapRect.left);
+        const y = Math.round(r.top - wrapRect.top);
+        const w = Math.round(r.width);
+        const h = Math.round(r.height);
+
+        if (clipRect) {
+          clipRect.setAttribute('x', x);
+          clipRect.setAttribute('y', y);
+          clipRect.setAttribute('width', w);
+          clipRect.setAttribute('height', h);
+          clipRect.setAttribute('rx', '12');
+          clipRect.setAttribute('ry', '12');
+        }
+        if (maskRect) {
+          maskRect.setAttribute('x', x);
+          maskRect.setAttribute('y', y);
+          maskRect.setAttribute('width', w);
+          maskRect.setAttribute('height', h);
+          maskRect.setAttribute('rx', '12');
+          maskRect.setAttribute('ry', '12');
+        }
+      }
+    }
+
+    window.addEventListener('load', updateBentoMask);
+    window.addEventListener('resize', updateBentoMask);
+    document.addEventListener('DOMContentLoaded', updateBentoMask);
+    if (window.ResizeObserver) {
+      const bentoObserver = new ResizeObserver(() => updateBentoMask());
+      const bentoWrapper = document.getElementById('bento-grid-wrapper');
+      if (bentoWrapper) bentoObserver.observe(bentoWrapper);
+      for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById('bento-card-' + i);
+        if (card) bentoObserver.observe(card);
+      }
+    }
+    updateBentoMask();
+    setTimeout(updateBentoMask, 100);
+    setTimeout(updateBentoMask, 500);
+  </script>
 </body>
 </html>

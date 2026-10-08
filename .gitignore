@@ -7,6 +7,7 @@
 
 # Node / Build artifacts
 node_modules/
+shader-build/
 .netlify/
 dist/
 
@@ -17,6 +18,10 @@ drafts/
 notes/
 AGENT.md
 agent.md
+AGENTS.md
+agents.md
+GEMINI.md
+gemini.md
 *.draft.md
 *.internal.md
 *.agent.md
