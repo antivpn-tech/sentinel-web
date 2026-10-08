@@ -21,17 +21,32 @@
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
 
-  <!-- Total Netlify Floating Element & Toolbar Suppression -->
+  <!-- Total Netlify Floating Element, HUD & Badge Suppression -->
   <script>
     (function() {
+      // 1. Pre-seed Netlify HUD dismissal state in localStorage and cookies to stop hud script at top
+      try {
+        localStorage.setItem('nl-hud:public:v1', 'hidden');
+        localStorage.setItem('nl-hud:owner-private:v1', 'hidden');
+        document.cookie = 'nf_hud_dismissed=true; path=/; max-age=31536000';
+      } catch(e) {}
+
+      // 2. Intercept and destroy injected Netlify scripts & iframes immediately
       function purgeNetlify() {
         const selectors = [
+          '#nl-badge-frame',
+          '#nl-hud-frame',
+          'iframe[id*="nl-"]',
+          'iframe[title*="Netlify" i]',
+          'iframe[title*="Powered by Netlify" i]',
+          'iframe[src*="netlify" i]',
+          'script[src*="netlify"]',
+          'script[data-nf-variant]',
           '#netlify-drawer',
           'netlify-drawer',
           '.netlify-badge',
           '[id*="netlify" i]',
           '[class*="netlify" i]',
-          'iframe[src*="netlify" i]',
           'div[data-netlify]',
           'a[href*="netlify.com" i]',
           '[aria-label*="netlify" i]'
@@ -57,13 +72,18 @@
                 const cls = (typeof node.className === 'string') ? node.className : '';
                 const src = node.getAttribute('src') || '';
                 const href = node.getAttribute('href') || '';
+                const title = node.getAttribute('title') || '';
                 const text = node.textContent || '';
                 if (
+                  id === 'nl-badge-frame' ||
+                  id === 'nl-hud-frame' ||
                   /netlify/i.test(id) ||
                   /netlify/i.test(tag) ||
                   /netlify/i.test(cls) ||
                   /netlify/i.test(src) ||
                   /netlify/i.test(href) ||
+                  /netlify/i.test(title) ||
+                  node.hasAttribute('data-nf-variant') ||
                   /powered by netlify|deploys by netlify/i.test(text)
                 ) {
                   try { node.remove(); } catch(e) {}
@@ -78,8 +98,8 @@
       if (typeof window !== 'undefined') {
         window.addEventListener('DOMContentLoaded', purgeNetlify);
         window.addEventListener('load', purgeNetlify);
-        const timer = setInterval(purgeNetlify, 150);
-        setTimeout(function() { clearInterval(timer); }, 10000);
+        const timer = setInterval(purgeNetlify, 100);
+        setTimeout(function() { clearInterval(timer); }, 15000);
       }
     })();
   </script>
@@ -143,6 +163,11 @@
 
   <style>
     /* Complete Netlify Floating Badge & Toolbar Elimination */
+    #nl-badge-frame,
+    #nl-hud-frame,
+    iframe[id*="nl-"],
+    iframe[title*="Netlify" i],
+    iframe[title*="Powered by Netlify" i],
     #netlify-drawer,
     netlify-drawer,
     .netlify-badge,
@@ -259,6 +284,9 @@
   </style>
 </head>
 <body class="min-h-screen bg-[#000101] text-foreground antialiased selection:bg-white selection:text-black">
+  <!-- Built-in Netlify HUD Guard (causes Netlify hud script to exit immediately) -->
+  <div id="nl-badge-frame" style="display:none!important;position:absolute!important;top:-99999px!important;left:-99999px!important;width:0!important;height:0!important;pointer-events:none!important;" aria-hidden="true"></div>
+  <div id="nl-hud-frame" style="display:none!important;position:absolute!important;top:-99999px!important;left:-99999px!important;width:0!important;height:0!important;pointer-events:none!important;" aria-hidden="true"></div>
 
   <!-- ==================== 1. FLOATING NAVIGATION ==================== -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
