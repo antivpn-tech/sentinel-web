@@ -107,49 +107,55 @@
         </a>
 
         <!-- Desktop Links -->
-        <div class="hidden md:flex items-center gap-6 lg:gap-8">
-          <a href="index.html#features" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+        <div class="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8">
+          <a href="index.html#features" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Capabilities
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="index.html#how-it-works" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+          <a href="index.html#how-it-works" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Architecture
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="index.html#infra" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+          <a href="index.html#infra" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Threat Grid
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="index.html#metrics" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+          <a href="index.html#metrics" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Telemetry
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="index.html#integrations" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+          <a href="index.html#integrations" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Integrations
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="benchmarks.html" class="nav-link text-sm text-cyan-400 font-semibold relative group">
+          <a href="benchmarks.html" class="nav-link text-xs xl:text-sm text-cyan-400 font-semibold relative group">
             Benchmarks
             <span class="nav-indicator absolute -bottom-1 left-0 w-full h-px bg-cyan-400 transition-all duration-300"></span>
           </a>
-          <a href="index.html#pricing" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+          <a href="index.html#pricing" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Pricing
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
         </div>
 
         <!-- Desktop Actions -->
-        <div class="hidden md:flex items-center gap-4">
-          <a href="docs.html" class="text-sm text-white/70 hover:text-white transition-all duration-500 font-mono">
+        <div class="hidden lg:flex items-center gap-3">
+          <div id="nav-license-btn-container" class="hidden">
+            <a href="index.html" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all shadow-[0_0_10px_rgba(16,185,129,0.15)] group" title="Active Key Cached (Click to return)">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="nav-license-label">Key</span>
+            </a>
+          </div>
+          <a href="docs.html" class="text-xs xl:text-sm text-white/70 hover:text-white transition-all duration-500 font-mono">
             API Docs
           </a>
-          <a href="index.html#pricing" class="rounded-full bg-white hover:bg-white/90 text-black px-6 h-10 inline-flex items-center justify-center text-sm font-medium transition-all duration-500 shadow-sm hover:shadow-white/10">
+          <a href="index.html#pricing" class="rounded-full bg-white hover:bg-white/90 text-black px-4 xl:px-5 h-9 inline-flex items-center justify-center text-xs xl:text-sm font-medium transition-all duration-500 shadow-sm hover:shadow-white/10">
             Deploy Edge
           </a>
         </div>
 
         <!-- Mobile Menu Toggle -->
-        <button id="mobile-menu-btn" class="md:hidden p-2 text-white" aria-label="Toggle Menu" onclick="toggleMobileNav()">
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white" aria-label="Toggle Menu" onclick="toggleMobileNav()">
           <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
@@ -161,7 +167,7 @@
     </nav>
 
     <!-- Mobile Drawer -->
-    <div id="mobile-menu" class="md:hidden fixed inset-0 w-full h-full bg-[#000101]/95 backdrop-blur-2xl z-40 transition-all duration-300 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-8 pt-24 overflow-y-auto">
+    <div id="mobile-menu" class="lg:hidden fixed inset-0 w-full h-full bg-[#000101]/95 backdrop-blur-2xl z-40 transition-all duration-300 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-8 pt-24 overflow-y-auto">
       <div class="flex flex-col gap-5 sm:gap-6">
         <a href="index.html#features" class="text-xl sm:text-2xl font-display text-white">Capabilities</a>
         <a href="index.html#how-it-works" class="text-xl sm:text-2xl font-display text-white">Architecture</a>
@@ -805,6 +811,14 @@
         setTimeout(() => { btn.textContent = 'Copy Command'; }, 2000);
       });
     }
+
+    try {
+      const savedKey = localStorage.getItem('sentinel_license_key');
+      if (savedKey && savedKey.startsWith('stl_live_')) {
+        const c = document.getElementById('nav-license-btn-container');
+        if (c) c.classList.remove('hidden');
+      }
+    } catch(e) {}
   </script>
 </body>
 </html>
