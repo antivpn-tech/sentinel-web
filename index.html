@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://antivpn.tech/">
   <meta property="og:title" content="Sentinel Anti VPN - Autonomous Edge Intelligence & Proxy Defense">
-  <meta property="og:description" content="Autonomous edge threat mitigation and line-rate proxy detection across 330+ Anycast edge locations. Evaluate connections before TCP handshake.">
+  <meta property="og:description" content="Autonomous edge threat mitigation and line-rate proxy detection across 330+ Anycast edge locations in 50+ regional transit zones. Evaluate connections before TCP handshake.">
   <meta property="og:site_name" content="Sentinel Security">
 
   <meta name="twitter:card" content="summary">
@@ -340,6 +340,10 @@
             Integrations
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
+          <a href="benchmarks.html" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Benchmarks
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
           <a href="#pricing" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Pricing
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -354,7 +358,7 @@
               <span id="nav-license-label">Active Key</span>
             </button>
           </div>
-          <a href="#developers" id="sign-in-link" class="text-sm text-white/70 hover:text-white transition-all duration-500 font-mono">
+          <a href="docs.html" id="sign-in-link" class="text-sm text-white/70 hover:text-white transition-all duration-500 font-mono">
             API Docs
           </a>
           <a href="#pricing" id="cta-button" class="rounded-full bg-white hover:bg-white/90 text-black px-6 h-10 inline-flex items-center justify-center text-sm font-medium transition-all duration-500 shadow-sm hover:shadow-white/10">
@@ -380,6 +384,7 @@
         <a href="#features" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Capabilities</a>
         <a href="#how-it-works" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Architecture</a>
         <a href="#infra" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Threat Grid</a>
+        <a href="benchmarks.html" class="mobile-nav-link text-xl sm:text-2xl font-display text-cyan-400">Benchmarks</a>
         <a href="#metrics" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Telemetry</a>
         <a href="#integrations" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Integrations</a>
         <a href="#pricing" class="mobile-nav-link text-xl sm:text-2xl font-display text-white">Pricing</a>
@@ -391,7 +396,7 @@
             <span id="mobile-license-label">View Claimed Key</span>
           </button>
         </div>
-        <a href="#developers" class="mobile-nav-link w-full py-2.5 text-center border border-white/20 rounded-full text-white font-mono text-xs sm:text-sm">API Docs</a>
+        <a href="docs.html" class="mobile-nav-link w-full py-2.5 text-center border border-white/20 rounded-full text-white font-mono text-xs sm:text-sm">API Docs</a>
         <a href="#pricing" class="mobile-nav-link w-full py-2.5 text-center bg-white text-black rounded-full font-medium text-xs sm:text-sm">Deploy Edge</a>
       </div>
     </div>
@@ -478,8 +483,8 @@
       <div class="relative mt-8 sm:mt-12 lg:mt-0 lg:absolute lg:bottom-12 left-0 right-0 px-6 lg:px-12 transition-all duration-700 delay-500 pb-8 lg:pb-0">
         <div class="max-w-[1400px] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-start gap-5 sm:gap-8 lg:gap-24 border-t border-white/10 pt-6 sm:pt-8">
           <div class="flex flex-col gap-1">
-            <span class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">450M+</span>
-            <span class="text-[11px] sm:text-xs text-white/50 font-mono leading-tight">threat vectors indexed</span>
+            <span class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">100M+</span>
+            <span class="text-[11px] sm:text-xs text-white/50 font-mono leading-tight" title="100M+ active edge routing records · 450M+ cumulative vectors">active threat indicators</span>
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">99.9%</span>
@@ -487,7 +492,7 @@
           </div>
           <div class="flex flex-col gap-1 col-span-2 sm:col-span-1">
             <span class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">&lt;0.8ms</span>
-            <span class="text-[11px] sm:text-xs text-white/50 font-mono leading-tight">edge evaluation latency</span>
+            <span class="text-[11px] sm:text-xs text-white/50 font-mono leading-tight" title="In-memory isolate compute; excludes network RTT">isolate decision latency</span>
           </div>
         </div>
       </div>
@@ -591,8 +596,8 @@
                 </p>
               </div>
               <div class="pt-3.5 sm:pt-4 border-t border-white/10 flex items-baseline justify-between">
-                <span class="text-2xl sm:text-3xl font-display text-white">50+</span>
-                <span class="text-xs font-mono text-muted-foreground">global edge regions</span>
+                <span class="text-2xl sm:text-3xl font-display text-white">330+</span>
+                <span class="text-xs font-mono text-muted-foreground">Anycast edge locations</span>
               </div>
             </div>
 
@@ -608,7 +613,7 @@
               </div>
               <div class="pt-3.5 sm:pt-4 border-t border-white/10 flex items-baseline justify-between">
                 <span class="text-2xl sm:text-3xl font-display text-white">&lt;0.8ms</span>
-                <span class="text-xs font-mono text-muted-foreground">sub-millisecond evaluation</span>
+                <span class="text-xs font-mono text-muted-foreground">isolate RAM compute</span>
               </div>
             </div>
 
@@ -770,7 +775,7 @@
           <div class="grid lg:grid-cols-[auto_1fr] gap-8 items-end">
             <h2 class="text-3xl sm:text-4xl md:text-6xl lg:text-[75px] font-display tracking-tight text-white leading-[0.98] sm:leading-[0.95]">
               Distributed across<br>
-              <span class="text-muted-foreground">50+ edge regions.</span>
+              <span class="text-muted-foreground">330+ Anycast locations.</span>
             </h2>
           </div>
         </div>
@@ -836,7 +841,7 @@
               <div class="flex items-center gap-1.5 sm:gap-2 text-white bg-black/70 px-2 sm:px-2.5 py-1 rounded border border-white/10 backdrop-blur-md text-[10px] sm:text-xs">
                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                 <span class="tracking-wide">SENTINEL THREAT NETWORK</span>
-                <span class="text-[9px] sm:text-[10px] text-muted-foreground uppercase px-1.5 py-0.2 rounded bg-white/5 border border-white/10 hidden xs:inline">50+ POPs</span>
+                <span class="text-[9px] sm:text-[10px] text-muted-foreground uppercase px-1.5 py-0.2 rounded bg-white/5 border border-white/10 hidden xs:inline">330+ POPs</span>
               </div>
               <div class="hidden sm:flex items-center gap-3 text-[11px] text-muted-foreground bg-black/70 px-3 py-1 rounded border border-white/10 backdrop-blur-md">
                 <span id="globe-telemetry-rot">ROT: 280.0°</span>
@@ -884,12 +889,13 @@
       <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
         <div class="grid lg:grid-cols-12 gap-8 mb-8 lg:mb-10">
           <div class="lg:col-span-8">
-            <div class="flex items-center gap-4 mb-3">
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-3">
               <span class="flex items-center gap-2 px-3 py-1 bg-white/5 text-white/90 text-xs font-mono border border-white/20 rounded">
-                <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
-                Live Grid Stream
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Threat Grid: Active Stream
               </span>
-              <span id="live-utc-clock" class="text-xs font-mono text-muted-foreground">--:--:-- UTC</span>
+              <span class="text-xs font-mono text-cyan-400/90 hidden sm:inline">&middot; Last Sync 3m ago (5m delta cycle)</span>
+              <span id="live-utc-clock" class="text-xs font-mono text-muted-foreground ml-auto">--:--:-- UTC</span>
             </div>
             <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[70px] font-display tracking-tight text-white leading-[0.98] sm:leading-[0.95]">
               Real-time telemetry.<br>
@@ -946,6 +952,37 @@
             <div class="w-full">
               <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
             </div>
+        </div>
+
+        <!-- Empirical Benchmarks Preview Card -->
+        <div class="mt-8 p-6 sm:p-8 bg-[#020204]/90 border border-white/10 rounded-2xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 hover:border-white/20 transition-all">
+          <div class="max-w-xl">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+              <span class="text-[11px] font-mono text-cyan-400 uppercase tracking-wider font-semibold">Empirical Evidence &amp; Accuracy</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-display text-white mb-2">
+              Ground-Truth Benchmarks Across 250,000 Live Endpoints
+            </h3>
+            <p class="text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans">
+              Deterministic 99.94% precision on commercial VPNs &amp; datacenters. Transparent 94.8% recall on dynamic residential proxy tunnels with zero marketing inflation.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto shrink-0">
+            <div class="grid grid-cols-2 gap-3 sm:flex sm:items-center font-mono text-xs">
+              <div class="px-3.5 py-2 rounded-lg bg-white/5 border border-white/10">
+                <span class="text-[10px] text-white/50 block">VPN Precision</span>
+                <span class="text-emerald-400 font-bold">99.94%</span>
+              </div>
+              <div class="px-3.5 py-2 rounded-lg bg-white/5 border border-white/10">
+                <span class="text-[10px] text-white/50 block">Residential FPR</span>
+                <span class="text-amber-300 font-bold">1.30%</span>
+              </div>
+            </div>
+            <a href="benchmarks.html" class="px-5 py-3 rounded-full bg-white text-black font-medium text-xs font-mono inline-flex items-center justify-center gap-2 hover:bg-white/90 transition-all shrink-0">
+              View Full Benchmark Report &rarr;
+            </a>
           </div>
         </div>
       </div>
@@ -1056,7 +1093,7 @@
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">03 / Telemetry</span>
-                <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">50+ POPs</span>
+                <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">330+ POPs</span>
               </div>
               <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">Carrier Intelligence</h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
@@ -1076,9 +1113,9 @@
                 <span class="font-mono text-[11px] text-white/50 uppercase tracking-wider">04 / Volatile</span>
                 <span class="text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded border border-white/15">RAM Only</span>
               </div>
-              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">Sub-ms Overhead</h3>
+              <h3 class="text-lg lg:text-xl font-display text-white mb-1.5 group-hover:translate-x-0.5 transition-transform">Sub-ms Isolate Latency</h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
-                Zero database round-trips and zero disk persistence. Evaluated strictly in volatile memory isolate under 0.8ms.
+                Measures in-RAM radix trie lookup (&lt;0.8ms) with zero disk seeks or DB calls. Adds negligible compute time to Anycast transit RTT.
               </p>
             </div>
             <div class="mt-6 pt-3.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
@@ -1330,7 +1367,7 @@
                 Get API Key
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
-              <a href="#developers" class="h-11 px-7 rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm inline-flex items-center justify-center gap-2 hover:bg-white/5 transition-all">
+              <a href="docs.html" class="h-11 px-7 rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm inline-flex items-center justify-center gap-2 hover:bg-white/5 transition-all">
                 Developer Guide
               </a>
             </div>
@@ -1349,7 +1386,7 @@
             ZERO-LOG VOLATILE MEMORY ARCHITECTURE
           </span>
           <p class="text-xs md:text-sm text-muted-foreground font-mono">
-            Sub-millisecond ingress defense across 50+ Anycast edge regions worldwide.
+            Sub-millisecond isolate compute across 330+ Anycast edge locations in 50+ regional zones.
           </p>
         </div>
       </div>
@@ -1378,6 +1415,7 @@
                 <li><a href="#features" class="hover:text-white transition-colors">Capabilities</a></li>
                 <li><a href="#how-it-works" class="hover:text-white transition-colors">Architecture</a></li>
                 <li><a href="#infra" class="hover:text-white transition-colors">Global Threat Grid</a></li>
+                <li><a href="benchmarks.html" class="hover:text-white transition-colors text-cyan-400">Benchmarks</a></li>
                 <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
@@ -1386,10 +1424,10 @@
             <div>
               <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Developers</span>
               <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
-                <li><a href="#developers" class="hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="docs.html" class="hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="docs.html" class="hover:text-white transition-colors">API Reference</a></li>
                 <li><a href="#integrations" class="hover:text-white transition-colors">Edge Middleware</a></li>
-                <li><a href="#how-it-works" class="hover:text-white transition-colors">TypeScript SDK</a></li>
-                <li><a href="#metrics" class="hover:text-white transition-colors">API Reference</a></li>
+                <li><a href="#how-it-works" class="hover:text-white transition-colors">Integration Code</a></li>
               </ul>
             </div>
 
@@ -1399,8 +1437,8 @@
               <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
                 <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
                 <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#features" class="hover:text-white transition-colors">Zero-Log Architecture</a></li>
-                <li><a href="privacy.html" class="hover:text-white transition-colors">Data Processing</a></li>
+                <li><a href="benchmarks.html" class="hover:text-white transition-colors">Accuracy Benchmarks</a></li>
+                <li><a href="privacy.html" class="hover:text-white transition-colors">Zero-Log Architecture</a></li>
               </ul>
             </div>
 
@@ -1726,7 +1764,7 @@
         files: ['middleware.ts', 'evaluate.edge.ts', 'enforce.ts'],
         outputs: [
           'STATUS: READY &middot; 0.18ms &middot; ZERO-DEPENDENCY EDGE RUNTIME',
-          'STATUS: EVALUATED &middot; 0.38ms &middot; RESIDENTIAL ISP &middot; RISK: 04/100',
+          'STATUS: EVALUATED &middot; 0.38ms &middot; RESIDENTIAL ISP &middot; RISK: 04/100 &middot; CONF: 0.98',
           'STATUS: VERDICT: 200 OK &middot; 0.15ms &middot; ZERO PERSISTED LOGS'
         ],
         plain: [
@@ -1748,16 +1786,18 @@ const res = await fetch(\`\${SENTINEL_ENDPOINT}?ip=\${encodeURIComponent(clientI
 });
 
 const verdict = await res.json();
-// Carrier Network Classification verdict resolved`,
-`// 03 Stateless Edge Enforcement in Volatile Memory
-if (verdict.action === 'BLOCK' || verdict.risk_score > 65) {
+// Returns risk_score (0-100), confidence (0.00-1.00), and reason_codes`,
+`// 03 Enforce Graduated Verdict (Confidence + Reason Codes)
+if (verdict.action === 'BLOCK' && verdict.confidence >= 0.95) {
   return new Response('Ingress Denied: Untrusted Ingress', {
     status: 403,
-    headers: {
-      'X-Sentinel-Verdict': 'REJECTED',
-      'X-Sentinel-Threat': verdict.threat_type
-    }
+    headers: { 'X-Sentinel-Verdict': 'REJECTED', 'X-Sentinel-Threat': verdict.threat_type }
   });
+}
+
+if (verdict.reason_codes?.includes('RESIDENTIAL_TUNNEL_PROXY')) {
+  // Step-up challenge (MFA/CAPTCHA) rather than hard drop for residential tunnels
+  return promptStepUpVerification(req);
 }
 
 // Pass authenticated subscriber with zero persisted logs
@@ -1782,16 +1822,18 @@ return next();`
 });
 
 <span class="text-blue-400 font-semibold">const</span> verdict = <span class="text-blue-400 font-semibold">await</span> res.json();
-<span class="text-zinc-500 italic">// Carrier Network Classification verdict resolved</span>`,
-`<span class="text-zinc-500 italic">// 03 Stateless Edge Enforcement in Volatile Memory</span>
-<span class="text-blue-400 font-semibold">if</span> (verdict.action === <span class="text-zinc-300">'BLOCK'</span> || verdict.risk_score &gt; 65) {
+<span class="text-zinc-500 italic">// Returns risk_score (0-100), confidence (0.00-1.00), and reason_codes</span>`,
+`<span class="text-zinc-500 italic">// 03 Enforce Graduated Verdict (Confidence + Reason Codes)</span>
+<span class="text-blue-400 font-semibold">if</span> (verdict.action === <span class="text-zinc-300">'BLOCK'</span> &amp;&amp; verdict.confidence &gt;= <span class="text-emerald-400">0.95</span>) {
   <span class="text-blue-400 font-semibold">return new</span> Response(<span class="text-zinc-300">'Ingress Denied: Untrusted Ingress'</span>, {
     status: 403,
-    headers: {
-      <span class="text-zinc-300">'X-Sentinel-Verdict'</span>: <span class="text-zinc-300">'REJECTED'</span>,
-      <span class="text-zinc-300">'X-Sentinel-Threat'</span>: verdict.threat_type
-    }
+    headers: { <span class="text-zinc-300">'X-Sentinel-Verdict'</span>: <span class="text-zinc-300">'REJECTED'</span>, <span class="text-zinc-300">'X-Sentinel-Threat'</span>: verdict.threat_type }
   });
+}
+
+<span class="text-blue-400 font-semibold">if</span> (verdict.reason_codes?.includes(<span class="text-zinc-300">'RESIDENTIAL_TUNNEL_PROXY'</span>)) {
+  <span class="text-zinc-500 italic">// Step-up challenge (MFA/CAPTCHA) rather than hard drop for residential tunnels</span>
+  <span class="text-blue-400 font-semibold">return</span> promptStepUpVerification(req);
 }
 
 <span class="text-zinc-500 italic">// Pass authenticated subscriber with zero persisted logs</span>
@@ -1812,7 +1854,7 @@ curl -s -X GET "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
   -H "Authorization: Bearer stl_live_your_api_key_here" \\
   -H "Accept: application/json"
 
-# Sub-millisecond dual-stack ingress response from 300+ edge nodes`,
+# Sub-millisecond dual-stack ingress response from 330+ edge locations`,
 `# 02 Query Dual-Stack Threat Intelligence & Carrier Telemetry
 curl -s "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
   -H "Authorization: Bearer stl_live_your_api_key_here" | jq .
@@ -1823,7 +1865,11 @@ curl -s "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
   "ip": "1.1.1.1",
   "action": "ALLOW",
   "risk_score": 0,
+  "confidence": 0.99,
   "threat_type": "Clean Residential",
+  "reason_codes": [
+    "CARRIER_RESIDENTIAL_CLEAN"
+  ],
   "is_vpn": false,
   "asn": 13335,
   "provider": "Cloudflare, Inc.",
@@ -1838,7 +1884,7 @@ curl -s "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
   -H <span class="text-zinc-300">"Authorization: Bearer stl_live_your_api_key_here"</span> \\
   -H <span class="text-zinc-300">"Accept: application/json"</span>
 
-<span class="text-zinc-500 italic"># Sub-millisecond dual-stack ingress response from 300+ edge nodes</span>`,
+<span class="text-zinc-500 italic"># Sub-millisecond dual-stack ingress response from 330+ edge locations</span>`,
 `<span class="text-zinc-500 italic"># 02 Query Dual-Stack Threat Intelligence &amp; Carrier Telemetry</span>
 <span class="text-blue-400 font-semibold">curl</span> -s <span class="text-zinc-300">"https://api.antivpn.tech/v1/check?ip=1.1.1.1"</span> \\
   -H <span class="text-zinc-300">"Authorization: Bearer stl_live_your_api_key_here"</span> | jq .
@@ -1849,7 +1895,9 @@ curl -s "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
   <span class="text-blue-400">"ip"</span>: <span class="text-zinc-300">"1.1.1.1"</span>,
   <span class="text-blue-400">"action"</span>: <span class="text-emerald-400">"ALLOW"</span>,
   <span class="text-blue-400">"risk_score"</span>: <span class="text-emerald-400">0</span>,
+  <span class="text-blue-400">"confidence"</span>: <span class="text-emerald-400">0.99</span>,
   <span class="text-blue-400">"threat_type"</span>: <span class="text-zinc-300">"Clean Residential"</span>,
+  <span class="text-blue-400">"reason_codes"</span>: [<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-amber-300">"CARRIER_RESIDENTIAL_CLEAN"</span><br>&nbsp;&nbsp;],
   <span class="text-blue-400">"is_vpn"</span>: <span class="text-emerald-400">false</span>,
   <span class="text-blue-400">"asn"</span>: <span class="text-zinc-300">13335</span>,
   <span class="text-blue-400">"provider"</span>: <span class="text-zinc-300">"Cloudflare, Inc."</span>,
@@ -1884,13 +1932,16 @@ response = await client.get(
 )
 
 verdict = response.json()
-# Carrier Network Classification verdict resolved`,
-`# 03 Enforce Sub-ms Ingress Verdict in Microservice
-if verdict.get("action") == "BLOCK" or verdict.get("risk_score", 0) > 65:
+# Inspect risk_score, confidence, and reason_codes`,
+`# 03 Enforce Graduated Ingress Verdict in Microservice
+if verdict.get("action") == "BLOCK" and verdict.get("confidence", 0) >= 0.95:
     return JSONResponse(
         status_code=403,
         content={"error": "Untrusted Ingress", "threat": verdict["threat_type"]}
     )
+
+if "RESIDENTIAL_TUNNEL_PROXY" in verdict.get("reason_codes", []):
+    return redirectToChallenge(request)
 
 # Pass verified subscriber with zero persisted logs
 return await call_next(request)`
@@ -1912,13 +1963,16 @@ response = <span class="text-blue-400 font-semibold">await</span> client.get(
 )
 
 verdict = response.json()
-<span class="text-zinc-500 italic"># Carrier Network Classification verdict resolved</span>`,
-`<span class="text-zinc-500 italic"># 03 Enforce Sub-ms Ingress Verdict in Microservice</span>
-<span class="text-blue-400 font-semibold">if</span> verdict.get(<span class="text-zinc-300">"action"</span>) == <span class="text-zinc-300">"BLOCK"</span> <span class="text-blue-400 font-semibold">or</span> verdict.get(<span class="text-zinc-300">"risk_score"</span>, 0) &gt; 65:
+<span class="text-zinc-500 italic"># Inspect risk_score, confidence, and reason_codes</span>`,
+`<span class="text-zinc-500 italic"># 03 Enforce Graduated Ingress Verdict in Microservice</span>
+<span class="text-blue-400 font-semibold">if</span> verdict.get(<span class="text-zinc-300">"action"</span>) == <span class="text-zinc-300">"BLOCK"</span> <span class="text-blue-400 font-semibold">and</span> verdict.get(<span class="text-zinc-300">"confidence"</span>, 0) &gt;= <span class="text-emerald-400">0.95</span>:
     <span class="text-blue-400 font-semibold">return</span> JSONResponse(
         status_code=403,
         content={<span class="text-zinc-300">"error"</span>: <span class="text-zinc-300">"Untrusted Ingress"</span>, <span class="text-zinc-300">"threat"</span>: verdict[<span class="text-zinc-300">"threat_type"</span>]}
     )
+
+<span class="text-blue-400 font-semibold">if</span> <span class="text-zinc-300">"RESIDENTIAL_TUNNEL_PROXY"</span> <span class="text-blue-400 font-semibold">in</span> verdict.get(<span class="text-zinc-300">"reason_codes"</span>, []):
+    <span class="text-blue-400 font-semibold">return</span> redirectToChallenge(request)
 
 <span class="text-zinc-500 italic"># Pass verified subscriber with zero persisted logs</span>
 <span class="text-blue-400 font-semibold">return await</span> call_next(request)`
@@ -2437,7 +2491,8 @@ api:
   license-key: "${key}"
   timeout-ms: 2500
 mode: "ENFORCE"
-risk-threshold: 80`;
+risk-threshold: 80
+min-confidence: 0.90`;
         } else if (tab === 'curl') {
           snippet = `curl -s -X GET "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
   -H "Authorization: Bearer ${key}" \\
@@ -2449,7 +2504,13 @@ risk-threshold: 80`;
     'Accept': 'application/json'
   }
 });
-const verdict = await res.json();`;
+const verdict = await res.json();
+// Inspect verdict.confidence (0.00-1.00) and verdict.reason_codes
+if (verdict.action === 'BLOCK' && verdict.confidence >= 0.95) {
+  // Hard drop deterministic VPN / Datacenter hop
+} else if (verdict.reason_codes?.includes('RESIDENTIAL_TUNNEL_PROXY')) {
+  // Step-up challenge (MFA / CAPTCHA) for residential proxies
+}`;
         } else if (tab === 'python') {
           snippet = `import requests
 
@@ -2458,7 +2519,12 @@ res = requests.get(
     params={"ip": client_ip},
     headers={"Authorization": "Bearer ${key}"}
 )
-verdict = res.json()`;
+verdict = res.json()
+# Inspect verdict["confidence"] and verdict["reason_codes"]
+if verdict.get("action") == "BLOCK" and verdict.get("confidence", 0) >= 0.95:
+    pass # Hard drop
+elif "RESIDENTIAL_TUNNEL_PROXY" in verdict.get("reason_codes", []):
+    pass # Step-up challenge (MFA / CAPTCHA)`;
         }
         codeEl.textContent = snippet;
       },

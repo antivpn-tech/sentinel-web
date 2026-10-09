@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Reference & Developer Documentation — Sentinel</title>
+  <meta name="description" content="Complete REST API reference, authentication headers, response schemas, error codes, and fail-open integration patterns for Sentinel Edge Intelligence.">
+  <link rel="canonical" href="https://antivpn.tech/docs">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+
+  <!-- Netlify HUD Suppression -->
+  <script>
+    (function() {
+      try {
+        localStorage.setItem('nl-hud:public:v1', 'hidden');
+        localStorage.setItem('nl-hud:owner-private:v1', 'hidden');
+        document.cookie = 'nf_hud_dismissed=true; path=/; max-age=31536000';
+      } catch(e) {}
+    })();
+  </script>
+
+  <!-- Google Fonts: Instrument Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#000101',
+            foreground: '#ecebe7',
+            card: '#040609',
+            border: '#15181e',
+            cyan: {
+              400: '#38bdf8',
+              500: '#0ea5e9',
+            }
+          },
+          fontFamily: {
+            sans: ['"Instrument Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::selection {
+      background: #0ea5e9;
+      color: #000101;
+    }
+    body {
+      background-color: #000101;
+      color: #ecebe7;
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .doc-pre {
+      background: #020306;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.775rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#000101] text-[#ecebe7] antialiased selection:bg-cyan-500 selection:text-black">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="border-b border-white/10 bg-[#000101]/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 text-white hover:text-cyan-400 transition-colors group">
+        <svg class="w-4 h-4 text-cyan-400 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        <div class="flex items-center gap-2">
+          <span class="font-bold tracking-tight text-base font-mono">SENTINEL</span>
+          <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">DOCUMENTATION</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-xs font-mono">
+        <a href="index.html#features" class="text-white/60 hover:text-white transition-colors">Capabilities</a>
+        <a href="index.html#how-it-works" class="text-white/60 hover:text-white transition-colors">Architecture</a>
+        <a href="benchmarks.html" class="text-white/60 hover:text-white transition-colors">Benchmarks</a>
+        <span class="text-cyan-400 font-semibold border-b border-cyan-400 pb-0.5">Documentation</span>
+        <a href="index.html#pricing" class="text-white/60 hover:text-white transition-colors">Pricing</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/antivpn-tech" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-white transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a href="benchmarks.html" class="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-all font-mono border border-white/15">
+          View Benchmarks
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
+
+      <!-- Sticky Sidebar Navigation (3 cols) -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 font-mono text-xs">
+        <div class="p-5 rounded-xl bg-[#040609] border border-white/10">
+          <span class="text-white/40 uppercase tracking-wider block mb-3 font-semibold text-[11px]">API Reference</span>
+          <nav class="flex flex-col gap-2 text-white/60">
+            <a href="#quickstart" class="hover:text-cyan-400 transition-colors">1. Quickstart</a>
+            <a href="#authentication" class="hover:text-cyan-400 transition-colors">2. Authentication</a>
+            <a href="#response-schema" class="hover:text-cyan-400 transition-colors">3. Output Schema &amp; Confidence</a>
+            <a href="#reason-codes" class="hover:text-cyan-400 transition-colors">4. Reason Codes Catalog</a>
+            <a href="#endpoints" class="hover:text-cyan-400 transition-colors">5. Endpoints Specification</a>
+            <a href="#headers" class="hover:text-cyan-400 transition-colors">6. Telemetry Headers</a>
+            <a href="#error-codes" class="hover:text-cyan-400 transition-colors">7. Errors &amp; Rate Limits</a>
+            <a href="#fail-open" class="hover:text-cyan-400 transition-colors">8. Fail-Open Architecture</a>
+            <a href="#graduated-defense" class="hover:text-cyan-400 transition-colors">9. Graduated Defense Pattern</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Documentation Content (9 cols) -->
+      <div class="lg:col-span-9 space-y-16">
+
+        <!-- Title / Overview -->
+        <div class="pb-8 border-b border-white/10">
+          <div class="flex flex-wrap items-center gap-3 mb-4 text-xs font-mono">
+            <span class="text-cyan-400 uppercase tracking-wider font-semibold">REST API v1</span>
+            <span class="text-white/20">&middot;</span>
+            <span class="text-emerald-400">api.antivpn.tech</span>
+            <span class="text-white/20">&middot;</span>
+            <span class="text-white/60">V8 Volatile Isolate Runtime</span>
+          </div>
+          <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-white mb-4">
+            Sentinel Edge Intelligence API Reference
+          </h1>
+          <p class="text-base text-white/60 leading-relaxed max-w-3xl">
+            Evaluate inbound IP connections in sub-millisecond volatile memory before completing TCP/TLS handshakes or processing application request bodies.
+          </p>
+        </div>
+
+        <!-- ==================== 1. QUICKSTART ==================== -->
+        <section id="quickstart" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">1. Quickstart (3 Minutes)</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            Send an authenticated HTTP GET request to <code class="text-cyan-400 font-mono">https://api.antivpn.tech/v1/check</code>. Pass your target IP address in the <code class="text-white font-mono">ip</code> query parameter.
+          </p>
+
+          <div class="doc-pre text-zinc-300 mb-4">
+            <span class="text-zinc-500 italic"># Terminal cURL evaluation</span><br>
+            <span class="text-blue-400 font-semibold">curl</span> -s -X GET <span class="text-zinc-300">"https://api.antivpn.tech/v1/check?ip=185.213.154.20"</span> \<br>
+            &nbsp;&nbsp;-H <span class="text-zinc-300">"Authorization: Bearer stl_live_your_api_key_here"</span> \<br>
+            &nbsp;&nbsp;-H <span class="text-zinc-300">"Accept: application/json"</span> | jq .
+          </div>
+
+          <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs font-mono text-cyan-300">
+            <strong>Testing Sandbox:</strong> You can test without an active key using our public sandbox demo key: <code class="bg-black/40 px-2 py-0.5 rounded text-white">stl_test_showcase_demo</code>.
+          </div>
+        </section>
+
+        <!-- ==================== 2. AUTHENTICATION ==================== -->
+        <section id="authentication" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">2. Authentication &amp; Keys</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            All requests to <code class="text-cyan-400 font-mono">api.antivpn.tech</code> must be authenticated using your Universal License Key (<code class="text-white font-mono">stl_live_...</code>).
+          </p>
+
+          <h3 class="text-sm font-mono font-semibold text-white mb-2 uppercase tracking-wider text-xs">Standard Authorization Header (Recommended)</h3>
+          <div class="doc-pre text-zinc-300 mb-4">
+            Authorization: Bearer stl_live_your_api_key_here
+          </div>
+
+          <h3 class="text-sm font-mono font-semibold text-white mb-2 uppercase tracking-wider text-xs">Query Parameter Fallback</h3>
+          <p class="text-xs text-white/60 mb-2">For environments where custom request headers cannot be configured (e.g. legacy game server plugins or Webhooks):</p>
+          <div class="doc-pre text-zinc-300">
+            https://api.antivpn.tech/v1/check?ip=1.1.1.1&amp;key=stl_live_your_api_key_here
+          </div>
+        </section>
+
+        <!-- ==================== 3. OUTPUT SCHEMA & CONFIDENCE ==================== -->
+        <section id="response-schema" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">3. Output Schema &amp; Confidence Scoring</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            Sentinel provides nuanced, multi-dimensional outputs. Instead of forcing your application into a rigid binary decision, responses include both an integer <code class="text-white font-mono">risk_score</code> (0–100) and a normalized <code class="text-cyan-400 font-mono">confidence</code> float (0.00–1.00), paired with machine-readable <code class="text-white font-mono">reason_codes</code>.
+          </p>
+
+          <div class="doc-pre text-zinc-300 mb-6">
+            <span class="text-zinc-500 italic">// Complete JSON Response Payload</span><br>
+            {<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"ip"</span>: <span class="text-zinc-300">"185.213.154.20"</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"action"</span>: <span class="text-rose-400">"BLOCK"</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"risk_score"</span>: <span class="text-rose-400">95</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"confidence"</span>: <span class="text-emerald-400">0.98</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"threat_type"</span>: <span class="text-zinc-300">"Commercial VPN"</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"reason_codes"</span>: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-amber-300">"CARRIER_COMMERCIAL_VPN"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-amber-300">"HOSTING_INFRASTRUCTURE_MATCH"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-amber-300">"GATEWAY_EXIT_ACTIVE"</span><br>
+            &nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"asn"</span>: <span class="text-emerald-400">206016</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"provider"</span>: <span class="text-zinc-300">"Mullvad VPN"</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"carrier_type"</span>: <span class="text-zinc-300">"transit_cloud"</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"country"</span>: <span class="text-zinc-300">"SE"</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"city"</span>: <span class="text-zinc-300">"Stockholm"</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"execution_time_ms"</span>: <span class="text-emerald-400">0.38</span>,<br>
+            &nbsp;&nbsp;<span class="text-blue-400">"dataset_sync_timestamp"</span>: <span class="text-zinc-300">"2026-10-09T03:55:00Z"</span><br>
+            }
+          </div>
+
+          <h3 class="text-sm font-mono font-semibold text-white mb-2 uppercase tracking-wider text-xs">Field Dictionary</h3>
+          <div class="overflow-x-auto rounded-xl border border-white/10 bg-[#040609] mb-4">
+            <table class="w-full text-left border-collapse text-xs font-mono">
+              <thead>
+                <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.02]">
+                  <th class="py-2.5 px-4">Field</th>
+                  <th class="py-2.5 px-3">Type</th>
+                  <th class="py-2.5 px-4">Description</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-white/70">
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">ip</td>
+                  <td class="py-2.5 px-3">string</td>
+                  <td class="py-2.5 px-4 font-sans">The evaluated IPv4 or IPv6 address.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">action</td>
+                  <td class="py-2.5 px-3">string</td>
+                  <td class="py-2.5 px-4 font-sans"><code class="text-white">ALLOW</code> or <code class="text-white">BLOCK</code> based on standard baseline thresholds.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">risk_score</td>
+                  <td class="py-2.5 px-3">integer (0–100)</td>
+                  <td class="py-2.5 px-4 font-sans">Assessed threat severity. 0 = clean subscriber, 100 = active confirmed threat hop.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">confidence</td>
+                  <td class="py-2.5 px-3">float (0.00–1.00)</td>
+                  <td class="py-2.5 px-4 font-sans">Statistical certainty of the classification. Allows developers to tune sensitivity.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">threat_type</td>
+                  <td class="py-2.5 px-3">string</td>
+                  <td class="py-2.5 px-4 font-sans">Primary classification (e.g. Commercial VPN, Datacenter VPS, Residential Proxy, Tor Exit Node, Clean Residential).</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">reason_codes</td>
+                  <td class="py-2.5 px-3">array[string]</td>
+                  <td class="py-2.5 px-4 font-sans">Standardized machine-readable triggers for programmatic rule matching.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">execution_time_ms</td>
+                  <td class="py-2.5 px-3">float</td>
+                  <td class="py-2.5 px-4 font-sans">Local in-memory isolate compute duration in milliseconds.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">dataset_sync_timestamp</td>
+                  <td class="py-2.5 px-3">ISO 8601 string</td>
+                  <td class="py-2.5 px-4 font-sans">Timestamp when the active Global Threat Grid delta was synchronized into isolate memory.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================== 4. REASON CODES CATALOG ==================== -->
+        <section id="reason-codes" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">4. Standardized Reason Codes Catalog</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            Developers can write fine-grained application logic by inspecting the <code class="text-cyan-400 font-mono">reason_codes</code> array:
+          </p>
+
+          <div class="overflow-x-auto rounded-xl border border-white/10 bg-[#040609]">
+            <table class="w-full text-left border-collapse text-xs font-mono">
+              <thead>
+                <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.02]">
+                  <th class="py-3 px-4">Reason Code</th>
+                  <th class="py-3 px-3">Category</th>
+                  <th class="py-3 px-3 text-center">Typical Risk</th>
+                  <th class="py-3 px-4">Recommended Enforcement</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-white/70">
+                <tr>
+                  <td class="py-3 px-4 text-rose-400 font-semibold">CARRIER_COMMERCIAL_VPN</td>
+                  <td class="py-3 px-3">Commercial VPN</td>
+                  <td class="py-3 px-3 text-center font-bold text-rose-400">85–100</td>
+                  <td class="py-3 px-4 font-sans">Immediate Handshake Drop or 403 Forbidden</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-rose-400 font-semibold">HOSTING_INFRASTRUCTURE_MATCH</td>
+                  <td class="py-3 px-3">Datacenter VPS</td>
+                  <td class="py-3 px-3 text-center font-bold text-rose-400">80–100</td>
+                  <td class="py-3 px-4 font-sans">Block automated scrapers &amp; server hops</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-rose-400 font-semibold">TOR_EXIT_NODE</td>
+                  <td class="py-3 px-3">Tor Anonymous Network</td>
+                  <td class="py-3 px-3 text-center font-bold text-rose-400">100</td>
+                  <td class="py-3 px-4 font-sans">Strict Connection Refusal</td>
+                </tr>
+                <tr class="bg-amber-500/[0.03]">
+                  <td class="py-3 px-4 text-amber-300 font-semibold">RESIDENTIAL_TUNNEL_PROXY</td>
+                  <td class="py-3 px-3">Residential Proxy</td>
+                  <td class="py-3 px-3 text-center font-bold text-amber-300">65–90</td>
+                  <td class="py-3 px-4 font-sans"><strong>Step-Up Challenge:</strong> Trigger MFA, CAPTCHA, or rate throttle</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-amber-300 font-semibold">INGRESS_ANOMALY_TEMPORAL</td>
+                  <td class="py-3 px-3">Behavioral Anomaly</td>
+                  <td class="py-3 px-3 text-center font-bold text-amber-300">50–75</td>
+                  <td class="py-3 px-4 font-sans">Log audit telemetry &amp; monitor velocity</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-emerald-400 font-semibold">CARRIER_RESIDENTIAL_CLEAN</td>
+                  <td class="py-3 px-3">Consumer Broadband</td>
+                  <td class="py-3 px-3 text-center font-bold text-emerald-400">0–15</td>
+                  <td class="py-3 px-4 font-sans">Unrestricted Clean Pass</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-emerald-400 font-semibold">CARRIER_MOBILE_CELLULAR</td>
+                  <td class="py-3 px-3">Mobile 5G/LTE</td>
+                  <td class="py-3 px-3 text-center font-bold text-emerald-400">0–25</td>
+                  <td class="py-3 px-4 font-sans">Clean Pass with CGNAT Session Tolerance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================== 5. ENDPOINTS ==================== -->
+        <section id="endpoints" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">5. Endpoints Specification</h2>
+
+          <div class="space-y-8">
+            <!-- GET /v1/check?ip= -->
+            <div class="p-5 rounded-xl bg-[#040609] border border-white/10">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                <code class="text-sm font-mono text-white font-semibold">/v1/check?ip={target_ip}</code>
+              </div>
+              <p class="text-xs text-white/70 mb-4 leading-relaxed font-sans">
+                Evaluates an explicit target IPv4 or IPv6 address. Standard dual-stack ingress lookup.
+              </p>
+              <div class="text-[11px] font-mono text-white/50 mb-1">Parameters:</div>
+              <ul class="list-disc list-inside text-xs font-mono text-white/70 mb-3 space-y-1">
+                <li><code class="text-cyan-400">ip</code> (string, required): Explicit IPv4 or IPv6 string.</li>
+              </ul>
+            </div>
+
+            <!-- GET /v1/check (auto visitor) -->
+            <div class="p-5 rounded-xl bg-[#040609] border border-white/10">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                <code class="text-sm font-mono text-white font-semibold">/v1/check</code>
+              </div>
+              <p class="text-xs text-white/70 mb-2 leading-relaxed font-sans">
+                Automatically detects and evaluates the inbound caller's connection from edge proxy headers (<code class="text-white/90 font-mono">CF-Connecting-IP</code>, <code class="text-white/90 font-mono">X-Forwarded-For</code>).
+              </p>
+            </div>
+
+            <!-- GET /v1/license/status -->
+            <div class="p-5 rounded-xl bg-[#040609] border border-white/10">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                <code class="text-sm font-mono text-white font-semibold">/v1/license/status</code>
+              </div>
+              <p class="text-xs text-white/70 mb-2 leading-relaxed font-sans">
+                Returns the authenticated license key's current tier, monthly allotment, and remaining check balance.
+              </p>
+            </div>
+
+            <!-- GET /healthz -->
+            <div class="p-5 rounded-xl bg-[#040609] border border-white/10">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                <code class="text-sm font-mono text-white font-semibold">/healthz</code>
+              </div>
+              <p class="text-xs text-white/70 mb-2 leading-relaxed font-sans">
+                Global Anycast edge liveness probe. Returns HTTP 200 OK (<code class="text-white/90 font-mono">{"status": "ok"}</code>). No authentication required.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 6. TELEMETRY HEADERS ==================== -->
+        <section id="headers" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">6. Telemetry &amp; Quota Response Headers</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            Every response from Sentinel includes real-time telemetry headers evaluated directly in volatile isolate RAM:
+          </p>
+
+          <div class="overflow-x-auto rounded-xl border border-white/10 bg-[#040609]">
+            <table class="w-full text-left border-collapse text-xs font-mono">
+              <thead>
+                <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.02]">
+                  <th class="py-2.5 px-4">Header</th>
+                  <th class="py-2.5 px-3">Example Value</th>
+                  <th class="py-2.5 px-4">Description</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-white/70">
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">X-Sentinel-Tier</td>
+                  <td class="py-2.5 px-3">business</td>
+                  <td class="py-2.5 px-4 font-sans">Active license plan tier.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">X-Sentinel-Quota-Limit</td>
+                  <td class="py-2.5 px-3">250000</td>
+                  <td class="py-2.5 px-4 font-sans">Total monthly evaluations allocated to key.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">X-Sentinel-Quota-Remaining</td>
+                  <td class="py-2.5 px-3">241820</td>
+                  <td class="py-2.5 px-4 font-sans">Checks remaining in active billing cycle.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">X-Sentinel-Dataset-Sync</td>
+                  <td class="py-2.5 px-3">2026-10-09T03:55:00Z</td>
+                  <td class="py-2.5 px-4 font-sans">Timestamp of active Global Threat Grid synchronization.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">X-Sentinel-Data-Age</td>
+                  <td class="py-2.5 px-3">180s</td>
+                  <td class="py-2.5 px-4 font-sans">Seconds elapsed since the latest micro-delta sync.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-cyan-400 font-semibold">X-Sentinel-Execution-Time</td>
+                  <td class="py-2.5 px-3">0.38ms</td>
+                  <td class="py-2.5 px-4 font-sans">Local isolate execution duration in milliseconds.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================== 7. ERROR CODES ==================== -->
+        <section id="error-codes" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">7. Errors &amp; Rate Limit Behavior</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            Sentinel follows standard HTTP status conventions. Error payloads return structured JSON envelopes:
+          </p>
+
+          <div class="overflow-x-auto rounded-xl border border-white/10 bg-[#040609] mb-4">
+            <table class="w-full text-left border-collapse text-xs font-mono">
+              <thead>
+                <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.02]">
+                  <th class="py-2.5 px-4">Status</th>
+                  <th class="py-2.5 px-3">Error Code</th>
+                  <th class="py-2.5 px-4">Trigger Condition</th>
+                  <th class="py-2.5 px-4">Client Recommended Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-white/70">
+                <tr>
+                  <td class="py-2.5 px-4 text-amber-400 font-semibold">400 Bad Request</td>
+                  <td class="py-2.5 px-3">INVALID_IP_FORMAT</td>
+                  <td class="py-2.5 px-4 font-sans">Supplied string is not valid IPv4 or IPv6 syntax.</td>
+                  <td class="py-2.5 px-4 font-sans">Validate IP format before querying API.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-rose-400 font-semibold">401 Unauthorized</td>
+                  <td class="py-2.5 px-3">INVALID_LICENSE_KEY</td>
+                  <td class="py-2.5 px-4 font-sans">Authorization header is missing or key is corrupted.</td>
+                  <td class="py-2.5 px-4 font-sans">Check environment variable <code class="text-white">SENTINEL_API_KEY</code>.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-rose-400 font-semibold">403 Forbidden</td>
+                  <td class="py-2.5 px-3">QUOTA_DEPLETED</td>
+                  <td class="py-2.5 px-4 font-sans">Monthly check allotment has reached 0.</td>
+                  <td class="py-2.5 px-4 font-sans">Upgrade tier or wait for monthly cycle reset.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-amber-400 font-semibold">429 Rate Limited</td>
+                  <td class="py-2.5 px-3">RATE_LIMIT_BURST</td>
+                  <td class="py-2.5 px-4 font-sans">Queries per second exceed burst threshold.</td>
+                  <td class="py-2.5 px-4 font-sans">Honor <code class="text-white">Retry-After</code> header; apply exponential backoff.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-white/50 font-semibold">500 / 503 Edge Error</td>
+                  <td class="py-2.5 px-3">EDGE_ISOLATE_TIMEOUT</td>
+                  <td class="py-2.5 px-4 font-sans">Edge isolate timeout or temporary transit disruption.</td>
+                  <td class="py-2.5 px-4 font-sans"><strong>Fail-Open:</strong> Forward traffic to avoid downtime.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================== 8. FAIL-OPEN ARCHITECTURE ==================== -->
+        <section id="fail-open" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">8. Production Fail-Open Architecture</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            Security software should never create single points of failure. In production web applications and APIs, always wrap Sentinel calls in a <strong>fail-open</strong> handler: if network connectivity to the edge fails or times out, permit the connection and log a warning rather than locking out legitimate visitors.
+          </p>
+
+          <div class="doc-pre text-zinc-300">
+            <span class="text-zinc-500 italic">// Node.js / Express Fail-Open Middleware Pattern</span><br>
+            <span class="text-blue-400 font-semibold">async function</span> <span class="text-amber-300">sentinelGuard</span>(req, res, next) {<br>
+            &nbsp;&nbsp;<span class="text-blue-400 font-semibold">const</span> clientIP = req.headers[<span class="text-zinc-300">"cf-connecting-ip"</span>] || req.socket.remoteAddress;<br>
+            <br>
+            &nbsp;&nbsp;<span class="text-blue-400 font-semibold">try</span> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">const</span> controller = <span class="text-blue-400 font-semibold">new</span> AbortController();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">const</span> timeout = setTimeout(() =&gt; controller.abort(), <span class="text-emerald-400">1200</span>); <span class="text-zinc-500 italic">// 1.2s timeout</span><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">const</span> resp = <span class="text-blue-400 font-semibold">await</span> fetch(<span class="text-zinc-300">`https://api.antivpn.tech/v1/check?ip=\${encodeURIComponent(clientIP)}`</span>, {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers: { <span class="text-zinc-300">"Authorization"</span>: <span class="text-zinc-300">`Bearer \${process.env.SENTINEL_API_KEY}`</span> },<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signal: controller.signal<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;clearTimeout(timeout);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">if</span> (!resp.ok) <span class="text-blue-400 font-semibold">return</span> next(); <span class="text-zinc-500 italic">// Fail-open on non-200</span><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">const</span> verdict = <span class="text-blue-400 font-semibold">await</span> resp.json();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">if</span> (verdict.action === <span class="text-zinc-300">"BLOCK"</span> &amp;&amp; verdict.confidence &gt;= <span class="text-emerald-400">0.95</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">return</span> res.status(<span class="text-emerald-400">403</span>).json({ error: <span class="text-zinc-300">"Access Denied: Untrusted Ingress"</span> });<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;next();<br>
+            &nbsp;&nbsp;} <span class="text-blue-400 font-semibold">catch</span> (err) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-zinc-500 italic">// Fail-open: Never disrupt legitimate user traffic if edge network is unreachable</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;console.warn(<span class="text-zinc-300">`[Sentinel Warning] Fail-open bypass for \${clientIP}: \${err.message}`</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;next();<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </div>
+        </section>
+
+        <!-- ==================== 9. GRADUATED DEFENSE PATTERN ==================== -->
+        <section id="graduated-defense" class="scroll-mt-24">
+          <h2 class="text-2xl font-semibold text-white tracking-tight mb-3">9. Graduated Defense Policy Recipe</h2>
+          <p class="text-sm text-white/70 leading-relaxed mb-4">
+            Take full advantage of <code class="text-cyan-400 font-mono">confidence</code> and <code class="text-cyan-400 font-mono">reason_codes</code> to separate deterministic datacenter/VPN drops from residential proxies:
+          </p>
+
+          <div class="doc-pre text-zinc-300">
+            <span class="text-zinc-500 italic">// Advanced multi-tier policy enforcement</span><br>
+            <span class="text-blue-400 font-semibold">function</span> <span class="text-amber-300">enforceIngressPolicy</span>(verdict) {<br>
+            &nbsp;&nbsp;<span class="text-zinc-500 italic">// 1. Deterministic Hard Drop (Commercial VPNs, Hosting Scrapers, Tor)</span><br>
+            &nbsp;&nbsp;<span class="text-blue-400 font-semibold">if</span> (verdict.risk_score &gt;= <span class="text-emerald-400">85</span> &amp;&amp; verdict.confidence &gt;= <span class="text-emerald-400">0.95</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">return</span> { decision: <span class="text-zinc-300">"DENY"</span>, status: <span class="text-emerald-400">403</span> };<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<span class="text-zinc-500 italic">// 2. Probabilistic Step-Up Challenge (Residential Proxies &amp; Tunnels)</span><br>
+            &nbsp;&nbsp;<span class="text-blue-400 font-semibold">if</span> (verdict.reason_codes.includes(<span class="text-zinc-300">"RESIDENTIAL_TUNNEL_PROXY"</span>)) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400 font-semibold">return</span> { decision: <span class="text-zinc-300">"CHALLENGE"</span>, action: <span class="text-zinc-300">"PROMPT_CAPTCHA_OR_MFA"</span> };<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<span class="text-zinc-500 italic">// 3. Clean Connection: Allow without friction</span><br>
+            &nbsp;&nbsp;<span class="text-blue-400 font-semibold">return</span> { decision: <span class="text-zinc-300">"PASS"</span> };<br>
+            }
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-white/10 bg-black py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-white/50">
+      <div class="flex items-center gap-3">
+        <span class="text-white font-semibold">SENTINEL</span>
+        <span>&middot;</span>
+        <span>Developer API Reference</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-6">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="benchmarks.html" class="hover:text-white transition-colors">Benchmarks</a>
+        <a href="docs.html" class="text-cyan-400 hover:text-white transition-colors">API Docs</a>
+        <a href="terms.html" class="hover:text-white transition-colors">Terms</a>
+        <a href="privacy.html" class="hover:text-white transition-colors">Privacy</a>
+        <a href="https://github.com/antivpn-tech" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub</a>
+      </div>
+      <div>
+        &copy; 2026 Sentinel Security. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

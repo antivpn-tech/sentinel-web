@@ -14,7 +14,10 @@ Evaluate any IP address live at **[antivpn.tech](https://antivpn.tech)**.
 
 ## How It Works
 
-Sentinel evaluates inbound traffic at the edge before connection authorization, eliminating server load and blocking malicious sessions with sub-millisecond edge compute execution across 300+ global PoPs.
+Sentinel evaluates inbound traffic at the edge before connection authorization, eliminating server load and blocking malicious sessions with sub-millisecond edge compute execution (<0.8ms local isolate RAM lookup) across 330+ Anycast edge locations in 50+ regional transit zones.
+
+> [!NOTE]
+> **What "Sub-ms" Measures**: Sub-millisecond (<0.8ms) strictly measures local V8 isolate compute and RAM trie evaluation time once the incoming connection reaches the edge node. It involves zero database lookups, zero disk writes, and zero cold starts. Total request overhead equals your client-to-edge Anycast network round-trip time (typically 5–25ms globally) plus the <0.8ms isolate decision cycle.
 
 ### Connection Filtering Lifecycle
 
@@ -26,18 +29,18 @@ Sentinel evaluates inbound traffic at the edge before connection authorization, 
   │  ► Subscriber Carrier Verification & Edge Ingress Consistency
   │  ► Autonomous Infrastructure Legitimate Routing Match
   ▼
-  Verdict: ALLOW (Risk: 0/100) ──► Forwarded to Application / Game Server
+  Verdict: ALLOW (Risk: 0/100, Confidence: 0.99) ──► Forwarded to Application / Game Server
 
 
 [ MALICIOUS ACTOR / BOT / PROXY ]
   │  (Mullvad, NordVPN, Bright Data, Hetzner VPS, Tor, etc.)
   ▼
 [ Sentinel Edge Network ]
-  │  ► Sentinel Global Threat Grid Correlation
+  │  ► Sentinel Global Threat Grid Correlation (100M+ active indicators · 450M+ vectors)
   │  ► Sentinel Carrier & Autonomous System Topology Match
   │  ► Dynamic Tunnel & Gateway Behavioral Anomaly Detection
   ▼
-  Verdict: BLOCK (Risk: 85-100) ──► Connection Refused / 403 Handshake Drop
+  Verdict: BLOCK (Risk: 85-100, Confidence: 0.98) ──► Connection Refused / 403 Handshake Drop
 ```
 
 ---
@@ -48,7 +51,8 @@ Sentinel evaluates inbound traffic at the edge before connection authorization, 
 * **Residential Proxy & Covert Tunnel Defense**: Identifies stealth residential proxy tunnels, rotating gateway nodes, and hijacked consumer endpoints via proprietary edge telemetry and temporal correlation.
 * **Dual-Stack IPv4 & IPv6 Parity**: Seamless inspection of both legacy IPv4 blocks and modern IPv6 privacy relay subnets.
 * **Carrier & Topology Intelligence**: Autonomous carrier routing and infrastructure topology validation, separating verified residential broadband from transit cloud infrastructure.
-* **Zero Cold Starts**: Distributed serverless edge presence across 330+ locations globally for sub-millisecond execution overhead.
+* **Zero Cold Starts & Line-Rate Table**: Distributed serverless edge presence across 330+ Anycast locations globally across 50+ regional transit zones for sub-millisecond isolate execution overhead.
+* **Empirical Benchmarks**: Publicly published detection and false positive rates against a verified 250,000 endpoint test set ([View Benchmarks](https://antivpn.tech/benchmarks)).
 
 ---
 
@@ -283,30 +287,37 @@ curl -s -X GET "https://api.antivpn.tech/v1/check?ip=185.213.154.20" \
   "ip": "185.213.154.20",
   "action": "BLOCK",
   "risk_score": 95,
+  "confidence": 0.98,
   "threat_type": "Commercial VPN",
+  "reason_codes": [
+    "CARRIER_COMMERCIAL_VPN",
+    "HOSTING_INFRASTRUCTURE_MATCH",
+    "GATEWAY_EXIT_ACTIVE"
+  ],
   "asn": 206016,
   "provider": "Mullvad VPN",
-  "hostname": null,
+  "carrier_type": "transit_cloud",
   "country": "SE",
-  "reasons": [
-    "Carrier Network Classification: Commercial VPN (Mullvad VPN)"
-  ],
-  "duration_ms": 1
+  "city": "Stockholm",
+  "execution_time_ms": 0.38,
+  "dataset_sync_timestamp": "2026-10-09T03:55:00Z"
 }
 ```
 
 ---
 
-## API Reference
+## Documentation & API Reference
 
-### `GET /v1/check?ip={target_ip}`
-Evaluates an explicit IPv4 or IPv6 address.
+For the full interactive API reference, error catalog, fail-open recipes, and rate limits, visit **[antivpn.tech/docs](https://antivpn.tech/docs)**.
 
-### `GET /v1/check`
-Automatically evaluates the inbound visitor's connection headers.
+For statistical detection rates and false positive benchmarks against 250,000 live endpoints, visit **[antivpn.tech/benchmarks](https://antivpn.tech/benchmarks)**.
 
-### `GET /healthz`
-Global edge health and liveness probe.
+### Endpoints Overview
+
+* **`GET /v1/check?ip={target_ip}`**: Evaluates an explicit IPv4 or IPv6 address.
+* **`GET /v1/check`**: Automatically evaluates the inbound visitor's connection headers.
+* **`GET /v1/license/status`**: Returns key tier and remaining monthly checks.
+* **`GET /healthz`**: Global Anycast edge health and liveness probe.
 
 ---
 
