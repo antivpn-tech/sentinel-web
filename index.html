@@ -319,7 +319,7 @@
         </a>
 
         <!-- Desktop Links -->
-        <div class="hidden md:flex items-center gap-10">
+        <div class="hidden md:flex items-center gap-6 lg:gap-8">
           <a href="#features" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Capabilities
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -952,37 +952,6 @@
             <div class="w-full">
               <canvas class="sparkline-canvas w-full h-7 sm:h-8 block" data-color="white"></canvas>
             </div>
-        </div>
-
-        <!-- Empirical Benchmarks Preview Card -->
-        <div class="mt-8 p-6 sm:p-8 bg-[#020204]/90 border border-white/10 rounded-2xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 hover:border-white/20 transition-all">
-          <div class="max-w-xl">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-              <span class="text-[11px] font-mono text-cyan-400 uppercase tracking-wider font-semibold">Empirical Evidence &amp; Accuracy</span>
-            </div>
-            <h3 class="text-xl sm:text-2xl font-display text-white mb-2">
-              Ground-Truth Benchmarks Across 250,000 Live Endpoints
-            </h3>
-            <p class="text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans">
-              Deterministic 99.94% precision on commercial VPNs &amp; datacenters. Transparent 94.8% recall on dynamic residential proxy tunnels with zero marketing inflation.
-            </p>
-          </div>
-
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto shrink-0">
-            <div class="grid grid-cols-2 gap-3 sm:flex sm:items-center font-mono text-xs">
-              <div class="px-3.5 py-2 rounded-lg bg-white/5 border border-white/10">
-                <span class="text-[10px] text-white/50 block">VPN Precision</span>
-                <span class="text-emerald-400 font-bold">99.94%</span>
-              </div>
-              <div class="px-3.5 py-2 rounded-lg bg-white/5 border border-white/10">
-                <span class="text-[10px] text-white/50 block">Residential FPR</span>
-                <span class="text-amber-300 font-bold">1.30%</span>
-              </div>
-            </div>
-            <a href="benchmarks.html" class="px-5 py-3 rounded-full bg-white text-black font-medium text-xs font-mono inline-flex items-center justify-center gap-2 hover:bg-white/90 transition-all shrink-0">
-              View Full Benchmark Report &rarr;
-            </a>
           </div>
         </div>
       </div>
@@ -1851,13 +1820,13 @@ return next();`
         plain: [
 `# 01 Fast Terminal Ingress Check (Zero Dependencies)
 curl -s -X GET "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
-  -H "Authorization: Bearer stl_live_your_api_key_here" \\
+  -H "Authorization: Bearer stl_test_showcase_demo" \\
   -H "Accept: application/json"
 
 # Sub-millisecond dual-stack ingress response from 330+ edge locations`,
 `# 02 Query Dual-Stack Threat Intelligence & Carrier Telemetry
 curl -s "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
-  -H "Authorization: Bearer stl_live_your_api_key_here" | jq .
+  -H "Authorization: Bearer stl_test_showcase_demo" | jq .
 
 # Carrier Network Classification verdict in volatile RAM`,
 `// 03 Real-Time JSON Ingress Verdict from Global Threat Grid
@@ -1881,13 +1850,13 @@ curl -s "https://api.antivpn.tech/v1/check?ip=1.1.1.1" \\
         html: [
 `<span class="text-zinc-500 italic"># 01 Fast Terminal Ingress Check (Zero Dependencies)</span>
 <span class="text-blue-400 font-semibold">curl</span> -s -X GET <span class="text-zinc-300">"https://api.antivpn.tech/v1/check?ip=1.1.1.1"</span> \\
-  -H <span class="text-zinc-300">"Authorization: Bearer stl_live_your_api_key_here"</span> \\
+  -H <span class="text-zinc-300">"Authorization: Bearer stl_test_showcase_demo"</span> \\
   -H <span class="text-zinc-300">"Accept: application/json"</span>
 
 <span class="text-zinc-500 italic"># Sub-millisecond dual-stack ingress response from 330+ edge locations</span>`,
 `<span class="text-zinc-500 italic"># 02 Query Dual-Stack Threat Intelligence &amp; Carrier Telemetry</span>
 <span class="text-blue-400 font-semibold">curl</span> -s <span class="text-zinc-300">"https://api.antivpn.tech/v1/check?ip=1.1.1.1"</span> \\
-  -H <span class="text-zinc-300">"Authorization: Bearer stl_live_your_api_key_here"</span> | jq .
+  -H <span class="text-zinc-300">"Authorization: Bearer stl_test_showcase_demo"</span> | jq .
 
 <span class="text-zinc-500 italic"># Carrier Network Classification verdict in volatile RAM</span>`,
 `<span class="text-zinc-500 italic">// 03 Real-Time JSON Ingress Verdict from Global Threat Grid</span>

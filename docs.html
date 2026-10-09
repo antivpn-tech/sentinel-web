@@ -74,41 +74,101 @@
 </head>
 <body class="min-h-screen bg-[#000101] text-[#ecebe7] antialiased selection:bg-cyan-500 selection:text-black">
 
-  <!-- ==================== HEADER ==================== -->
-  <header class="border-b border-white/10 bg-[#000101]/90 backdrop-blur-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2.5 text-white hover:text-cyan-400 transition-colors group">
-        <svg class="w-4 h-4 text-cyan-400 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-        </svg>
-        <div class="flex items-center gap-2">
-          <span class="font-bold tracking-tight text-base font-mono">SENTINEL</span>
-          <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">DOCUMENTATION</span>
+  <!-- ==================== 1. FLOATING NAVIGATION HEADER ==================== -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#000101]/80 backdrop-blur-xl border-b border-white/10">
+    <nav id="nav-inner" class="mx-auto max-w-[1400px]">
+      <div id="nav-container" class="flex items-center justify-between px-6 lg:px-8 h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/20 flex items-center justify-center text-white group-hover:scale-105 transition-transform">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span id="brand-title" class="font-display tracking-tight text-2xl text-white">SENTINEL</span>
+        </a>
+
+        <!-- Desktop Links -->
+        <div class="hidden md:flex items-center gap-6 lg:gap-8">
+          <a href="index.html#features" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Capabilities
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#how-it-works" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Architecture
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#infra" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Threat Grid
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#metrics" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Telemetry
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#integrations" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Integrations
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="benchmarks.html" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Benchmarks
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#pricing" class="nav-link text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Pricing
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
         </div>
-      </a>
 
-      <nav class="hidden md:flex items-center gap-6 text-xs font-mono">
-        <a href="index.html#features" class="text-white/60 hover:text-white transition-colors">Capabilities</a>
-        <a href="index.html#how-it-works" class="text-white/60 hover:text-white transition-colors">Architecture</a>
-        <a href="benchmarks.html" class="text-white/60 hover:text-white transition-colors">Benchmarks</a>
-        <span class="text-cyan-400 font-semibold border-b border-cyan-400 pb-0.5">Documentation</span>
-        <a href="index.html#pricing" class="text-white/60 hover:text-white transition-colors">Pricing</a>
-      </nav>
+        <!-- Desktop Actions -->
+        <div class="hidden md:flex items-center gap-4">
+          <span class="text-sm text-cyan-400 font-semibold font-mono">
+            API Docs
+          </span>
+          <a href="index.html#pricing" class="rounded-full bg-white hover:bg-white/90 text-black px-6 h-10 inline-flex items-center justify-center text-sm font-medium transition-all duration-500 shadow-sm hover:shadow-white/10">
+            Deploy Edge
+          </a>
+        </div>
 
-      <div class="flex items-center gap-3">
-        <a href="https://github.com/antivpn-tech" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-white transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-        </a>
-        <a href="benchmarks.html" class="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-all font-mono border border-white/15">
-          View Benchmarks
-        </a>
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-white" aria-label="Toggle Menu" onclick="toggleMobileNav()">
+          <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 w-full h-full bg-[#000101]/95 backdrop-blur-2xl z-40 transition-all duration-300 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-8 pt-24 overflow-y-auto">
+      <div class="flex flex-col gap-5 sm:gap-6">
+        <a href="index.html#features" class="text-xl sm:text-2xl font-display text-white">Capabilities</a>
+        <a href="index.html#how-it-works" class="text-xl sm:text-2xl font-display text-white">Architecture</a>
+        <a href="index.html#infra" class="text-xl sm:text-2xl font-display text-white">Threat Grid</a>
+        <a href="benchmarks.html" class="text-xl sm:text-2xl font-display text-white">Benchmarks</a>
+        <a href="index.html#metrics" class="text-xl sm:text-2xl font-display text-white">Telemetry</a>
+        <a href="index.html#integrations" class="text-xl sm:text-2xl font-display text-white">Integrations</a>
+        <a href="index.html#pricing" class="text-xl sm:text-2xl font-display text-white">Pricing</a>
+      </div>
+      <div class="flex flex-col gap-3 pt-6 border-t border-white/10 mt-6">
+        <a href="docs.html" class="w-full py-2.5 text-center text-cyan-400 font-mono text-xs sm:text-sm">API Docs</a>
+        <a href="index.html#pricing" class="w-full py-2.5 text-center bg-white text-black rounded-full font-medium text-xs sm:text-sm">Deploy Edge</a>
       </div>
     </div>
   </header>
 
-  <!-- ==================== MAIN CONTENT ==================== -->
-  <main class="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
-    <div class="grid lg:grid-cols-12 gap-8 items-start">
+  <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+  <main class="relative min-h-screen pt-28 pb-20 overflow-x-hidden">
+
+    <!-- Ambient Glows -->
+    <div class="absolute -top-[5%] left-[10%] w-[55%] h-[60%] bg-gradient-to-br from-cyan-500/15 via-sky-600/10 to-transparent rounded-full filter blur-[70px] opacity-70 pointer-events-none"></div>
+    <div class="absolute top-[35%] -right-[10%] w-[50%] h-[50%] bg-gradient-to-bl from-blue-600/10 via-indigo-700/5 to-transparent rounded-full filter blur-[80px] opacity-60 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
 
       <!-- Sticky Sidebar Navigation (3 cols) -->
       <aside class="hidden lg:block lg:col-span-3 sticky top-24 font-mono text-xs">
@@ -566,27 +626,112 @@
     </div>
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="border-t border-white/10 bg-black py-12 px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-white/50">
-      <div class="flex items-center gap-3">
-        <span class="text-white font-semibold">SENTINEL</span>
-        <span>&middot;</span>
-        <span>Developer API Reference</span>
+  <!-- ==================== GRAND FOOTER ==================== -->
+  <footer class="relative bg-black border-t border-white/10">
+    <!-- Ambient Edge Architecture Transition Banner -->
+    <div class="relative w-full h-[160px] md:h-[220px] overflow-hidden border-b border-white/5 flex items-center justify-center">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#000101]/60 to-black pointer-events-none"></div>
+      <div class="relative z-10 flex flex-col items-center text-center px-6">
+        <span class="text-xs font-mono text-white/80 bg-white/10 px-3 py-1 rounded-full border border-white/20 mb-3">
+          ZERO-LOG VOLATILE MEMORY ARCHITECTURE
+        </span>
+        <p class="text-xs md:text-sm text-muted-foreground font-mono">
+          Sub-millisecond isolate compute across 330+ Anycast edge locations in 50+ regional zones.
+        </p>
       </div>
-      <div class="flex flex-wrap items-center gap-6">
-        <a href="index.html" class="hover:text-white transition-colors">Home</a>
-        <a href="benchmarks.html" class="hover:text-white transition-colors">Benchmarks</a>
-        <a href="docs.html" class="text-cyan-400 hover:text-white transition-colors">API Docs</a>
-        <a href="terms.html" class="hover:text-white transition-colors">Terms</a>
-        <a href="privacy.html" class="hover:text-white transition-colors">Privacy</a>
-        <a href="https://github.com/antivpn-tech" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub</a>
+    </div>
+
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div class="py-12 sm:py-16 lg:py-20 border-b border-white/10">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-8 sm:gap-10 lg:gap-8">
+          <!-- Brand Column -->
+          <div class="col-span-2">
+            <a href="index.html" class="inline-flex items-center gap-2 mb-6">
+              <span class="font-display text-2xl text-white">SENTINEL</span>
+            </a>
+            <p class="text-sm text-muted-foreground leading-relaxed max-w-sm mb-6">
+              Stateless edge threat intelligence & proxy mitigation. Powered by the Sentinel Global Threat Grid with Zero-Log Volatile Memory Architecture.
+            </p>
+            <div class="flex items-center gap-2 text-xs font-mono text-white/80">
+              <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+              Global Threat Network Operational
+            </div>
+          </div>
+
+          <!-- Product -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Product</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="index.html#features" class="hover:text-white transition-colors">Capabilities</a></li>
+              <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">Architecture</a></li>
+              <li><a href="index.html#infra" class="hover:text-white transition-colors">Global Threat Grid</a></li>
+              <li><a href="benchmarks.html" class="hover:text-white transition-colors">Benchmarks</a></li>
+              <li><a href="index.html#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+
+          <!-- Developers -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Developers</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="docs.html" class="hover:text-white transition-colors text-cyan-400">Documentation</a></li>
+              <li><a href="docs.html" class="hover:text-white transition-colors text-cyan-400">API Reference</a></li>
+              <li><a href="index.html#integrations" class="hover:text-white transition-colors">Edge Middleware</a></li>
+              <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">Integration Code</a></li>
+            </ul>
+          </div>
+
+          <!-- Security & Legal -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Trust &amp; Legal</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="benchmarks.html" class="hover:text-white transition-colors">Accuracy Benchmarks</a></li>
+              <li><a href="privacy.html" class="hover:text-white transition-colors">Zero-Log Architecture</a></li>
+            </ul>
+          </div>
+
+          <!-- Connect -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Connect</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="https://github.com/antivpn-tech" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1.5">
+                GitHub
+                <svg class="w-3.5 h-3.5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div>
-        &copy; 2026 Sentinel Security. All rights reserved.
+
+      <div class="py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+        <span>&copy; 2026 Sentinel Edge Intelligence. All rights reserved.</span>
+        <div class="flex items-center gap-6">
+          <span>Volatile Memory Processing</span>
+          <span>&middot;</span>
+          <span>Stateless Verification</span>
+        </div>
       </div>
     </div>
   </footer>
 
+  <script>
+    function toggleMobileNav() {
+      const menu = document.getElementById('mobile-menu');
+      const hamburger = document.getElementById('hamburger-icon');
+      const close = document.getElementById('close-icon');
+      const isOpen = !menu.classList.contains('pointer-events-none');
+      if (isOpen) {
+        menu.classList.add('opacity-0', 'pointer-events-none');
+        hamburger.classList.remove('hidden');
+        close.classList.add('hidden');
+      } else {
+        menu.classList.remove('opacity-0', 'pointer-events-none');
+        hamburger.classList.add('hidden');
+        close.classList.remove('hidden');
+      }
+    }
+  </script>
 </body>
 </html>
