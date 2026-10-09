@@ -1,0 +1,376 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Sentinel Edge Intelligence API",
+    "version": "1.0.0",
+    "description": "Stateless edge threat intelligence, VPN/proxy mitigation, and carrier network classification running in zero-log volatile memory across 330+ Anycast edge nodes.",
+    "contact": {
+      "name": "Sentinel Operations",
+      "url": "https://antivpn.tech"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.antivpn.tech",
+      "description": "Global Anycast Edge Network"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    },
+    {
+      "ApiKeyHeader": []
+    }
+  ],
+  "paths": {
+    "/v1/check": {
+      "get": {
+        "summary": "Evaluate IP address (Query Parameter)",
+        "description": "Evaluates an inbound IPv4 or IPv6 address against the Sentinel Global Threat Grid.",
+        "operationId": "checkIpGet",
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "query",
+            "required": true,
+            "description": "Target IPv4 or IPv6 address to evaluate.",
+            "schema": {
+              "type": "string",
+              "example": "185.213.154.20"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful threat intelligence evaluation verdict.",
+            "headers": {
+              "X-Sentinel-Tier": {
+                "schema": { "type": "string" },
+                "description": "Active license tier"
+              },
+              "X-Sentinel-Quota-Limit": {
+                "schema": { "type": "integer" },
+                "description": "Total monthly allotment"
+              },
+              "X-Sentinel-Quota-Remaining": {
+                "schema": { "type": "integer" },
+                "description": "Checks remaining in current billing cycle"
+              },
+              "X-Sentinel-Data-Age": {
+                "schema": { "type": "string" },
+                "description": "Seconds since latest threat grid delta synchronization"
+              },
+              "X-Sentinel-Execution-Time": {
+                "schema": { "type": "string" },
+                "description": "Isolate execution duration in milliseconds"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SentinelVerdict"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid IP format",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing license key",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "403": {
+            "description": "Monthly quota depleted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit burst concurrency exceeded or daily sandbox cap reached",
+            "headers": {
+              "Retry-After": {
+                "schema": { "type": "integer" },
+                "description": "Seconds before backoff expires"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Evaluate IP address (Zero-Log POST Body)",
+        "description": "Evaluates an inbound IPv4 or IPv6 address passed in the request body. Recommended for zero-log privacy hygiene to prevent client IPs from appearing in reverse proxy URL access logs.",
+        "operationId": "checkIpPost",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["ip"],
+                "properties": {
+                  "ip": {
+                    "type": "string",
+                    "description": "IPv4 or IPv6 address to evaluate.",
+                    "example": "185.213.154.20"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful threat intelligence evaluation verdict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SentinelVerdict"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid IP format",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing license key",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "403": {
+            "description": "Monthly quota depleted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit concurrency exceeded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/license/status": {
+      "get": {
+        "summary": "Retrieve license tier and remaining quota balance",
+        "operationId": "getLicenseStatus",
+        "responses": {
+          "200": {
+            "description": "Current license status and quota balance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "active" },
+                    "tier": { "type": "string", "example": "business" },
+                    "monthly_limit": { "type": "integer", "example": 1000000 },
+                    "remaining": { "type": "integer", "example": 984520 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "summary": "Edge isolate liveness probe",
+        "operationId": "healthz",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Isolate is healthy and receptive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Authenticate using standard HTTP Bearer header: `Authorization: Bearer <key>`"
+      },
+      "ApiKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Sentinel-Key",
+        "description": "Authenticate using custom header: `X-Sentinel-Key: <key>`"
+      }
+    },
+    "schemas": {
+      "SentinelVerdict": {
+        "type": "object",
+        "required": [
+          "ip",
+          "action",
+          "risk_score",
+          "confidence",
+          "threat_type",
+          "is_vpn",
+          "is_gaming_optimizer",
+          "reason_codes",
+          "reasons"
+        ],
+        "properties": {
+          "ip": {
+            "type": "string",
+            "example": "185.213.154.20"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["ALLOW", "FLAG", "BLOCK"],
+            "example": "BLOCK"
+          },
+          "risk_score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "example": 95
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "example": 0.99,
+            "description": "Calibrated statistical posterior probability of the classification."
+          },
+          "threat_type": {
+            "type": "string",
+            "example": "Commercial VPN"
+          },
+          "is_vpn": {
+            "type": "boolean",
+            "example": true
+          },
+          "is_gaming_optimizer": {
+            "type": "boolean",
+            "example": false
+          },
+          "asn": {
+            "type": "integer",
+            "example": 206016
+          },
+          "provider": {
+            "type": "string",
+            "example": "Mullvad VPN AB"
+          },
+          "hostname": {
+            "type": "string",
+            "nullable": true,
+            "example": "se-sto-wg-001.relays.mullvad.net"
+          },
+          "carrier_type": {
+            "type": "string",
+            "example": "transit_cloud"
+          },
+          "country": {
+            "type": "string",
+            "example": "SE"
+          },
+          "city": {
+            "type": "string",
+            "nullable": true,
+            "example": "Stockholm"
+          },
+          "region": {
+            "type": "string",
+            "nullable": true,
+            "example": "Stockholm County"
+          },
+          "timezone": {
+            "type": "string",
+            "nullable": true,
+            "example": "Europe/Stockholm"
+          },
+          "reason_codes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "example": ["CARRIER_COMMERCIAL_VPN", "HOSTING_INFRASTRUCTURE_MATCH"]
+          },
+          "reasons": {
+            "type": "array",
+            "items": { "type": "string" },
+            "example": ["Commercial VPN network detected", "Hosting/Datacenter IP infrastructure match"]
+          },
+          "execution_time_ms": {
+            "type": "number",
+            "example": 0.38
+          },
+          "duration_ms": {
+            "type": "integer",
+            "example": 0
+          },
+          "dataset_sync_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-10-09T03:55:00Z"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["error", "code"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Rate limit exceeded"
+          },
+          "code": {
+            "type": "string",
+            "example": "RATE_LIMIT_EXCEEDED"
+          },
+          "retry_after": {
+            "type": "integer",
+            "example": 5
+          }
+        }
+      }
+    }
+  }
+}
