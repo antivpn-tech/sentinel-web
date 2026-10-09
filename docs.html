@@ -103,7 +103,7 @@
       background-color: #000101;
       color: #ecebe7;
       font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
     .font-display {
       font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -112,6 +112,13 @@
     }
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
+    }
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
     }
     /* Subtle Blueprint Dot Grid */
     .bg-grid-mesh {
@@ -188,13 +195,13 @@
         <!-- Desktop Action Buttons -->
         <div class="hidden lg:flex items-center gap-3">
           <div id="nav-license-btn-container" class="hidden">
-            <button onclick="SentinelLicense.openModal()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all shadow-[0_0_10px_rgba(16,185,129,0.15)] group" title="View Sentinel API License">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <button onclick="SentinelLicense.openModal()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/20 text-white font-mono text-xs hover:bg-white/20 hover:border-white/40 transition-all group" title="View Sentinel API License">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
               <span id="nav-license-label">Key</span>
             </button>
           </div>
           <!-- Active Docs Link -->
-          <a href="docs.html" id="sign-in-link" class="text-xs xl:text-sm text-cyan-400 font-semibold transition-all duration-500 font-mono">
+          <a href="docs.html" id="sign-in-link" class="text-xs xl:text-sm text-white font-medium transition-all duration-500 font-mono">
             API Docs
           </a>
           <a href="index.html#pricing" id="cta-button" class="rounded-full bg-white hover:bg-white/90 text-black px-4 xl:px-5 h-9 inline-flex items-center justify-center text-xs xl:text-sm font-medium transition-all duration-500 shadow-sm hover:shadow-white/10">
@@ -226,14 +233,14 @@
         <a href="index.html#pricing" class="text-xl sm:text-2xl font-display text-white">Pricing</a>
       </div>
       <div class="flex flex-col gap-3 pt-6 border-t border-white/10 mt-6">
-        <a href="docs.html" class="w-full py-2.5 text-center text-cyan-400 font-mono text-xs sm:text-sm">API Docs</a>
+        <a href="docs.html" class="w-full py-2.5 text-center text-white font-mono text-xs sm:text-sm">API Docs</a>
         <a href="index.html#pricing" class="w-full py-2.5 text-center bg-white text-black rounded-full font-medium text-xs sm:text-sm">Deploy Edge</a>
       </div>
     </div>
   </header>
 
   <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
-  <main class="relative min-h-screen pt-28 pb-20 overflow-x-hidden">
+  <main class="relative min-h-screen pt-28 pb-20">
 
     <!-- Tech Blueprint Background Grid Pattern -->
     <div class="absolute inset-0 bg-grid-mesh opacity-25 pointer-events-none z-0"></div>
@@ -247,22 +254,22 @@
       <div class="absolute h-px bg-white/10" style="top: 85%; left: 0; right: 0;"></div>
     </div>
 
-    <!-- Ambient Mesh Glows -->
-    <div class="absolute -top-[5%] left-[8%] w-[650px] h-[650px] bg-gradient-to-br from-cyan-500/15 via-sky-600/10 to-transparent rounded-full filter blur-[120px] opacity-75 pointer-events-none z-0"></div>
-    <div class="absolute top-[35%] -right-[10%] w-[550px] h-[550px] bg-gradient-to-bl from-blue-600/10 via-indigo-700/5 to-transparent rounded-full filter blur-[130px] opacity-60 pointer-events-none z-0"></div>
+    <!-- Ambient Subtle Neutral Glows -->
+    <div class="absolute -top-[5%] left-[10%] w-[500px] h-[500px] bg-white/[0.02] rounded-full filter blur-[120px] pointer-events-none z-0"></div>
+    <div class="absolute top-[40%] right-[5%] w-[450px] h-[450px] bg-white/[0.015] rounded-full filter blur-[130px] pointer-events-none z-0"></div>
 
-    <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
       <div class="grid lg:grid-cols-12 gap-8 items-start">
 
         <!-- Sticky Sidebar Navigation (3 cols) with Scrollspy -->
-        <aside class="hidden lg:block lg:col-span-3 sticky top-28 font-mono text-xs">
+        <aside class="hidden lg:block lg:col-span-3 sticky top-28 self-start font-mono text-xs max-h-[calc(100vh-8rem)] overflow-y-auto sidebar-scroll">
           <div class="p-5 rounded-2xl bg-[#020204]/90 backdrop-blur-md border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
             <div class="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/70"></span>
               <span class="text-white/50 uppercase tracking-wider font-semibold text-[11px]">API Reference</span>
             </div>
             <nav id="docs-sidebar-nav" class="flex flex-col gap-1 text-white/60">
-              <a href="#quickstart" class="sidebar-link px-3 py-2 rounded-lg hover:text-white hover:bg-white/5 transition-all text-white font-semibold bg-white/5">1. Quickstart</a>
+              <a href="#quickstart" class="sidebar-link px-3 py-2 rounded-lg hover:text-white hover:bg-white/5 transition-all text-white font-semibold bg-white/10 border-l-2 border-white">1. Quickstart</a>
               <a href="#authentication" class="sidebar-link px-3 py-2 rounded-lg hover:text-white hover:bg-white/5 transition-all">2. Authentication</a>
               <a href="#response-schema" class="sidebar-link px-3 py-2 rounded-lg hover:text-white hover:bg-white/5 transition-all">3. Output Schema &amp; Confidence</a>
               <a href="#reason-codes" class="sidebar-link px-3 py-2 rounded-lg hover:text-white hover:bg-white/5 transition-all">4. Reason Codes Catalog</a>
@@ -282,12 +289,12 @@
           <!-- Title / Overview Header -->
           <div class="pb-8 border-b border-white/10">
             <div class="flex flex-wrap items-center gap-3 mb-4 text-xs font-mono">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-semibold shadow-[0_0_15px_rgba(14,165,233,0.15)]">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/15 text-white/80 font-mono text-xs">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                 REST API v1
               </span>
               <span class="text-white/20">&middot;</span>
-              <span class="text-emerald-400">api.antivpn.tech</span>
+              <span class="text-white/80">api.antivpn.tech</span>
               <span class="text-white/20">&middot;</span>
               <span class="text-white/60">V8 Volatile Isolate Runtime</span>
             </div>
@@ -302,12 +309,12 @@
           <!-- ==================== 1. QUICKSTART ==================== -->
           <section id="quickstart" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Step 1</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Step 1</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">1. Quickstart (3 Minutes)</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
-              Send an authenticated HTTP GET request to <code class="text-cyan-400 font-mono">https://api.antivpn.tech/v1/check</code>. Pass your target IP address in the <code class="text-white font-mono">ip</code> query parameter.
+              Send an authenticated HTTP GET request to <code class="text-white font-mono">https://api.antivpn.tech/v1/check</code>. Pass your target IP address in the <code class="text-white font-mono">ip</code> query parameter.
             </p>
 
             <!-- Terminal Code Window -->
@@ -331,20 +338,20 @@
               </div>
             </div>
 
-            <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs font-mono text-cyan-300">
-              <strong>Public Showcase Key:</strong> You can run zero-cost evaluations against real endpoints without an account using: <code class="bg-black/60 px-2 py-0.5 rounded text-white border border-white/10">stl_test_showcase_demo</code>.
+            <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono text-white/80">
+              <strong class="text-white">Public Showcase Key:</strong> You can run zero-cost evaluations against real endpoints without an account using: <code class="bg-black/60 px-2 py-0.5 rounded text-white border border-white/10">stl_test_showcase_demo</code>.
             </div>
           </section>
 
           <!-- ==================== 2. AUTHENTICATION ==================== -->
           <section id="authentication" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Security</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Security</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">2. Authentication &amp; Credentials</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
-              All requests to <code class="text-cyan-400 font-mono">api.antivpn.tech</code> must be authenticated using your Universal License Key (<code class="text-white font-mono">stl_live_...</code>).
+              All requests to <code class="text-white font-mono">api.antivpn.tech</code> must be authenticated using your Universal License Key (<code class="text-white font-mono">stl_live_...</code>).
             </p>
 
             <h3 class="text-xs font-mono font-semibold text-white/80 mb-2 uppercase tracking-wider">Standard Authorization Header (Recommended)</h3>
@@ -367,12 +374,12 @@
           <!-- ==================== 3. OUTPUT SCHEMA & CONFIDENCE ==================== -->
           <section id="response-schema" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Payload Specification</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Payload Specification</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">3. Output Schema &amp; Calibrated Confidence Scoring</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
-              Sentinel provides multi-dimensional, machine-actionable outputs. Instead of forcing your application into a fragile binary block, responses include an integer <code class="text-white font-mono">risk_score</code> (0–100), a statistically calibrated <code class="text-cyan-400 font-mono">confidence</code> score (0.00–1.00), boolean flags (<code class="text-white font-mono">is_vpn</code>, <code class="text-white font-mono">is_gaming_optimizer</code>), and both machine-readable <code class="text-white font-mono">reason_codes</code> and human-readable <code class="text-white font-mono">reasons</code>.
+              Sentinel provides multi-dimensional, machine-actionable outputs. Instead of forcing your application into a fragile binary block, responses include an integer <code class="text-white font-mono">risk_score</code> (0–100), a statistically calibrated <code class="text-white font-mono">confidence</code> score (0.00–1.00), boolean flags (<code class="text-white font-mono">is_vpn</code>, <code class="text-white font-mono">is_gaming_optimizer</code>), and both machine-readable <code class="text-white font-mono">reason_codes</code> and human-readable <code class="text-white font-mono">reasons</code>.
             </p>
 
             <!-- JSON Payload Terminal Window -->
@@ -424,30 +431,30 @@
             <div class="mb-6">
               <h3 class="text-xs font-mono font-semibold text-white/80 mb-3 uppercase tracking-wider">Calibrated Confidence Scoring Defined</h3>
               <p class="text-xs text-white/60 mb-3 font-sans leading-relaxed">
-                Unlike uncalibrated raw heuristic scores, Sentinel's <code class="text-cyan-400 font-mono">confidence</code> metric represents the empirical posterior probability that the classification is correct. This enables mathematically sound policy thresholds:
+                Unlike uncalibrated raw heuristic scores, Sentinel's <code class="text-white font-mono">confidence</code> metric represents the empirical posterior probability that the classification is correct. This enables mathematically sound policy thresholds:
               </p>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div class="p-3.5 rounded-xl bg-[#020306] border border-emerald-500/20">
+                <div class="p-3.5 rounded-xl bg-[#020306] border border-white/10 hover:border-white/20 transition-colors">
                   <div class="flex items-center justify-between mb-1">
-                    <span class="text-emerald-400 font-mono text-xs font-bold">0.99 Confidence</span>
+                    <span class="text-white font-mono text-xs font-bold">0.99 Confidence</span>
                     <span class="text-[10px] font-mono text-white/40 uppercase">Deterministic</span>
                   </div>
                   <p class="text-[11px] text-white/70 font-sans leading-relaxed">
                     Direct ASN registry matches, authoritative Tor exit directory relays, datacenter server subnets, or verified clean residential broadband. Immediate hard-kick is statistically safe (&gt;99.9% precision).
                   </p>
                 </div>
-                <div class="p-3.5 rounded-xl bg-[#020306] border border-cyan-500/20">
+                <div class="p-3.5 rounded-xl bg-[#020306] border border-white/10 hover:border-white/20 transition-colors">
                   <div class="flex items-center justify-between mb-1">
-                    <span class="text-cyan-400 font-mono text-xs font-bold">0.95 Confidence</span>
+                    <span class="text-white/90 font-mono text-xs font-bold">0.95 Confidence</span>
                     <span class="text-[10px] font-mono text-white/40 uppercase">Carrier Classified</span>
                   </div>
                   <p class="text-[11px] text-white/70 font-sans leading-relaxed">
                     Mobile cellular networks with dynamic CGNAT pooling, or recognized gaming route accelerators (e.g. ExitLag). Requires whitelist preservation for legitimate gamers.
                   </p>
                 </div>
-                <div class="p-3.5 rounded-xl bg-[#020306] border border-amber-500/20">
+                <div class="p-3.5 rounded-xl bg-[#020306] border border-white/10 hover:border-white/20 transition-colors">
                   <div class="flex items-center justify-between mb-1">
-                    <span class="text-amber-400 font-mono text-xs font-bold">0.88 Confidence</span>
+                    <span class="text-white/80 font-mono text-xs font-bold">0.88 Confidence</span>
                     <span class="text-[10px] font-mono text-white/40 uppercase">Behavioral Anomaly</span>
                   </div>
                   <p class="text-[11px] text-white/70 font-sans leading-relaxed">
@@ -459,181 +466,185 @@
 
             <h3 class="text-xs font-mono font-semibold text-white/80 mb-3 uppercase tracking-wider">Field Dictionary</h3>
             <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-              <table class="w-full text-left border-collapse text-xs font-mono">
-                <thead>
-                  <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
-                    <th class="py-3.5 px-5">Field</th>
-                    <th class="py-3.5 px-4">Type</th>
-                    <th class="py-3.5 px-5">Description</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5 text-white/70">
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">ip</td>
-                    <td class="py-3 px-4 text-white/50">string</td>
-                    <td class="py-3 px-5 font-sans">The evaluated IPv4 or IPv6 address.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">action</td>
-                    <td class="py-3 px-4 text-white/50">string</td>
-                    <td class="py-3 px-5 font-sans"><code class="text-white">ALLOW</code>, <code class="text-amber-400">FLAG</code>, or <code class="text-rose-400">BLOCK</code> based on standard baseline thresholds.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">risk_score</td>
-                    <td class="py-3 px-4 text-white/50">integer (0–100)</td>
-                    <td class="py-3 px-5 font-sans">Assessed threat severity. 0 = clean subscriber, 100 = active confirmed threat hop.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">confidence</td>
-                    <td class="py-3 px-4 text-white/50">float (0.00–1.00)</td>
-                    <td class="py-3 px-5 font-sans">Calibrated statistical posterior probability of the classification. Allows developers to tune sensitivity thresholds.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">threat_type</td>
-                    <td class="py-3 px-4 text-white/50">string</td>
-                    <td class="py-3 px-5 font-sans">Primary classification (e.g. Commercial VPN, Datacenter VPS, Residential Proxy, Tor Exit Node, Clean Residential).</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">is_vpn</td>
-                    <td class="py-3 px-4 text-white/50">boolean</td>
-                    <td class="py-3 px-5 font-sans">Convenience boolean flag set to true if the connection represents an anonymizing proxy, VPN, or datacenter hop.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">is_gaming_optimizer</td>
-                    <td class="py-3 px-4 text-white/50">boolean</td>
-                    <td class="py-3 px-5 font-sans">True if traffic originates from a legitimate gaming network accelerator (e.g., ExitLag, WTFast, NoPing). Never blocked if whitelist is active.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">reason_codes</td>
-                    <td class="py-3 px-4 text-white/50">array[string]</td>
-                    <td class="py-3 px-5 font-sans">Standardized machine-readable triggers (e.g., <code class="text-white">CARRIER_COMMERCIAL_VPN</code>) for programmatic rule matching.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">reasons</td>
-                    <td class="py-3 px-4 text-white/50">array[string]</td>
-                    <td class="py-3 px-5 font-sans">Human-readable explanatory strings for console logging and UI alerts.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">asn</td>
-                    <td class="py-3 px-4 text-white/50">integer</td>
-                    <td class="py-3 px-5 font-sans">Autonomous System Number (ASN) resolved via Carrier &amp; Topology Intelligence.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">provider</td>
-                    <td class="py-3 px-4 text-white/50">string</td>
-                    <td class="py-3 px-5 font-sans">Carrier or ISP organization name associated with the Autonomous System.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">hostname</td>
-                    <td class="py-3 px-4 text-white/50">string (nullable)</td>
-                    <td class="py-3 px-5 font-sans">Reverse DNS (PTR) hostname sanitized with internal octet masking for privacy.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">execution_time_ms / duration_ms</td>
-                    <td class="py-3 px-4 text-white/50">float / integer</td>
-                    <td class="py-3 px-5 font-sans">Local in-memory isolate compute duration in milliseconds. Dual-supported for backward compatibility across all client SDKs.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">dataset_sync_timestamp</td>
-                    <td class="py-3 px-4 text-white/50">ISO 8601 string</td>
-                    <td class="py-3 px-5 font-sans">Timestamp when the active Global Threat Grid delta was synchronized into isolate memory.</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs font-mono">
+                  <thead>
+                    <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
+                      <th class="py-3.5 px-5">Field</th>
+                      <th class="py-3.5 px-4">Type</th>
+                      <th class="py-3.5 px-5">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5 text-white/70">
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">ip</td>
+                      <td class="py-3 px-4 text-white/50">string</td>
+                      <td class="py-3 px-5 font-sans">The evaluated IPv4 or IPv6 address.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">action</td>
+                      <td class="py-3 px-4 text-white/50">string</td>
+                      <td class="py-3 px-5 font-sans"><code class="text-white">ALLOW</code>, <code class="text-amber-400">FLAG</code>, or <code class="text-rose-400">BLOCK</code> based on standard baseline thresholds.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">risk_score</td>
+                      <td class="py-3 px-4 text-white/50">integer (0–100)</td>
+                      <td class="py-3 px-5 font-sans">Assessed threat severity. 0 = clean subscriber, 100 = active confirmed threat hop.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">confidence</td>
+                      <td class="py-3 px-4 text-white/50">float (0.00–1.00)</td>
+                      <td class="py-3 px-5 font-sans">Calibrated statistical posterior probability of the classification. Allows developers to tune sensitivity thresholds.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">threat_type</td>
+                      <td class="py-3 px-4 text-white/50">string</td>
+                      <td class="py-3 px-5 font-sans">Primary classification (e.g. Commercial VPN, Datacenter VPS, Residential Proxy, Tor Exit Node, Clean Residential).</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">is_vpn</td>
+                      <td class="py-3 px-4 text-white/50">boolean</td>
+                      <td class="py-3 px-5 font-sans">Convenience boolean flag set to true if the connection represents an anonymizing proxy, VPN, or datacenter hop.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">is_gaming_optimizer</td>
+                      <td class="py-3 px-4 text-white/50">boolean</td>
+                      <td class="py-3 px-5 font-sans">True if traffic originates from a legitimate gaming network accelerator (e.g., ExitLag, WTFast, NoPing). Never blocked if whitelist is active.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">reason_codes</td>
+                      <td class="py-3 px-4 text-white/50">array[string]</td>
+                      <td class="py-3 px-5 font-sans">Standardized machine-readable triggers (e.g., <code class="text-white">CARRIER_COMMERCIAL_VPN</code>) for programmatic rule matching.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">reasons</td>
+                      <td class="py-3 px-4 text-white/50">array[string]</td>
+                      <td class="py-3 px-5 font-sans">Human-readable explanatory strings for console logging and UI alerts.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">asn</td>
+                      <td class="py-3 px-4 text-white/50">integer</td>
+                      <td class="py-3 px-5 font-sans">Autonomous System Number (ASN) resolved via Carrier &amp; Topology Intelligence.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">provider</td>
+                      <td class="py-3 px-4 text-white/50">string</td>
+                      <td class="py-3 px-5 font-sans">Carrier or ISP organization name associated with the Autonomous System.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">hostname</td>
+                      <td class="py-3 px-4 text-white/50">string (nullable)</td>
+                      <td class="py-3 px-5 font-sans">Reverse DNS (PTR) hostname sanitized with internal octet masking for privacy.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">execution_time_ms / duration_ms</td>
+                      <td class="py-3 px-4 text-white/50">float / integer</td>
+                      <td class="py-3 px-5 font-sans">Local in-memory isolate compute duration in milliseconds. Dual-supported for backward compatibility across all client SDKs.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">dataset_sync_timestamp</td>
+                      <td class="py-3 px-4 text-white/50">ISO 8601 string</td>
+                      <td class="py-3 px-5 font-sans">Timestamp when the active Global Threat Grid delta was synchronized into isolate memory.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
 
           <!-- ==================== 4. REASON CODES CATALOG ==================== -->
           <section id="reason-codes" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Policy Triggers</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Policy Triggers</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">4. Standardized Reason Codes Catalog</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
-              Developers can write fine-grained application logic by inspecting the <code class="text-cyan-400 font-mono">reason_codes</code> array:
+              Developers can write fine-grained application logic by inspecting the <code class="text-white font-mono">reason_codes</code> array:
             </p>
 
             <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-              <table class="w-full text-left border-collapse text-xs font-mono">
-                <thead>
-                  <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
-                    <th class="py-3.5 px-5">Reason Code</th>
-                    <th class="py-3.5 px-4">Category</th>
-                    <th class="py-3.5 px-4 text-center">Typical Risk</th>
-                    <th class="py-3.5 px-5">Recommended Enforcement</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5 text-white/70">
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-rose-400 font-semibold">CARRIER_COMMERCIAL_VPN</td>
-                    <td class="py-3 px-4">Commercial VPN</td>
-                    <td class="py-3 px-4 text-center font-bold text-rose-400">85–100</td>
-                    <td class="py-3 px-5 font-sans">Immediate Handshake Drop or 403 Forbidden</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-rose-400 font-semibold">HOSTING_INFRASTRUCTURE_MATCH</td>
-                    <td class="py-3 px-4">Datacenter VPS</td>
-                    <td class="py-3 px-4 text-center font-bold text-rose-400">80–100</td>
-                    <td class="py-3 px-5 font-sans">Block automated scrapers &amp; server hops</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-rose-400 font-semibold">TOR_EXIT_NODE</td>
-                    <td class="py-3 px-4">Tor Anonymous Network</td>
-                    <td class="py-3 px-4 text-center font-bold text-rose-400">100</td>
-                    <td class="py-3 px-5 font-sans">Strict Connection Refusal</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02] bg-amber-500/[0.03]">
-                    <td class="py-3 px-5 text-amber-300 font-semibold">RESIDENTIAL_TUNNEL_PROXY</td>
-                    <td class="py-3 px-4">Residential Proxy</td>
-                    <td class="py-3 px-4 text-center font-bold text-amber-300">65–90</td>
-                    <td class="py-3 px-5 font-sans"><strong>Step-Up Challenge:</strong> Trigger MFA, CAPTCHA, or rate throttle</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-amber-300 font-semibold">INGRESS_ANOMALY_TEMPORAL</td>
-                    <td class="py-3 px-4">Behavioral Anomaly</td>
-                    <td class="py-3 px-4 text-center font-bold text-amber-300">50–75</td>
-                    <td class="py-3 px-5 font-sans">Log audit telemetry &amp; monitor velocity</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-emerald-400 font-semibold">CARRIER_RESIDENTIAL_CLEAN</td>
-                    <td class="py-3 px-4">Consumer Broadband</td>
-                    <td class="py-3 px-4 text-center font-bold text-emerald-400">0–15</td>
-                    <td class="py-3 px-5 font-sans">Unrestricted Clean Pass</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-emerald-400 font-semibold">CARRIER_MOBILE_CELLULAR</td>
-                    <td class="py-3 px-4">Mobile 5G/LTE</td>
-                    <td class="py-3 px-4 text-center font-bold text-emerald-400">0–25</td>
-                    <td class="py-3 px-5 font-sans">Clean Pass with CGNAT Session Tolerance</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs font-mono">
+                  <thead>
+                    <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
+                      <th class="py-3.5 px-5">Reason Code</th>
+                      <th class="py-3.5 px-4">Category</th>
+                      <th class="py-3.5 px-4 text-center">Typical Risk</th>
+                      <th class="py-3.5 px-5">Recommended Enforcement</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5 text-white/70">
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">CARRIER_COMMERCIAL_VPN</td>
+                      <td class="py-3 px-4">Commercial VPN</td>
+                      <td class="py-3 px-4 text-center font-bold text-white/90">85–100</td>
+                      <td class="py-3 px-5 font-sans">Immediate Handshake Drop or 403 Forbidden</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">HOSTING_INFRASTRUCTURE_MATCH</td>
+                      <td class="py-3 px-4">Datacenter VPS</td>
+                      <td class="py-3 px-4 text-center font-bold text-white/90">80–100</td>
+                      <td class="py-3 px-5 font-sans">Block automated scrapers &amp; server hops</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">TOR_EXIT_NODE</td>
+                      <td class="py-3 px-4">Tor Anonymous Network</td>
+                      <td class="py-3 px-4 text-center font-bold text-white/90">100</td>
+                      <td class="py-3 px-5 font-sans">Strict Connection Refusal</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02] bg-white/[0.02]">
+                      <td class="py-3 px-5 text-zinc-300 font-mono font-medium">RESIDENTIAL_TUNNEL_PROXY</td>
+                      <td class="py-3 px-4">Residential Proxy</td>
+                      <td class="py-3 px-4 text-center font-bold text-zinc-300">65–90</td>
+                      <td class="py-3 px-5 font-sans"><strong>Step-Up Challenge:</strong> Trigger MFA, CAPTCHA, or rate throttle</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-zinc-300 font-mono font-medium">INGRESS_ANOMALY_TEMPORAL</td>
+                      <td class="py-3 px-4">Behavioral Anomaly</td>
+                      <td class="py-3 px-4 text-center font-bold text-zinc-300">50–75</td>
+                      <td class="py-3 px-5 font-sans">Log audit telemetry &amp; monitor velocity</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white/80 font-mono font-medium">CARRIER_RESIDENTIAL_CLEAN</td>
+                      <td class="py-3 px-4">Consumer Broadband</td>
+                      <td class="py-3 px-4 text-center font-bold text-white/80">0–15</td>
+                      <td class="py-3 px-5 font-sans">Unrestricted Clean Pass</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white/80 font-mono font-medium">CARRIER_MOBILE_CELLULAR</td>
+                      <td class="py-3 px-4">Mobile 5G/LTE</td>
+                      <td class="py-3 px-4 text-center font-bold text-white/80">0–25</td>
+                      <td class="py-3 px-5 font-sans">Clean Pass with CGNAT Session Tolerance</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
 
           <!-- ==================== 5. ENDPOINTS ==================== -->
           <section id="endpoints" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">REST Endpoints</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">REST Endpoints</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-6">5. Endpoints Specification</h2>
 
             <div class="space-y-6">
               <!-- POST /v1/check (Privacy-Hardened JSON Body) -->
-              <div class="p-6 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-cyan-500/20 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+              <div class="p-6 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold">POST</span>
+                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-white/10 text-white border border-white/20 font-semibold">POST</span>
                   <code class="text-sm font-mono text-white font-semibold">/v1/check</code>
-                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Recommended for Zero-Log Hygiene</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 text-white/70 border border-white/10">Recommended for Zero-Log Hygiene</span>
                 </div>
                 <p class="text-xs text-white/70 mb-3 leading-relaxed font-sans">
                   Evaluates an explicit target IP address transmitted via a JSON request body (<code class="text-white font-mono">{ "ip": "1.1.1.1" }</code>). 
                   <strong>Privacy Advantage:</strong> Sending the IP in the POST body ensures visitor IPs are never recorded in URL access logs, intermediate proxy access logs, or browser histories, preserving Sentinel's Zero-Log Volatile Memory Architecture.
                 </p>
                 <div class="text-[11px] font-mono text-white/50 mb-1">Request Body (application/json):</div>
-                <div class="p-3 bg-[#000101] border border-white/10 rounded-xl font-mono text-xs text-cyan-300">
+                <div class="p-3 bg-[#000101] border border-white/10 rounded-xl font-mono text-xs text-white/90">
                   { "ip": "185.213.154.20" }
                 </div>
               </div>
@@ -641,7 +652,7 @@
               <!-- GET /v1/check?ip= -->
               <div class="p-6 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-white/10 text-white/90 border border-white/20 font-semibold">GET</span>
                   <code class="text-sm font-mono text-white font-semibold">/v1/check?ip={target_ip}</code>
                 </div>
                 <p class="text-xs text-white/70 mb-4 leading-relaxed font-sans">
@@ -649,14 +660,14 @@
                 </p>
                 <div class="text-[11px] font-mono text-white/50 mb-1">Parameters:</div>
                 <ul class="list-disc list-inside text-xs font-mono text-white/70 space-y-1">
-                  <li><code class="text-cyan-400">ip</code> (string, required): Explicit IPv4 or IPv6 string.</li>
+                  <li><code class="text-white font-mono">ip</code> (string, required): Explicit IPv4 or IPv6 string.</li>
                 </ul>
               </div>
 
               <!-- GET /v1/check (auto visitor) -->
               <div class="p-6 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-white/10 text-white/90 border border-white/20 font-semibold">GET</span>
                   <code class="text-sm font-mono text-white font-semibold">/v1/check</code>
                 </div>
                 <p class="text-xs text-white/70 leading-relaxed font-sans">
@@ -667,7 +678,7 @@
               <!-- GET /v1/license/status -->
               <div class="p-6 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-white/10 text-white/90 border border-white/20 font-semibold">GET</span>
                   <code class="text-sm font-mono text-white font-semibold">/v1/license/status</code>
                 </div>
                 <p class="text-xs text-white/70 leading-relaxed font-sans">
@@ -678,7 +689,7 @@
               <!-- GET /healthz -->
               <div class="p-6 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">GET</span>
+                  <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-white/10 text-white/90 border border-white/20 font-semibold">GET</span>
                   <code class="text-sm font-mono text-white font-semibold">/healthz</code>
                 </div>
                 <p class="text-xs text-white/70 leading-relaxed font-sans">
@@ -691,8 +702,8 @@
           <!-- ==================== 6. TELEMETRY HEADERS ==================== -->
           <section id="headers" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Response Metadata</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Response Metadata</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">6. Telemetry &amp; Quota Response Headers</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
@@ -700,55 +711,57 @@
             </p>
 
             <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-              <table class="w-full text-left border-collapse text-xs font-mono">
-                <thead>
-                  <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
-                    <th class="py-3.5 px-5">Header</th>
-                    <th class="py-3.5 px-4">Example Value</th>
-                    <th class="py-3.5 px-5">Description</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5 text-white/70">
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">X-Sentinel-Tier</td>
-                    <td class="py-3 px-4">business</td>
-                    <td class="py-3 px-5 font-sans">Active license plan tier.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">X-Sentinel-Quota-Limit</td>
-                    <td class="py-3 px-4">250000</td>
-                    <td class="py-3 px-5 font-sans">Total monthly evaluations allocated to key.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">X-Sentinel-Quota-Remaining</td>
-                    <td class="py-3 px-4">241820</td>
-                    <td class="py-3 px-5 font-sans">Checks remaining in active billing cycle.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">X-Sentinel-Dataset-Sync</td>
-                    <td class="py-3 px-4">2026-10-09T03:55:00Z</td>
-                    <td class="py-3 px-5 font-sans">Timestamp of active Global Threat Grid synchronization.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">X-Sentinel-Data-Age</td>
-                    <td class="py-3 px-4">180s</td>
-                    <td class="py-3 px-5 font-sans">Seconds elapsed since the latest micro-delta sync.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">X-Sentinel-Execution-Time</td>
-                    <td class="py-3 px-4">0.38ms</td>
-                    <td class="py-3 px-5 font-sans">Local isolate execution duration in milliseconds.</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs font-mono">
+                  <thead>
+                    <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
+                      <th class="py-3.5 px-5">Header</th>
+                      <th class="py-3.5 px-4">Example Value</th>
+                      <th class="py-3.5 px-5">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5 text-white/70">
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">X-Sentinel-Tier</td>
+                      <td class="py-3 px-4">business</td>
+                      <td class="py-3 px-5 font-sans">Active license plan tier.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">X-Sentinel-Quota-Limit</td>
+                      <td class="py-3 px-4">250000</td>
+                      <td class="py-3 px-5 font-sans">Total monthly evaluations allocated to key.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">X-Sentinel-Quota-Remaining</td>
+                      <td class="py-3 px-4">241820</td>
+                      <td class="py-3 px-5 font-sans">Checks remaining in active billing cycle.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">X-Sentinel-Dataset-Sync</td>
+                      <td class="py-3 px-4">2026-10-09T03:55:00Z</td>
+                      <td class="py-3 px-5 font-sans">Timestamp of active Global Threat Grid synchronization.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">X-Sentinel-Data-Age</td>
+                      <td class="py-3 px-4">180s</td>
+                      <td class="py-3 px-5 font-sans">Seconds elapsed since the latest micro-delta sync.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">X-Sentinel-Execution-Time</td>
+                      <td class="py-3 px-4">0.38ms</td>
+                      <td class="py-3 px-5 font-sans">Local isolate execution duration in milliseconds.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
 
           <!-- ==================== 7. ERROR CODES & TIER LIMITS ==================== -->
           <section id="error-codes" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Status Codes &amp; Quotas</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Status Codes &amp; Quotas</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">7. Errors, Quota Tiers &amp; Rate Limit Behavior</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
@@ -758,108 +771,112 @@
             <!-- Tier Allotment & Rate Limits Table -->
             <h3 class="text-xs font-mono font-semibold text-white/80 mb-3 uppercase tracking-wider">Tier Quota &amp; Concurrency Matrix</h3>
             <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] mb-6">
-              <table class="w-full text-left border-collapse text-xs font-mono">
-                <thead>
-                  <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
-                    <th class="py-3.5 px-5">Tier</th>
-                    <th class="py-3.5 px-4">Monthly Allotment</th>
-                    <th class="py-3.5 px-4">Burst Concurrency</th>
-                    <th class="py-3.5 px-5">Overage / Quota Depletion</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5 text-white/70">
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-zinc-300 font-semibold">Sandbox Demo (<code class="text-xs text-cyan-300 font-mono">stl_test_showcase_demo</code>)</td>
-                    <td class="py-3 px-4">50 requests / day</td>
-                    <td class="py-3 px-4">5 req / sec</td>
-                    <td class="py-3 px-5 font-sans text-amber-300">Shared public rate limit; HTTP 429 when exhausted</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">Developer</td>
-                    <td class="py-3 px-4">5,000 checks / mo</td>
-                    <td class="py-3 px-4">15 req / sec</td>
-                    <td class="py-3 px-5 font-sans">Soft-cap warning at &lt;500 checks remaining; HTTP 403 on depletion</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">Starter</td>
-                    <td class="py-3 px-4">150,000 checks / mo</td>
-                    <td class="py-3 px-4">50 req / sec</td>
-                    <td class="py-3 px-5 font-sans">$0.25 / 10k overage available; automatic billing rollover</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">Business</td>
-                    <td class="py-3 px-4">1,000,000 checks / mo</td>
-                    <td class="py-3 px-4">200 req / sec</td>
-                    <td class="py-3 px-5 font-sans">$0.18 / 10k overage; priority edge isolate routing</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">Scale</td>
-                    <td class="py-3 px-4">5,000,000 checks / mo</td>
-                    <td class="py-3 px-4">1,000 req / sec</td>
-                    <td class="py-3 px-5 font-sans">$0.10 / 10k overage; global multi-key orchestration</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-cyan-400 font-semibold">Enterprise</td>
-                    <td class="py-3 px-4">20,000,000 checks / mo</td>
-                    <td class="py-3 px-4">Custom dedicated</td>
-                    <td class="py-3 px-5 font-sans">$0.05 / 10k overage; 99.99% SLA &amp; dedicated edge reflector</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs font-mono">
+                  <thead>
+                    <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
+                      <th class="py-3.5 px-5">Tier</th>
+                      <th class="py-3.5 px-4">Monthly Allotment</th>
+                      <th class="py-3.5 px-4">Burst Concurrency</th>
+                      <th class="py-3.5 px-5">Overage / Quota Depletion</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5 text-white/70">
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-zinc-300 font-semibold">Sandbox Demo (<code class="text-xs text-white/80 font-mono">stl_test_showcase_demo</code>)</td>
+                      <td class="py-3 px-4">50 requests / day</td>
+                      <td class="py-3 px-4">5 req / sec</td>
+                      <td class="py-3 px-5 font-sans text-amber-300">Shared public rate limit; HTTP 429 when exhausted</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">Developer</td>
+                      <td class="py-3 px-4">5,000 checks / mo</td>
+                      <td class="py-3 px-4">15 req / sec</td>
+                      <td class="py-3 px-5 font-sans">Soft-cap warning at &lt;500 checks remaining; HTTP 403 on depletion</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">Starter</td>
+                      <td class="py-3 px-4">150,000 checks / mo</td>
+                      <td class="py-3 px-4">50 req / sec</td>
+                      <td class="py-3 px-5 font-sans">$0.25 / 10k overage available; automatic billing rollover</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">Business</td>
+                      <td class="py-3 px-4">1,000,000 checks / mo</td>
+                      <td class="py-3 px-4">200 req / sec</td>
+                      <td class="py-3 px-5 font-sans">$0.18 / 10k overage; priority edge isolate routing</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">Scale</td>
+                      <td class="py-3 px-4">5,000,000 checks / mo</td>
+                      <td class="py-3 px-4">1,000 req / sec</td>
+                      <td class="py-3 px-5 font-sans">$0.10 / 10k overage; global multi-key orchestration</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white font-mono font-medium">Enterprise</td>
+                      <td class="py-3 px-4">20,000,000 checks / mo</td>
+                      <td class="py-3 px-4">Custom dedicated</td>
+                      <td class="py-3 px-5 font-sans">$0.05 / 10k overage; 99.99% SLA &amp; dedicated edge reflector</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <h3 class="text-xs font-mono font-semibold text-white/80 mb-3 uppercase tracking-wider">HTTP Status Codes &amp; Backoff Handling</h3>
             <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-              <table class="w-full text-left border-collapse text-xs font-mono">
-                <thead>
-                  <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
-                    <th class="py-3.5 px-5">Status</th>
-                    <th class="py-3.5 px-4">Error Code</th>
-                    <th class="py-3.5 px-5">Trigger Condition</th>
-                    <th class="py-3.5 px-5">Client Recommended Action</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5 text-white/70">
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-amber-400 font-semibold">400 Bad Request</td>
-                    <td class="py-3 px-4">INVALID_IP_FORMAT</td>
-                    <td class="py-3 px-5 font-sans">Supplied string is not valid IPv4 or IPv6 syntax.</td>
-                    <td class="py-3 px-5 font-sans">Validate IP format before querying API.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-rose-400 font-semibold">401 Unauthorized</td>
-                    <td class="py-3 px-4">INVALID_LICENSE_KEY</td>
-                    <td class="py-3 px-5 font-sans">Authorization header is missing or key is unrecognized.</td>
-                    <td class="py-3 px-5 font-sans">Check environment variable <code class="text-white font-mono">SENTINEL_API_KEY</code> or configuration file.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-rose-400 font-semibold">403 Forbidden</td>
-                    <td class="py-3 px-4">QUOTA_DEPLETED</td>
-                    <td class="py-3 px-5 font-sans">Monthly check allotment has reached 0.</td>
-                    <td class="py-3 px-5 font-sans"><strong>Fail-Open:</strong> Plugins default to open allow to avoid lockout. Upgrade tier at <a href="https://antivpn.tech" class="text-cyan-400 underline">antivpn.tech</a>.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-amber-400 font-semibold">429 Rate Limited</td>
-                    <td class="py-3 px-4">RATE_LIMIT_EXCEEDED</td>
-                    <td class="py-3 px-5 font-sans">Queries per second exceed burst concurrency, or daily sandbox cap reached.</td>
-                    <td class="py-3 px-5 font-sans">Honor <code class="text-white font-mono">Retry-After</code> header (seconds). Apply exponential backoff with jitter.</td>
-                  </tr>
-                  <tr class="hover:bg-white/[0.02]">
-                    <td class="py-3 px-5 text-white/50 font-semibold">500 / 503 Edge Error</td>
-                    <td class="py-3 px-4">EDGE_ISOLATE_TIMEOUT</td>
-                    <td class="py-3 px-5 font-sans">Edge isolate timeout or temporary transit disruption.</td>
-                    <td class="py-3 px-5 font-sans"><strong>Fail-Open:</strong> Forward traffic immediately to avoid user-facing downtime.</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs font-mono">
+                  <thead>
+                    <tr class="border-b border-white/10 text-white/50 text-[11px] bg-white/[0.03]">
+                      <th class="py-3.5 px-5">Status</th>
+                      <th class="py-3.5 px-4">Error Code</th>
+                      <th class="py-3.5 px-5">Trigger Condition</th>
+                      <th class="py-3.5 px-5">Client Recommended Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5 text-white/70">
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-amber-400 font-semibold">400 Bad Request</td>
+                      <td class="py-3 px-4">INVALID_IP_FORMAT</td>
+                      <td class="py-3 px-5 font-sans">Supplied string is not valid IPv4 or IPv6 syntax.</td>
+                      <td class="py-3 px-5 font-sans">Validate IP format before querying API.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-rose-400 font-semibold">401 Unauthorized</td>
+                      <td class="py-3 px-4">INVALID_LICENSE_KEY</td>
+                      <td class="py-3 px-5 font-sans">Authorization header is missing or key is unrecognized.</td>
+                      <td class="py-3 px-5 font-sans">Check environment variable <code class="text-white font-mono">SENTINEL_API_KEY</code> or configuration file.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-rose-400 font-semibold">403 Forbidden</td>
+                      <td class="py-3 px-4">QUOTA_DEPLETED</td>
+                      <td class="py-3 px-5 font-sans">Monthly check allotment has reached 0.</td>
+                      <td class="py-3 px-5 font-sans"><strong>Fail-Open:</strong> Plugins default to open allow to avoid lockout. Upgrade tier at <a href="https://antivpn.tech" class="text-white underline">antivpn.tech</a>.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-amber-400 font-semibold">429 Rate Limited</td>
+                      <td class="py-3 px-4">RATE_LIMIT_EXCEEDED</td>
+                      <td class="py-3 px-5 font-sans">Queries per second exceed burst concurrency, or daily sandbox cap reached.</td>
+                      <td class="py-3 px-5 font-sans">Honor <code class="text-white font-mono">Retry-After</code> header (seconds). Apply exponential backoff with jitter.</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02]">
+                      <td class="py-3 px-5 text-white/50 font-semibold">500 / 503 Edge Error</td>
+                      <td class="py-3 px-4">EDGE_ISOLATE_TIMEOUT</td>
+                      <td class="py-3 px-5 font-sans">Edge isolate timeout or temporary transit disruption.</td>
+                      <td class="py-3 px-5 font-sans"><strong>Fail-Open:</strong> Forward traffic immediately to avoid user-facing downtime.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
 
           <!-- ==================== 8. FAIL-OPEN ARCHITECTURE ==================== -->
           <section id="fail-open" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Resilience Pattern</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Resilience Pattern</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">8. Production Fail-Open Architecture</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
@@ -935,12 +952,12 @@ async function sentinelGuard(req, res, next) {
           <!-- ==================== 9. GRADUATED DEFENSE PATTERN ==================== -->
           <section id="graduated-defense" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Implementation Pattern</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Implementation Pattern</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">9. Graduated Defense Policy Recipe</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
-              Take full advantage of <code class="text-cyan-400 font-mono">confidence</code> and <code class="text-cyan-400 font-mono">reason_codes</code> to separate deterministic datacenter/VPN drops from residential proxies:
+              Take full advantage of <code class="text-white font-mono">confidence</code> and <code class="text-white font-mono">reason_codes</code> to separate deterministic datacenter/VPN drops from residential proxies:
             </p>
 
             <!-- Policy Recipe Terminal Window -->
@@ -979,8 +996,8 @@ async function sentinelGuard(req, res, next) {
           <!-- ==================== 10. OPENAPI & VERSIONING ==================== -->
           <section id="versioning" class="scroll-mt-28">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Specification &amp; Stability</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Specification &amp; Stability</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-display text-white tracking-tight mb-3">10. OpenAPI 3.1 &amp; Semantic Versioning Policy</h2>
             <p class="text-sm text-white/70 leading-relaxed mb-4 font-sans">
@@ -990,13 +1007,13 @@ async function sentinelGuard(req, res, next) {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="p-5 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
                 <div class="flex items-center gap-2.5 mb-2">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/80"></span>
                   <h3 class="text-sm font-display text-white">Strict Backward Compatibility</h3>
                 </div>
                 <p class="text-xs text-white/70 font-sans leading-relaxed mb-3">
-                  All endpoints prefixed with <code class="text-cyan-300 font-mono">/v1/</code> are covered by our backward-compatibility guarantee: existing schema fields (<code class="text-white font-mono">risk_score</code>, <code class="text-white font-mono">action</code>, <code class="text-white font-mono">is_vpn</code>, <code class="text-white font-mono">duration_ms</code>) will never be renamed, changed in data type, or removed within v1.
+                  All endpoints prefixed with <code class="text-white font-mono">/v1/</code> are covered by our backward-compatibility guarantee: existing schema fields (<code class="text-white font-mono">risk_score</code>, <code class="text-white font-mono">action</code>, <code class="text-white font-mono">is_vpn</code>, <code class="text-white font-mono">duration_ms</code>) will never be renamed, changed in data type, or removed within v1.
                 </p>
-                <div class="text-[11px] font-mono text-emerald-400/90 flex items-center gap-1.5">
+                <div class="text-[11px] font-mono text-white/60 flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                   <span>Non-breaking additive schema extensions only</span>
                 </div>
@@ -1004,7 +1021,7 @@ async function sentinelGuard(req, res, next) {
 
               <div class="p-5 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
                 <div class="flex items-center gap-2.5 mb-2">
-                  <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/80"></span>
                   <h3 class="text-sm font-display text-white">OpenAPI 3.1 Contract</h3>
                 </div>
                 <p class="text-xs text-white/70 font-sans leading-relaxed mb-3">
@@ -1028,21 +1045,21 @@ async function sentinelGuard(req, res, next) {
   <!-- ==================== LICENSE KEY MODAL ==================== -->
   <div id="license-modal" class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300" role="dialog" aria-modal="true" aria-labelledby="license-modal-title">
     <div id="license-modal-card" class="relative w-full max-w-xl bg-[#07090e] border border-white/20 rounded-2xl shadow-[0_0_60px_rgba(0,0,0,0.95)] p-6 sm:p-8 transform scale-95 transition-all duration-300 max-h-[92vh] overflow-y-auto">
-      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-32 bg-emerald-500/20 blur-3xl rounded-full pointer-events-none"></div>
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-32 bg-white/[0.03] blur-3xl rounded-full pointer-events-none"></div>
 
       <button onclick="SentinelLicense.closeModal()" class="absolute top-5 right-5 text-white/40 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors" aria-label="Close dialog">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
 
       <div class="flex items-start gap-4 mb-6">
-        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+        <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
         </div>
         <div class="pr-6">
           <div class="flex items-center gap-2 mb-1">
-            <span id="license-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <span id="license-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold bg-white/10 text-white/90 border border-white/20">
               Developer License Linked
             </span>
           </div>
@@ -1063,7 +1080,7 @@ async function sentinelGuard(req, res, next) {
             <span id="license-mask-text">Hide</span>
           </button>
         </div>
-        <div class="flex items-center gap-2 p-2.5 sm:p-3 bg-[#020306] border border-white/20 rounded-xl relative group focus-within:border-emerald-500/50 transition-colors">
+        <div class="flex items-center gap-2 p-2.5 sm:p-3 bg-[#020306] border border-white/20 rounded-xl relative group focus-within:border-white/50 transition-colors">
           <input id="license-key-input" type="text" readonly class="w-full bg-transparent font-mono text-xs sm:text-sm text-white outline-none select-all font-semibold tracking-wider" value="stl_live_..." />
           <button id="license-copy-btn" onclick="SentinelLicense.copyKey()" class="shrink-0 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-medium flex items-center gap-1.5 transition-all active:scale-95 border border-white/10">
             <svg id="license-copy-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -1128,8 +1145,8 @@ async function sentinelGuard(req, res, next) {
           <div>
             <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Developers</span>
             <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
-              <li><a href="docs.html" class="hover:text-white transition-colors text-cyan-400">Documentation</a></li>
-              <li><a href="docs.html" class="hover:text-white transition-colors text-cyan-400">API Reference</a></li>
+              <li><a href="docs.html" class="hover:text-white transition-colors">Documentation</a></li>
+              <li><a href="docs.html" class="hover:text-white transition-colors">API Reference</a></li>
               <li><a href="index.html#integrations" class="hover:text-white transition-colors">Edge Middleware</a></li>
               <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">Integration Code</a></li>
             </ul>
@@ -1226,10 +1243,10 @@ async function sentinelGuard(req, res, next) {
       if (current) {
         sidebarLinks.forEach(link => {
           if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('text-cyan-400', 'bg-cyan-500/10', 'font-semibold');
+            link.classList.add('text-white', 'bg-white/10', 'font-semibold', 'border-l-2', 'border-white');
             link.classList.remove('text-white/60');
           } else {
-            link.classList.remove('text-cyan-400', 'bg-cyan-500/10', 'font-semibold');
+            link.classList.remove('text-white', 'bg-white/10', 'font-semibold', 'border-l-2', 'border-white');
             link.classList.add('text-white/60');
           }
         });

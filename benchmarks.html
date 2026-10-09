@@ -176,9 +176,9 @@
             <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>
           <!-- Active Benchmarks Link -->
-          <a href="benchmarks.html" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-cyan-400 font-medium">
+          <a href="benchmarks.html" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white font-medium">
             Benchmarks
-            <span class="nav-indicator absolute -bottom-1 left-0 w-full h-px bg-cyan-400"></span>
+            <span class="nav-indicator absolute -bottom-1 left-0 w-full h-px bg-white"></span>
           </a>
           <a href="index.html#pricing" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
             Pricing
@@ -189,8 +189,8 @@
         <!-- Desktop Action Buttons -->
         <div class="hidden lg:flex items-center gap-3">
           <div id="nav-license-btn-container" class="hidden">
-            <button onclick="SentinelLicense.openModal()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all shadow-[0_0_10px_rgba(16,185,129,0.15)] group" title="View Sentinel API License">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <button onclick="SentinelLicense.openModal()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/20 text-white font-mono text-xs hover:bg-white/20 hover:border-white/40 transition-all group" title="View Sentinel API License">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
               <span id="nav-license-label">Key</span>
             </button>
           </div>
@@ -220,7 +220,7 @@
         <a href="index.html#features" class="text-xl sm:text-2xl font-display text-white">Capabilities</a>
         <a href="index.html#how-it-works" class="text-xl sm:text-2xl font-display text-white">Architecture</a>
         <a href="index.html#infra" class="text-xl sm:text-2xl font-display text-white">Threat Grid</a>
-        <a href="benchmarks.html" class="text-xl sm:text-2xl font-display text-cyan-400">Benchmarks</a>
+        <a href="benchmarks.html" class="text-xl sm:text-2xl font-display text-white">Benchmarks</a>
         <a href="index.html#metrics" class="text-xl sm:text-2xl font-display text-white">Telemetry</a>
         <a href="index.html#integrations" class="text-xl sm:text-2xl font-display text-white">Integrations</a>
         <a href="index.html#pricing" class="text-xl sm:text-2xl font-display text-white">Pricing</a>
@@ -247,21 +247,21 @@
       <div class="absolute h-px bg-white/10" style="top: 85%; left: 0; right: 0;"></div>
     </div>
 
-    <!-- Ambient Mesh Glows -->
-    <div class="absolute -top-[5%] left-[8%] w-[650px] h-[650px] bg-gradient-to-br from-cyan-500/15 via-sky-600/10 to-transparent rounded-full filter blur-[120px] opacity-75 pointer-events-none z-0"></div>
-    <div class="absolute top-[35%] -right-[10%] w-[550px] h-[550px] bg-gradient-to-bl from-blue-600/10 via-indigo-700/5 to-transparent rounded-full filter blur-[130px] opacity-60 pointer-events-none z-0"></div>
+    <!-- Ambient Subtle Neutral Glows -->
+    <div class="absolute -top-[5%] left-[10%] w-[500px] h-[500px] bg-white/[0.02] rounded-full filter blur-[120px] pointer-events-none z-0"></div>
+    <div class="absolute top-[40%] right-[5%] w-[450px] h-[450px] bg-white/[0.015] rounded-full filter blur-[130px] pointer-events-none z-0"></div>
 
     <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
 
       <!-- ==================== 2. HERO / AUDIT BANNER ==================== -->
       <section class="pt-6 sm:pt-10 pb-12 lg:pb-16 border-b border-white/10">
         <div class="flex flex-wrap items-center gap-3 mb-6">
-          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-medium shadow-[0_0_15px_rgba(14,165,233,0.15)]">
-            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/15 text-white/80 text-xs font-mono font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
             EMPIRICAL VALIDATION HARNESS
           </span>
           <span class="text-xs font-mono text-muted-foreground hidden sm:inline">&middot; 250,000 Out-of-Band Endpoints</span>
-          <span class="text-xs font-mono text-emerald-400/90 ml-auto">&middot; Verified Run: 2026-10-07T18:00:00Z</span>
+          <span class="text-xs font-mono text-white/60 ml-auto">&middot; Verified Run: 2026-10-07T18:00:00Z</span>
         </div>
 
         <div class="max-w-4xl">
@@ -281,10 +281,10 @@
             <span>&middot;</span>
             <span>Composition: <strong class="text-white">172.5k Threats / 77.5k Controls</strong></span>
             <span>&middot;</span>
-            <span>Validation Harness: <strong class="text-cyan-400">scripts/benchmark_runner.py</strong></span>
+            <span>Validation Harness: <strong class="text-white font-mono">scripts/benchmark_runner.py</strong></span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
             <span class="text-white/80">Audit Status: Frozen Benchmark Cycle</span>
           </div>
         </div>
@@ -294,53 +294,53 @@
       <section class="py-12 lg:py-16">
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           <!-- KPI 1 -->
-          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
-            <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-all"></div>
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
             <div>
               <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Commercial VPN Recall</span>
               <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">99.88%</div>
             </div>
             <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-              <span class="text-emerald-400 font-semibold">95% CI: [99.85%, 99.91%]</span>
+              <span class="text-white/80 font-medium">95% CI: [99.85%, 99.91%]</span>
               <span class="text-white/50">49,940 / 50k</span>
             </div>
           </div>
 
           <!-- KPI 2 -->
-          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
-            <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-all"></div>
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
             <div>
               <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Datacenter VPS Recall</span>
               <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">99.98%</div>
             </div>
             <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-              <span class="text-emerald-400 font-semibold">95% CI: [99.97%, 99.99%]</span>
+              <span class="text-white/80 font-medium">95% CI: [99.97%, 99.99%]</span>
               <span class="text-white/50">74,985 / 75k</span>
             </div>
           </div>
 
           <!-- KPI 3 -->
-          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
-            <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-all"></div>
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
             <div>
               <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Tor Consensus Recall</span>
               <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">100.00%</div>
             </div>
             <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-              <span class="text-emerald-400 font-semibold">95% CI: [99.85%, 100.00%]</span>
+              <span class="text-white/80 font-medium">95% CI: [99.85%, 100.00%]</span>
               <span class="text-white/50">2,500 / 2.5k</span>
             </div>
           </div>
 
           <!-- KPI 4 -->
-          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
-            <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-all"></div>
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
             <div>
               <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Clean Control FPR</span>
               <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">0.079%</div>
             </div>
             <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-              <span class="text-cyan-300 font-semibold">95% CI: [0.061%, 0.101%]</span>
+              <span class="text-white/80 font-medium">95% CI: [0.061%, 0.101%]</span>
               <span class="text-white/50">61 / 77.5k clean</span>
             </div>
           </div>
@@ -352,18 +352,18 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Confusion Matrix — Part A</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Confusion Matrix &middot; Threat Targets</span>
             </div>
             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
-              Threat Cohort Sensitivity &amp; Recall (<code class="font-mono text-cyan-400">N = 172,500</code>)
+              Threat Cohort Sensitivity &amp; Recall (<code class="font-mono text-white/90">N = 172,500</code>)
             </h2>
             <p class="text-sm text-muted-foreground mt-2 max-w-2xl font-sans">
               Evaluated against ground-truth adversary ingress endpoints. Sensitivity / Recall reflects the probability of correctly identifying a genuine proxy, VPN, or exit relay (<code class="font-mono text-white/80">TP / (TP + FN)</code>).
             </p>
           </div>
           <div class="text-xs font-mono text-muted-foreground shrink-0 bg-white/[0.03] border border-white/10 px-4 py-2.5 rounded-xl">
-            Threat Recall: <strong class="text-emerald-400 text-sm">99.539%</strong> (171,705 / 172,500)
+            Threat Recall: <strong class="text-white text-sm font-semibold">99.539%</strong> (171,705 / 172,500)
           </div>
         </div>
 
@@ -388,10 +388,10 @@
                     <div class="text-xs text-muted-foreground font-mono">Consumer &amp; Enterprise WireGuard/OpenVPN</div>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/80">50,000</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">49,940</td>
-                  <td class="py-4 px-4 text-right font-mono text-rose-400/80">60</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">49,940</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">60</td>
                   <td class="py-4 px-4 text-right font-mono">
-                    <span class="inline-block px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">99.88%</span>
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">99.88%</span>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[99.85%, 99.91%]</td>
                   <td class="py-4 px-5 text-xs text-muted-foreground">Provider config harvesting &amp; active canary ingress tunnels</td>
@@ -402,10 +402,10 @@
                     <div class="text-xs text-muted-foreground font-mono">AWS, GCP, OVH, Hetzner, Linode, DigitalOcean</div>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/80">75,000</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">74,985</td>
-                  <td class="py-4 px-4 text-right font-mono text-rose-400/80">15</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">74,985</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">15</td>
                   <td class="py-4 px-4 text-right font-mono">
-                    <span class="inline-block px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">99.98%</span>
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">99.98%</span>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[99.97%, 99.99%]</td>
                   <td class="py-4 px-5 text-xs text-muted-foreground">Carrier BGP AS classification &amp; Regional Internet Registry WHOIS</td>
@@ -416,10 +416,10 @@
                     <div class="text-xs text-muted-foreground font-mono">Live Tor Directory Consensus Flags</div>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/80">2,500</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">2,500</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400">0</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">2,500</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">0</td>
                   <td class="py-4 px-4 text-right font-mono">
-                    <span class="inline-block px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">100.00%</span>
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">100.00%</span>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[99.85%, 100.00%]</td>
                   <td class="py-4 px-5 text-xs text-muted-foreground">Cryptographic directory consensus published out-of-band</td>
@@ -430,10 +430,10 @@
                     <div class="text-xs text-muted-foreground font-mono">Dynamic peer exit nodes, SDK bot relays</div>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/80">45,000</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">44,280</td>
-                  <td class="py-4 px-4 text-right font-mono text-amber-400">720</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">44,280</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">720</td>
                   <td class="py-4 px-4 text-right font-mono">
-                    <span class="inline-block px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">98.40%</span>
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">98.40%</span>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[98.28%, 98.51%]</td>
                   <td class="py-4 px-5 text-xs text-muted-foreground">Active canary proxy egress sessions harvesting live exit IPs</td>
@@ -443,9 +443,9 @@
                 <tr class="border-t border-white/10 bg-white/[0.04] font-mono text-xs">
                   <td class="py-4 px-5 font-bold text-white uppercase">Threat Subtotal</td>
                   <td class="py-4 px-4 text-right font-bold text-white">172,500</td>
-                  <td class="py-4 px-4 text-right font-bold text-emerald-400">171,705</td>
-                  <td class="py-4 px-4 text-right font-bold text-rose-400">795</td>
-                  <td class="py-4 px-4 text-right font-bold text-emerald-400">99.539%</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">171,705</td>
+                  <td class="py-4 px-4 text-right font-bold text-zinc-400">795</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">99.539%</td>
                   <td class="py-4 px-4 text-right text-white/70">[99.507%, 99.570%]</td>
                   <td class="py-4 px-5 text-xs text-white/60">Overall Target Threat Recall</td>
                 </tr>
@@ -460,18 +460,18 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">Confusion Matrix — Part B</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Confusion Matrix &middot; Clean Controls</span>
             </div>
             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
-              Clean Control Specificity &amp; False Positive Rate (<code class="font-mono text-emerald-400">N = 77,500</code>)
+              Clean Control Specificity &amp; False Positive Rate (<code class="font-mono text-white/90">N = 77,500</code>)
             </h2>
             <p class="text-sm text-muted-foreground mt-2 max-w-2xl font-sans">
               Evaluated against clean consumer residential connections. The False Positive Rate (FPR) measures how often legitimate players are mistakenly flagged (<code class="font-mono text-white/80">FP / (FP + TN)</code>), disentangled from class precision.
             </p>
           </div>
           <div class="text-xs font-mono text-muted-foreground shrink-0 bg-white/[0.03] border border-white/10 px-4 py-2.5 rounded-xl">
-            Aggregate FPR: <strong class="text-cyan-300 text-sm">0.079%</strong> (61 / 77,500)
+            Aggregate FPR: <strong class="text-white text-sm font-semibold">0.079%</strong> (61 / 77,500)
           </div>
         </div>
 
@@ -497,11 +497,11 @@
                     <div class="text-xs text-muted-foreground font-mono">FTTH / DOCSIS / Fixed Wireless Tier-1 ISPs</div>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/80">55,000</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">54,973</td>
-                  <td class="py-4 px-4 text-right font-mono text-amber-400">27</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400">99.951%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">54,973</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">27</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">99.951%</td>
                   <td class="py-4 px-4 text-right font-mono">
-                    <span class="inline-block px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-semibold">0.049%</span>
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">0.049%</span>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[0.034%, 0.071%]</td>
                   <td class="py-4 px-5 text-xs text-muted-foreground">90-day device-attested human gaming sessions</td>
@@ -512,11 +512,11 @@
                     <div class="text-xs text-muted-foreground font-mono">4G LTE / 5G SA Shared Carrier NAT IP Pools</div>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/80">22,500</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">22,466</td>
-                  <td class="py-4 px-4 text-right font-mono text-amber-400">34</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400">99.849%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">22,466</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">34</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">99.849%</td>
                   <td class="py-4 px-4 text-right font-mono">
-                    <span class="inline-block px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-300 font-semibold">0.151%</span>
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">0.151%</span>
                   </td>
                   <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[0.108%, 0.211%]</td>
                   <td class="py-4 px-5 text-xs text-muted-foreground">Carrier APN handoff logs &amp; Mobile Network Codes</td>
@@ -526,10 +526,10 @@
                 <tr class="border-t border-white/10 bg-white/[0.04] font-mono text-xs">
                   <td class="py-4 px-5 font-bold text-white uppercase">Control Subtotal</td>
                   <td class="py-4 px-4 text-right font-bold text-white">77,500</td>
-                  <td class="py-4 px-4 text-right font-bold text-emerald-400">77,439</td>
-                  <td class="py-4 px-4 text-right font-bold text-amber-400">61</td>
-                  <td class="py-4 px-4 text-right font-bold text-emerald-400">99.921%</td>
-                  <td class="py-4 px-4 text-right font-bold text-cyan-300">0.079%</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">77,439</td>
+                  <td class="py-4 px-4 text-right font-bold text-zinc-400">61</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">99.921%</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">0.079%</td>
                   <td class="py-4 px-4 text-right text-white/70">[0.061%, 0.101%]</td>
                   <td class="py-4 px-5 text-xs text-white/60">Aggregate False Positive Rate across Controls</td>
                 </tr>
@@ -543,8 +543,8 @@
       <section class="py-12 border-t border-white/10">
         <div class="max-w-3xl mb-8">
           <div class="flex items-center gap-2 mb-2">
-            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Statistical Base-Rate Effect</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Statistical Base-Rate Effect</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
             Bayes' Theorem &amp; Real-World Precision
@@ -558,11 +558,11 @@
         <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
           <div class="font-mono text-xs sm:text-sm text-white/90">
             <span class="text-muted-foreground">// Bayes' Theorem for Positive Predictive Value:</span><br>
-            <span class="text-cyan-400 font-semibold">PPV</span> = (TPR &times; p) / [ (TPR &times; p) + FPR &times; (1 - p) ]
+            <span class="text-white font-semibold">PPV</span> = (TPR &times; p) / [ (TPR &times; p) + FPR &times; (1 - p) ]
           </div>
           <div class="text-xs font-mono text-white/60 bg-white/[0.04] p-3 rounded-xl border border-white/5">
-            <div>TPR (Threat Recall) = <strong class="text-emerald-400">99.54%</strong></div>
-            <div>FPR (Clean Control) = <strong class="text-cyan-300">0.079%</strong></div>
+            <div>TPR (Threat Recall) = <strong class="text-white">99.54%</strong></div>
+            <div>FPR (Clean Control) = <strong class="text-white">0.079%</strong></div>
           </div>
         </div>
 
@@ -583,36 +583,36 @@
                 <tr class="hover:bg-white/[0.02] transition-colors">
                   <td class="py-4 px-5 font-mono text-white font-semibold">0.5% proxy traffic</td>
                   <td class="py-4 px-4 text-muted-foreground text-xs">Whitelisted / niche community server</td>
-                  <td class="py-4 px-4 text-right font-mono text-amber-300 font-semibold">86.40%</td>
-                  <td class="py-4 px-4 text-right font-mono text-amber-400">76.59%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90 font-semibold">86.40%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/70">76.59%</td>
                   <td class="py-4 px-5 text-xs text-white/70">Graduated friction (CAPTCHA / 2FA verification)</td>
                 </tr>
                 <tr class="hover:bg-white/[0.02] transition-colors bg-white/[0.02]">
                   <td class="py-4 px-5 font-mono text-white font-semibold">1.0% proxy traffic</td>
-                  <td class="py-4 px-4 text-cyan-400 text-xs">Typical public Minecraft server</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">92.74%</td>
-                  <td class="py-4 px-4 text-right font-mono text-amber-300">86.80%</td>
-                  <td class="py-4 px-5 text-xs text-emerald-300">Hard kick VPN/VPS; challenge residential tunnels</td>
+                  <td class="py-4 px-4 text-white/90 text-xs">Typical public Minecraft server</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">92.74%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">86.80%</td>
+                  <td class="py-4 px-5 text-xs text-white/70">Hard kick VPN/VPS; challenge residential tunnels</td>
                 </tr>
                 <tr class="hover:bg-white/[0.02] transition-colors bg-white/[0.02]">
                   <td class="py-4 px-5 font-mono text-white font-semibold">2.0% proxy traffic</td>
-                  <td class="py-4 px-4 text-cyan-400 text-xs">Competitive PvP / Factions / Anarchy network</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">96.27%</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400">93.00%</td>
-                  <td class="py-4 px-5 text-xs text-emerald-300">Enforce risk threshold &ge; 80</td>
+                  <td class="py-4 px-4 text-white/90 text-xs">Competitive PvP / Factions / Anarchy network</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">96.27%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">93.00%</td>
+                  <td class="py-4 px-5 text-xs text-white/70">Enforce risk threshold &ge; 80</td>
                 </tr>
                 <tr class="hover:bg-white/[0.02] transition-colors">
                   <td class="py-4 px-5 font-mono text-white font-semibold">5.0% proxy traffic</td>
                   <td class="py-4 px-4 text-muted-foreground text-xs">Tournament / high-stakes ranked match</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">98.52%</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400">97.16%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">98.52%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">97.16%</td>
                   <td class="py-4 px-5 text-xs text-white/70">Strict enforcement with staff bypass role</td>
                 </tr>
                 <tr class="hover:bg-white/[0.02] transition-colors">
                   <td class="py-4 px-5 font-mono text-white font-semibold">18.0% proxy traffic</td>
                   <td class="py-4 px-4 text-muted-foreground text-xs">Our empirical benchmark corpus</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">99.64%</td>
-                  <td class="py-4 px-4 text-right font-mono text-emerald-400 font-semibold">99.31%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">99.64%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">99.31%</td>
                   <td class="py-4 px-5 text-xs text-white/70">Raw test set baseline</td>
                 </tr>
               </tbody>
@@ -621,13 +621,13 @@
         </div>
 
         <!-- Mobile CGNAT Insight Box -->
-        <div class="p-6 rounded-2xl bg-amber-500/5 border border-amber-500/20 text-xs text-white/80 leading-relaxed">
-          <div class="flex items-center gap-2 mb-2 text-amber-400 font-mono font-semibold uppercase tracking-wider text-[11px]">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-white/80 leading-relaxed">
+          <div class="flex items-center gap-2 mb-2 text-white font-mono font-semibold uppercase tracking-wider text-[11px]">
+            <svg class="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
             Why Mobile CGNAT (0.151% FPR) Demands Graduated Defense
           </div>
           <p>
-            Cellular carriers assign thousands of mobile subscribers behind a single egress IP via Carrier-Grade NAT (CGNAT). If a malicious actor on that cell tower routes proxy traffic, flagging that carrier IP can inadvertently impact real cellular players. This is why Sentinel provides granular <code class="text-amber-300 font-mono">confidence</code> and <code class="text-amber-300 font-mono">reason_codes</code>: developers can hard-kick datacenter proxies while issuing non-destructive authentication challenges (such as web authentication or Discord linking) for residential tunnel signals.
+            Cellular carriers assign thousands of mobile subscribers behind a single egress IP via Carrier-Grade NAT (CGNAT). If a malicious actor on that cell tower routes proxy traffic, flagging that carrier IP can inadvertently impact real cellular players. This is why Sentinel provides granular <code class="text-white font-mono">confidence</code> and <code class="text-white font-mono">reason_codes</code>: developers can hard-kick datacenter proxies while issuing non-destructive authentication challenges (such as web authentication or Discord linking) for residential tunnel signals.
           </p>
         </div>
       </section>
@@ -636,8 +636,8 @@
       <section class="py-12 border-t border-white/10">
         <div class="max-w-3xl mb-8">
           <div class="flex items-center gap-2 mb-2">
-            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Anti-Circular Testing</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Anti-Circular Testing</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
             Independent Ground-Truth Collection
@@ -650,7 +650,7 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
             <div>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-2 font-semibold">Active Canary Probes</span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Active Canary Probes</span>
               <h3 class="text-base font-semibold text-white mb-2">Residential Proxies</h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
                 45,000 residential IP targets were harvested by purchasing commercial proxy egress sessions and routing canary requests through out-of-band echo servers that log the true egress IP directly.
@@ -663,7 +663,7 @@
 
           <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
             <div>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-2 font-semibold">Config Harvesting</span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Config Harvesting</span>
               <h3 class="text-base font-semibold text-white mb-2">Commercial VPNs</h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
                 50,000 VPN exit endpoints were compiled from official WireGuard, OpenVPN, and IKEv2 configuration bundles harvested directly from commercial VPN vendors.
@@ -676,7 +676,7 @@
 
           <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
             <div>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-2 font-semibold">Directory Consensus</span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Directory Consensus</span>
               <h3 class="text-base font-semibold text-white mb-2">Tor Exit Relays</h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
                 2,500 active exit nodes were extracted from hourly directory authority consensus documents, verified by 9 independent directory authorities.
@@ -689,7 +689,7 @@
 
           <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
             <div>
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-2 font-semibold">Session Attestation</span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Session Attestation</span>
               <h3 class="text-base font-semibold text-white mb-2">Clean Control Set</h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
                 77,500 clean IPs were curated from 90+ day authenticated consumer sessions across tier-1 fiber and mobile carriers, cross-verified with zero anomalous activity across global telemetry networks.
@@ -706,8 +706,8 @@
       <section class="py-12 border-t border-white/10">
         <div class="max-w-3xl mb-8">
           <div class="flex items-center gap-2 mb-2">
-            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">System Architecture Decoupling</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">System Architecture Decoupling</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
             Stateless Edge Execution vs. Background Threat Grid
@@ -720,23 +720,23 @@
         <div class="grid md:grid-cols-2 gap-6">
           <div class="p-6 sm:p-7 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
             <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">1. Request Runtime Path</span>
-              <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">&lt; 0.8ms Compute</span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-semibold">1. Request Runtime Path</span>
+              <span class="text-xs font-mono text-white bg-white/10 px-2 py-0.5 rounded border border-white/20">&lt; 0.8ms Compute</span>
             </div>
             <h3 class="text-lg font-semibold text-white mb-2">Zero-Log Volatile Memory Architecture</h3>
             <p class="text-xs text-white/70 leading-relaxed mb-4">
               When an API request hits our Anycast edge, evaluation executes within a V8 isolate that accesses a compiled, immutable radix trie residing entirely in RAM.
             </p>
             <ul class="space-y-2 text-xs font-mono text-white/60">
-              <li class="flex items-center gap-2"><span class="text-emerald-400">&check;</span> Zero database queries during request evaluation</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400">&check;</span> Zero disk writes or session persistence</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400">&check;</span> In-RAM bitmask matching in &lt; 0.8ms</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Zero database queries during request evaluation</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Zero disk writes or session persistence</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> In-RAM bitmask matching in &lt; 0.8ms</li>
             </ul>
           </div>
 
           <div class="p-6 sm:p-7 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
             <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">2. Asynchronous Ingestion Path</span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-semibold">2. Asynchronous Ingestion Path</span>
               <span class="text-xs font-mono text-white/60 bg-white/5 px-2 py-0.5 rounded border border-white/10">5-Minute Sync Delta</span>
             </div>
             <h3 class="text-lg font-semibold text-white mb-2">Sentinel Global Threat Grid Pipeline</h3>
@@ -744,9 +744,9 @@
               Temporal correlation, velocity anomaly detection, and risk decay execute asynchronously in our background Threat Grid aggregation cluster.
             </p>
             <ul class="space-y-2 text-xs font-mono text-white/60">
-              <li class="flex items-center gap-2"><span class="text-cyan-400">&check;</span> Dynamic tunnel churn tracked across time series graphs</li>
-              <li class="flex items-center gap-2"><span class="text-cyan-400">&check;</span> Inactive proxy IPs decay exponentially over 12&ndash;72 hours</li>
-              <li class="flex items-center gap-2"><span class="text-cyan-400">&check;</span> Compiled immutable delta broadcast every 5 minutes</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Dynamic tunnel churn tracked across time series graphs</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Inactive proxy IPs decay exponentially over 12&ndash;72 hours</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Compiled immutable delta broadcast every 5 minutes</li>
             </ul>
           </div>
         </div>
@@ -756,8 +756,8 @@
       <section class="py-12 border-t border-white/10">
         <div class="max-w-3xl mb-8">
           <div class="flex items-center gap-2 mb-2">
-            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">Empirical Verification</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Empirical Verification</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
             Reproduce These Metrics Locally
@@ -785,8 +785,8 @@
           <!-- Code Content -->
           <div class="p-6 font-mono text-xs text-white/80 overflow-x-auto leading-relaxed">
             <div class="text-muted-foreground italic mb-3"># 1. Clone repository &amp; execute local validation harness</div>
-            <div class="text-cyan-400 mb-4">$ git clone https://github.com/antivpn-tech/sentinel-web.git &amp;&amp; cd sentinel-web</div>
-            <div class="text-cyan-400 mb-4">$ python3 scripts/benchmark_runner.py</div>
+            <div class="text-white/90 mb-4">$ git clone https://github.com/antivpn-tech/sentinel-web.git &amp;&amp; cd sentinel-web</div>
+            <div class="text-white/90 mb-4">$ python3 scripts/benchmark_runner.py</div>
             <div class="text-muted-foreground italic mb-2"># Expected terminal verification output:</div>
             <div class="text-white/60 pl-2 border-l border-white/20 space-y-1">
               <div>[1] CONFUSION MATRIX &amp; WILSON SCORE INTERVALS (95% CI)</div>
@@ -796,7 +796,7 @@
               <div>Residential Proxies:            98.40% [98.28%, 98.51%] (44,280 / 45,000)</div>
               <div>Clean Consumer Broadband FPR:    0.049% [0.034%, 0.071%] (27 / 55,000)</div>
               <div>Clean Mobile Cellular FPR:       0.151% [0.108%, 0.211%] (34 / 22,500)</div>
-              <div class="text-emerald-400 font-semibold pt-1">&gt; Aggregate Threat Sensitivity: 99.539% | Specificity: 99.921% | FPR: 0.079%</div>
+              <div class="text-white font-semibold pt-1">&gt; Aggregate Threat Sensitivity: 99.539% | Specificity: 99.921% | FPR: 0.079%</div>
             </div>
           </div>
         </div>
@@ -808,21 +808,21 @@
   <!-- ==================== LICENSE KEY MODAL ==================== -->
   <div id="license-modal" class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300" role="dialog" aria-modal="true" aria-labelledby="license-modal-title">
     <div id="license-modal-card" class="relative w-full max-w-xl bg-[#07090e] border border-white/20 rounded-2xl shadow-[0_0_60px_rgba(0,0,0,0.95)] p-6 sm:p-8 transform scale-95 transition-all duration-300 max-h-[92vh] overflow-y-auto">
-      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-32 bg-emerald-500/20 blur-3xl rounded-full pointer-events-none"></div>
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-32 bg-white/[0.03] blur-3xl rounded-full pointer-events-none"></div>
 
       <button onclick="SentinelLicense.closeModal()" class="absolute top-5 right-5 text-white/40 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors" aria-label="Close dialog">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
 
       <div class="flex items-start gap-4 mb-6">
-        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+        <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
         </div>
         <div class="pr-6">
           <div class="flex items-center gap-2 mb-1">
-            <span id="license-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <span id="license-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold bg-white/10 text-white/90 border border-white/20">
               Developer License Linked
             </span>
           </div>
@@ -843,7 +843,7 @@
             <span id="license-mask-text">Hide</span>
           </button>
         </div>
-        <div class="flex items-center gap-2 p-2.5 sm:p-3 bg-[#020306] border border-white/20 rounded-xl relative group focus-within:border-emerald-500/50 transition-colors">
+        <div class="flex items-center gap-2 p-2.5 sm:p-3 bg-[#020306] border border-white/20 rounded-xl relative group focus-within:border-white/50 transition-colors">
           <input id="license-key-input" type="text" readonly class="w-full bg-transparent font-mono text-xs sm:text-sm text-white outline-none select-all font-semibold tracking-wider" value="stl_live_..." />
           <button id="license-copy-btn" onclick="SentinelLicense.copyKey()" class="shrink-0 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-medium flex items-center gap-1.5 transition-all active:scale-95 border border-white/10">
             <svg id="license-copy-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -899,7 +899,7 @@
               <li><a href="index.html#features" class="hover:text-white transition-colors">Capabilities</a></li>
               <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">Architecture</a></li>
               <li><a href="index.html#infra" class="hover:text-white transition-colors">Global Threat Grid</a></li>
-              <li><a href="benchmarks.html" class="hover:text-white transition-colors text-cyan-400">Benchmarks</a></li>
+              <li><a href="benchmarks.html" class="hover:text-white transition-colors">Benchmarks</a></li>
               <li><a href="index.html#pricing" class="hover:text-white transition-colors">Pricing</a></li>
             </ul>
           </div>
@@ -921,7 +921,7 @@
             <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
               <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
               <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="benchmarks.html" class="hover:text-white transition-colors text-cyan-400">Accuracy Benchmarks</a></li>
+              <li><a href="benchmarks.html" class="hover:text-white transition-colors">Accuracy Benchmarks</a></li>
               <li><a href="privacy.html" class="hover:text-white transition-colors">Zero-Log Architecture</a></li>
             </ul>
           </div>
