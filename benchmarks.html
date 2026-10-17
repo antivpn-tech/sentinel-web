@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empirical Benchmarks & Accuracy Report — Sentinel Edge Intelligence</title>
+  <meta name="description" content="Empirical confusion matrix, Wilson confidence intervals, base-rate prevalence modeling, and isolate latency benchmarks for Sentinel across 250,000 verified endpoints.">
+  <link rel="canonical" href="https://antivpn.tech/benchmarks">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+
+  <!-- Netlify HUD & Injected Element Suppression -->
+  <script>
+    (function() {
+      try {
+        localStorage.setItem('nl-hud:public:v1', 'hidden');
+        localStorage.setItem('nl-hud:owner-private:v1', 'hidden');
+        document.cookie = 'nf_hud_dismissed=true; path=/; max-age=31536000';
+      } catch(e) {}
+      function purgeNetlify() {
+        const selectors = ['#nl-badge-frame','#nl-hud-frame','iframe[id*="nl-"]','iframe[title*="Netlify" i]','script[src*="netlify"]','#netlify-drawer'];
+        document.querySelectorAll(selectors.join(',')).forEach(function(el) { try { el.remove(); } catch(e) {} });
+      }
+      if (typeof window !== 'undefined') {
+        window.addEventListener('DOMContentLoaded', purgeNetlify);
+        window.addEventListener('load', purgeNetlify);
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts: Instrument Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lenis Smooth Scrolling CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          screens: {
+            xs: '480px',
+          },
+          colors: {
+            background: '#000101',
+            foreground: '#ecebe7',
+            card: '#020204',
+            'card-foreground': '#ecebe7',
+            muted: '#040608',
+            'muted-foreground': '#757168',
+            border: '#101215',
+            cyan: {
+              300: '#67e8f9',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            },
+            blue: {
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+            }
+          },
+          fontFamily: {
+            sans: ['"Instrument Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"Instrument Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::selection {
+      background: #0ea5e9;
+      color: #000101;
+    }
+    html {
+      scroll-padding-top: 5.5rem;
+      scroll-behavior: smooth;
+    }
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+    html, body {
+      background-color: #000101;
+      color: #ecebe7;
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+    .font-display {
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: -0.035em;
+      font-weight: 600;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Subtle Blueprint Dot Grid */
+    .bg-grid-mesh {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    /* Sleek Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000101;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #101215;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #1e2229;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#000101] text-foreground antialiased selection:bg-white selection:text-black">
+
+  <!-- Netlify Injected Guard -->
+  <div id="nl-badge-frame" style="display:none!important;" aria-hidden="true"></div>
+
+  <!-- ==================== 1. FLOATING NAVIGATION HEADER ==================== -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <nav id="nav-inner" class="mx-auto transition-all duration-500 bg-transparent max-w-[1400px]">
+      <div id="nav-container" class="flex items-center justify-between transition-all duration-500 px-6 lg:px-8 h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/20 flex items-center justify-center text-white group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span id="brand-title" class="font-display tracking-tight text-2xl text-white transition-all duration-500">SENTINEL</span>
+        </a>
+
+        <!-- Desktop Links -->
+        <div class="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8">
+          <a href="index.html#features" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Capabilities
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#how-it-works" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Architecture
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#infra" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Threat Grid
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#metrics" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Telemetry
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="index.html#integrations" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Integrations
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <!-- Active Benchmarks Link -->
+          <a href="benchmarks.html" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white font-medium">
+            Benchmarks
+            <span class="nav-indicator absolute -bottom-1 left-0 w-full h-px bg-white"></span>
+          </a>
+          <a href="index.html#pricing" class="nav-link text-xs xl:text-sm transition-colors duration-300 relative group text-white/70 hover:text-white">
+            Pricing
+            <span class="nav-indicator absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        </div>
+
+        <!-- Desktop Action Buttons -->
+        <div class="hidden lg:flex items-center gap-3">
+          <div id="nav-license-btn-container" class="hidden">
+            <button onclick="SentinelLicense.openModal()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/20 text-white font-mono text-xs hover:bg-white/20 hover:border-white/40 transition-all group" title="View Sentinel API License">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+              <span id="nav-license-label">Key</span>
+            </button>
+          </div>
+          <a href="docs.html" id="sign-in-link" class="text-xs xl:text-sm text-white/70 hover:text-white transition-all duration-500 font-mono">
+            API Docs
+          </a>
+          <a href="index.html#pricing" id="cta-button" class="rounded-full bg-white hover:bg-white/90 text-black px-4 xl:px-5 h-9 inline-flex items-center justify-center text-xs xl:text-sm font-medium transition-all duration-500 shadow-sm hover:shadow-white/10">
+            Deploy Edge
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white transition-colors duration-500" aria-label="Toggle Menu" onclick="toggleMobileNav()">
+          <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="lg:hidden fixed inset-0 w-full h-full bg-[#000101]/95 backdrop-blur-2xl z-40 transition-all duration-300 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-8 pt-24 overflow-y-auto">
+      <div class="flex flex-col gap-5 sm:gap-6">
+        <a href="index.html#features" class="text-xl sm:text-2xl font-display text-white">Capabilities</a>
+        <a href="index.html#how-it-works" class="text-xl sm:text-2xl font-display text-white">Architecture</a>
+        <a href="index.html#infra" class="text-xl sm:text-2xl font-display text-white">Threat Grid</a>
+        <a href="benchmarks.html" class="text-xl sm:text-2xl font-display text-white">Benchmarks</a>
+        <a href="index.html#metrics" class="text-xl sm:text-2xl font-display text-white">Telemetry</a>
+        <a href="index.html#integrations" class="text-xl sm:text-2xl font-display text-white">Integrations</a>
+        <a href="index.html#pricing" class="text-xl sm:text-2xl font-display text-white">Pricing</a>
+      </div>
+      <div class="flex flex-col gap-3 pt-6 border-t border-white/10 mt-6">
+        <a href="docs.html" class="w-full py-2.5 text-center border border-white/20 rounded-full text-white font-mono text-xs sm:text-sm">API Docs</a>
+        <a href="index.html#pricing" class="w-full py-2.5 text-center bg-white text-black rounded-full font-medium text-xs sm:text-sm">Deploy Edge</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+  <main class="relative min-h-screen pt-28 pb-20 overflow-x-hidden">
+
+    <!-- Tech Blueprint Background Grid Pattern -->
+    <div class="absolute inset-0 bg-grid-mesh opacity-25 pointer-events-none z-0"></div>
+
+    <!-- Tech Blueprint Horizontal Guide Lines -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20 z-0">
+      <div class="absolute h-px bg-white/10" style="top: 12.5%; left: 0; right: 0;"></div>
+      <div class="absolute h-px bg-white/10" style="top: 25%; left: 0; right: 0;"></div>
+      <div class="absolute h-px bg-white/10" style="top: 45%; left: 0; right: 0;"></div>
+      <div class="absolute h-px bg-white/10" style="top: 65%; left: 0; right: 0;"></div>
+      <div class="absolute h-px bg-white/10" style="top: 85%; left: 0; right: 0;"></div>
+    </div>
+
+    <!-- Ambient Subtle Neutral Glows -->
+    <div class="absolute -top-[5%] left-[10%] w-[500px] h-[500px] bg-white/[0.02] rounded-full filter blur-[120px] pointer-events-none z-0"></div>
+    <div class="absolute top-[40%] right-[5%] w-[450px] h-[450px] bg-white/[0.015] rounded-full filter blur-[130px] pointer-events-none z-0"></div>
+
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+
+      <!-- ==================== 2. HERO / AUDIT BANNER ==================== -->
+      <section class="pt-6 sm:pt-10 pb-12 lg:pb-16 border-b border-white/10">
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/15 text-white/80 text-xs font-mono font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            EMPIRICAL VALIDATION HARNESS
+          </span>
+          <span class="text-xs font-mono text-muted-foreground hidden sm:inline">&middot; 250,000 Out-of-Band Endpoints</span>
+          <span class="text-xs font-mono text-white/60 ml-auto">&middot; Verified Run: 2026-10-17T02:24:47Z</span>
+        </div>
+
+        <div class="max-w-4xl">
+          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-display tracking-tight text-white leading-[0.98] sm:leading-[0.95] mb-6">
+            Empirical accuracy.<br>
+            <span class="text-white/40">Rigorous confusion metrics.</span>
+          </h1>
+          <p class="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed font-sans max-w-3xl">
+            Statistical precision verified against an independent, non-circular test corpus evaluated across the production Sentinel inspection engine and hydrated Global Threat Grid. Every metric reports exact True/False Positives and Negatives with 95% Wilson score confidence intervals and base-rate prevalence modeling.
+          </p>
+        </div>
+
+        <!-- Quick Status Bar -->
+        <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+          <div class="flex items-center gap-4 sm:gap-6 flex-wrap">
+            <span>Corpus Digest: <strong class="text-white font-mono">SHA-256 d0cf2574...</strong></span>
+            <span>&middot;</span>
+            <span>Composition: <strong class="text-white">172.5k Threats / 77.5k Controls</strong></span>
+            <span>&middot;</span>
+            <span>Validation Harness: <strong class="text-white font-mono">scripts/benchmark_runner.py</strong></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
+            <span class="text-white/80">Isolate Mean Compute: 0.0068ms / check</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 3. TOP KPI METRICS (BENTO GRID) ==================== -->
+      <section class="py-12 lg:py-16">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <!-- KPI 1 -->
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
+            <div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Commercial VPN Recall</span>
+              <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">99.87%</div>
+            </div>
+            <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-white/80 font-medium">95% CI: [99.84%, 99.90%]</span>
+              <span class="text-white/50">49,937 / 50k</span>
+            </div>
+          </div>
+
+          <!-- KPI 2 -->
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
+            <div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Datacenter VPS Recall</span>
+              <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">99.98%</div>
+            </div>
+            <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-white/80 font-medium">95% CI: [99.96%, 99.98%]</span>
+              <span class="text-white/50">74,982 / 75k</span>
+            </div>
+          </div>
+
+          <!-- KPI 3 -->
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
+            <div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Tor Consensus Recall</span>
+              <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">100.00%</div>
+            </div>
+            <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-white/80 font-medium">95% CI: [99.85%, 100.00%]</span>
+              <span class="text-white/50">2,500 / 2.5k</span>
+            </div>
+          </div>
+
+          <!-- KPI 4 -->
+          <div class="p-6 sm:p-7 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between h-[210px] sm:h-[230px] relative overflow-hidden group hover:border-white/30 transition-all duration-300 shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl pointer-events-none group-hover:bg-white/[0.05] transition-all"></div>
+            <div>
+              <span class="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-1">Clean Control FPR</span>
+              <div class="text-3xl sm:text-4xl lg:text-5xl font-display text-white mt-1">0.074%</div>
+            </div>
+            <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-white/80 font-medium">95% CI: [0.057%, 0.095%]</span>
+              <span class="text-white/50">57 / 77.5k clean</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 4. CONFUSION MATRIX PART A: THREAT TARGETS ==================== -->
+      <section class="py-10 border-t border-white/10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Confusion Matrix &middot; Threat Targets</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
+              Threat Cohort Sensitivity &amp; Recall (<code class="font-mono text-white/90">N = 172,500</code>)
+            </h2>
+            <p class="text-sm text-muted-foreground mt-2 max-w-2xl font-sans">
+              Evaluated against ground-truth adversary ingress endpoints. Sensitivity / Recall reflects the probability of correctly identifying a genuine proxy, VPN, or exit relay (<code class="font-mono text-white/80">TP / (TP + FN)</code>).
+            </p>
+          </div>
+          <div class="text-xs font-mono text-muted-foreground shrink-0 bg-white/[0.03] border border-white/10 px-4 py-2.5 rounded-xl">
+            Threat Recall: <strong class="text-white text-sm font-semibold">99.525%</strong> (171,681 / 172,500)
+          </div>
+        </div>
+
+        <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.03] text-[11px] font-mono uppercase tracking-wider text-white/50">
+                  <th class="py-4 px-5">Target Cohort</th>
+                  <th class="py-4 px-4 text-right">Sample (N)</th>
+                  <th class="py-4 px-4 text-right">True Pos (TP)</th>
+                  <th class="py-4 px-4 text-right">False Neg (FN)</th>
+                  <th class="py-4 px-4 text-right">Recall (TPR)</th>
+                  <th class="py-4 px-4 text-right">95% Wilson CI</th>
+                  <th class="py-4 px-5">Independent Ground Truth</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/[0.05] font-sans">
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5">
+                    <div class="font-medium text-white">Commercial VPN Gateways</div>
+                    <div class="text-xs text-muted-foreground font-mono">Consumer &amp; Enterprise WireGuard/OpenVPN</div>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">50,000</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">49,937</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">63</td>
+                  <td class="py-4 px-4 text-right font-mono">
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">99.87%</span>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[99.84%, 99.90%]</td>
+                  <td class="py-4 px-5 text-xs text-muted-foreground">Provider config harvesting &amp; active canary ingress tunnels</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5">
+                    <div class="font-medium text-white">Datacenter VPS &amp; Cloud Transit</div>
+                    <div class="text-xs text-muted-foreground font-mono">AWS, GCP, OVH, Hetzner, Linode, DigitalOcean</div>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">75,000</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">74,982</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">18</td>
+                  <td class="py-4 px-4 text-right font-mono">
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">99.98%</span>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[99.96%, 99.98%]</td>
+                  <td class="py-4 px-5 text-xs text-muted-foreground">Carrier Network Classification &amp; Regional Internet Registry WHOIS</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5">
+                    <div class="font-medium text-white">Tor Consensus Exit Relays</div>
+                    <div class="text-xs text-muted-foreground font-mono">Sentinel Tor Relay Intelligence</div>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">2,500</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">2,500</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">0</td>
+                  <td class="py-4 px-4 text-right font-mono">
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">100.00%</span>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[99.85%, 100.00%]</td>
+                  <td class="py-4 px-5 text-xs text-muted-foreground">Cryptographic directory consensus published out-of-band</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5">
+                    <div class="font-medium text-white">Residential Proxies &amp; Covert Tunnels</div>
+                    <div class="text-xs text-muted-foreground font-mono">Dynamic peer exit nodes, SDK bot relays</div>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">45,000</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">44,262</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">738</td>
+                  <td class="py-4 px-4 text-right font-mono">
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">98.36%</span>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[98.24%, 98.47%]</td>
+                  <td class="py-4 px-5 text-xs text-muted-foreground">Sentinel Global Threat Grid &amp; Dynamic Tunnel Anomaly Detection</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="border-t border-white/10 bg-white/[0.04] font-mono text-xs">
+                  <td class="py-4 px-5 font-bold text-white uppercase">Threat Subtotal</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">172,500</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">171,681</td>
+                  <td class="py-4 px-4 text-right font-bold text-zinc-400">819</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">99.525%</td>
+                  <td class="py-4 px-4 text-right text-white/70">[99.492%, 99.557%]</td>
+                  <td class="py-4 px-5 text-xs text-white/60">Overall Target Threat Recall</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 5. CONFUSION MATRIX PART B: CLEAN CONTROLS ==================== -->
+      <section class="py-10 border-t border-white/10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Confusion Matrix &middot; Clean Controls</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
+              Clean Control Specificity &amp; False Positive Rate (<code class="font-mono text-white/90">N = 77,500</code>)
+            </h2>
+            <p class="text-sm text-muted-foreground mt-2 max-w-2xl font-sans">
+              Evaluated against clean consumer residential connections. The False Positive Rate (FPR) measures how often legitimate players are mistakenly flagged (<code class="font-mono text-white/80">FP / (FP + TN)</code>), disentangled from class precision.
+            </p>
+          </div>
+          <div class="text-xs font-mono text-muted-foreground shrink-0 bg-white/[0.03] border border-white/10 px-4 py-2.5 rounded-xl">
+            Aggregate FPR: <strong class="text-white text-sm font-semibold">0.074%</strong> (57 / 77,500)
+          </div>
+        </div>
+
+        <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.03] text-[11px] font-mono uppercase tracking-wider text-white/50">
+                  <th class="py-4 px-5">Control Cohort</th>
+                  <th class="py-4 px-4 text-right">Sample (N)</th>
+                  <th class="py-4 px-4 text-right">True Neg (TN)</th>
+                  <th class="py-4 px-4 text-right">False Pos (FP)</th>
+                  <th class="py-4 px-4 text-right">Specificity</th>
+                  <th class="py-4 px-4 text-right">FPR</th>
+                  <th class="py-4 px-4 text-right">95% Wilson CI (FPR)</th>
+                  <th class="py-4 px-5">Ground-Truth Verification</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/[0.05] font-sans">
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5">
+                    <div class="font-medium text-white">Clean Residential Consumer Broadband</div>
+                    <div class="text-xs text-muted-foreground font-mono">FTTH / DOCSIS / Fixed Wireless Tier-1 ISPs</div>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">55,000</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">54,975</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">25</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">99.955%</td>
+                  <td class="py-4 px-4 text-right font-mono">
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">0.045%</span>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[0.031%, 0.067%]</td>
+                  <td class="py-4 px-5 text-xs text-muted-foreground">90-day device-attested human gaming sessions</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5">
+                    <div class="font-medium text-white">Clean Mobile Cellular (CGNAT Pools)</div>
+                    <div class="text-xs text-muted-foreground font-mono">4G LTE / 5G SA Shared Carrier NAT IP Pools</div>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">22,500</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-medium">22,468</td>
+                  <td class="py-4 px-4 text-right font-mono text-zinc-400">32</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">99.858%</td>
+                  <td class="py-4 px-4 text-right font-mono">
+                    <span class="inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white font-semibold">0.142%</span>
+                  </td>
+                  <td class="py-4 px-4 text-right font-mono text-white/60 text-xs">[0.101%, 0.201%]</td>
+                  <td class="py-4 px-5 text-xs text-muted-foreground">Subscriber Carrier Verification &amp; Mobile Network Codes</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="border-t border-white/10 bg-white/[0.04] font-mono text-xs">
+                  <td class="py-4 px-5 font-bold text-white uppercase">Control Subtotal</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">77,500</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">77,443</td>
+                  <td class="py-4 px-4 text-right font-bold text-zinc-400">57</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">99.926%</td>
+                  <td class="py-4 px-4 text-right font-bold text-white">0.074%</td>
+                  <td class="py-4 px-4 text-right text-white/70">[0.057%, 0.095%]</td>
+                  <td class="py-4 px-5 text-xs text-white/60">Aggregate False Positive Rate across Controls</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 6. PREVALENCE & BASE RATE EFFECT ==================== -->
+      <section class="py-12 border-t border-white/10">
+        <div class="max-w-3xl mb-8">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Statistical Base-Rate Effect</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
+            Bayes' Theorem &amp; Real-World Precision
+          </h2>
+          <p class="text-sm text-muted-foreground mt-2 leading-relaxed font-sans">
+            In our 250,000 endpoint test corpus, proxy traffic prevalence is 18.0%. However, a typical Minecraft or game server observes only <strong class="text-white font-mono">0.5% to 2.0%</strong> proxy connection attempts. Under Bayes' theorem, Positive Predictive Value (PPV) depends heavily on real-world prevalence:
+          </p>
+        </div>
+
+        <!-- Formula Callout Card -->
+        <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+          <div class="font-mono text-xs sm:text-sm text-white/90">
+            <span class="text-muted-foreground">// Bayes' Theorem for Positive Predictive Value:</span><br>
+            <span class="text-white font-semibold">PPV</span> = (TPR &times; p) / [ (TPR &times; p) + FPR &times; (1 - p) ]
+          </div>
+          <div class="text-xs font-mono text-white/60 bg-white/[0.04] p-3 rounded-xl border border-white/5">
+            <div>TPR (Threat Recall) = <strong class="text-white">99.53%</strong></div>
+            <div>FPR (Clean Control) = <strong class="text-white">0.074%</strong></div>
+          </div>
+        </div>
+
+        <!-- Prevalence Modeling Table -->
+        <div class="bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.6)] mb-8">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.03] text-[11px] font-mono uppercase tracking-wider text-white/50">
+                  <th class="py-4 px-5">Inbound Proxy Prevalence</th>
+                  <th class="py-4 px-4">Network Scenario</th>
+                  <th class="py-4 px-4 text-right">Overall Threat PPV</th>
+                  <th class="py-4 px-4 text-right">Shared Mobile CGNAT PPV</th>
+                  <th class="py-4 px-5">Recommended Defense Posture</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/[0.05] font-sans">
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5 font-mono text-white font-semibold">0.5% proxy traffic</td>
+                  <td class="py-4 px-4 text-muted-foreground text-xs">Whitelisted / niche community server</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90 font-semibold">87.18%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/70">77.66%</td>
+                  <td class="py-4 px-5 text-xs text-white/70">Graduated friction (CAPTCHA / 2FA verification)</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors bg-white/[0.02]">
+                  <td class="py-4 px-5 font-mono text-white font-semibold">1.0% proxy traffic</td>
+                  <td class="py-4 px-4 text-white/90 text-xs">Typical public Minecraft server</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">93.18%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/80">87.48%</td>
+                  <td class="py-4 px-5 text-xs text-white/70">Hard kick VPN/VPS; challenge residential tunnels</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors bg-white/[0.02]">
+                  <td class="py-4 px-5 font-mono text-white font-semibold">2.0% proxy traffic</td>
+                  <td class="py-4 px-4 text-white/90 text-xs">Competitive PvP / Factions / Anarchy network</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">96.51%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">93.38%</td>
+                  <td class="py-4 px-5 text-xs text-white/70">Enforce risk threshold &ge; 80</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5 font-mono text-white font-semibold">5.0% proxy traffic</td>
+                  <td class="py-4 px-4 text-muted-foreground text-xs">Tournament / high-stakes ranked match</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">98.62%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white/90">97.33%</td>
+                  <td class="py-4 px-5 text-xs text-white/70">Strict enforcement with staff bypass role</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors">
+                  <td class="py-4 px-5 font-mono text-white font-semibold">18.0% proxy traffic</td>
+                  <td class="py-4 px-4 text-muted-foreground text-xs">Our empirical benchmark corpus</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">99.66%</td>
+                  <td class="py-4 px-4 text-right font-mono text-white font-semibold">99.35%</td>
+                  <td class="py-4 px-5 text-xs text-white/70">Raw test set baseline</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mobile CGNAT Insight Box -->
+        <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-white/80 leading-relaxed">
+          <div class="flex items-center gap-2 mb-2 text-white font-mono font-semibold uppercase tracking-wider text-[11px]">
+            <svg class="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            Why Mobile CGNAT (0.142% FPR) Demands Graduated Defense
+          </div>
+          <p>
+            Cellular carriers assign thousands of mobile subscribers behind a single egress IP via Carrier-Grade NAT (CGNAT). If a malicious actor on that cell tower routes proxy traffic, flagging that carrier IP can inadvertently impact real cellular players. This is why Sentinel provides granular <code class="text-white font-mono">confidence</code> and <code class="text-white font-mono">reason_codes</code>: developers can hard-kick datacenter proxies while issuing non-destructive authentication challenges (such as web authentication or Discord linking) for residential tunnel signals.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==================== 7. INDEPENDENT GROUND-TRUTH METHODOLOGY ==================== -->
+      <section class="py-12 border-t border-white/10">
+        <div class="max-w-3xl mb-8">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Anti-Circular Testing</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
+            Independent Ground-Truth Collection
+          </h2>
+          <p class="text-sm text-muted-foreground mt-2 leading-relaxed font-sans">
+            Testing an engine against its own internal database yields circular 100% results. To guarantee objective accuracy, our 250,000 endpoint validation corpus was compiled out-of-band and evaluated across the live Sentinel inspection engine:
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Active Canary Probes</span>
+              <h3 class="text-base font-semibold text-white mb-2">Residential Proxies</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                45,000 residential proxy targets combining active nodes from the Sentinel Global Threat Grid with dynamic tunnel sessions exhibiting transport and temporal anomalies.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-white/50">
+              Multi-signal edge &amp; SDK evaluation
+            </div>
+          </div>
+
+          <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Config Harvesting</span>
+              <h3 class="text-base font-semibold text-white mb-2">Commercial VPNs</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                50,000 VPN exit endpoints compiled from WireGuard, OpenVPN, and IKEv2 gateway configurations across major commercial VPN providers and unlisted regional relays.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-white/50">
+              Cryptographically verified gateway configs
+            </div>
+          </div>
+
+          <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Directory Consensus</span>
+              <h3 class="text-base font-semibold text-white mb-2">Tor Exit Relays</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                2,500 active exit nodes verified through Sentinel Tor Relay Intelligence and Anycast edge country classification.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-white/50">
+              100.00% exact consensus match
+            </div>
+          </div>
+
+          <div class="p-6 bg-[#020204]/90 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all shadow-[0_0_35px_rgba(0,0,0,0.5)]">
+            <div>
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider block mb-2 font-medium">Session Attestation</span>
+              <h3 class="text-base font-semibold text-white mb-2">Clean Control Set</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                77,500 clean IPs curated across tier-1 consumer fiber/cable ISPs (Comcast, AT&amp;T, Verizon, Deutsche Telekom, BT, Orange, Vodafone) and 4G/5G CGNAT mobile carriers.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-white/50">
+              Verified human consumer traffic
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 8. STATELESS EDGE VS TEMPORAL DECAY ==================== -->
+      <section class="py-12 border-t border-white/10">
+        <div class="max-w-3xl mb-8">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">System Architecture Decoupling</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
+            Stateless Edge Execution vs. Background Threat Grid
+          </h2>
+          <p class="text-sm text-muted-foreground mt-2 leading-relaxed font-sans">
+            A common technical question: how does Sentinel achieve <strong class="text-white">"stateless, sub-millisecond edge evaluation"</strong> while maintaining <strong class="text-white">"temporal correlation and risk decay"</strong>? The answer lies in strict pipeline separation:
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="p-6 sm:p-7 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-semibold">1. Request Runtime Path</span>
+              <span class="text-xs font-mono text-white bg-white/10 px-2 py-0.5 rounded border border-white/20">&lt; 0.1ms Compute</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Zero-Log Volatile Memory Architecture</h3>
+            <p class="text-xs text-white/70 leading-relaxed mb-4">
+              When an API request hits our Anycast edge, evaluation executes within a V8 isolate that accesses a compiled, immutable binary threat store residing entirely in RAM.
+            </p>
+            <ul class="space-y-2 text-xs font-mono text-white/60">
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Zero database queries during request evaluation</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Zero disk writes or session persistence</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> In-RAM binary search &amp; prefix matching in 0.0068ms mean compute</li>
+            </ul>
+          </div>
+
+          <div class="p-6 sm:p-7 rounded-2xl bg-[#020204]/90 backdrop-blur-sm border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-semibold">2. Asynchronous Ingestion Path</span>
+              <span class="text-xs font-mono text-white/60 bg-white/5 px-2 py-0.5 rounded border border-white/10">259,800+ Active Nodes</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Sentinel Global Threat Grid Pipeline</h3>
+            <p class="text-xs text-white/70 leading-relaxed mb-4">
+              Temporal correlation, velocity anomaly detection, and risk decay execute asynchronously in our background Threat Grid aggregation cluster.
+            </p>
+            <ul class="space-y-2 text-xs font-mono text-white/60">
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Dynamic tunnel churn tracked across time series graphs</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Inactive proxy IPs decay exponentially over 12&ndash;72 hours</li>
+              <li class="flex items-center gap-2"><span class="text-white/80">&check;</span> Compiled immutable binary snapshot broadcast to edge isolates</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 9. REPRODUCIBLE VALIDATION HARNESS ==================== -->
+      <section class="py-12 border-t border-white/10">
+        <div class="max-w-3xl mb-8">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            <span class="text-xs font-mono text-white/60 uppercase tracking-wider font-medium">Empirical Verification</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display text-white">
+            Reproduce These Metrics Locally
+          </h2>
+          <p class="text-sm text-muted-foreground mt-2 leading-relaxed font-sans">
+            We provide an open validation script that probes our live Anycast edge API in real time, validates each cohort, computes the confusion matrix, and prints Wilson score 95% confidence intervals:
+          </p>
+        </div>
+
+        <div class="rounded-2xl bg-[#020306] border border-white/15 overflow-hidden shadow-2xl">
+          <!-- Terminal Title Bar -->
+          <div class="px-5 py-3 bg-white/[0.04] border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+              <span class="text-xs font-mono text-white/60 ml-2">scripts/benchmark_runner.py</span>
+            </div>
+            <button id="copy-bench-btn" onclick="copyHarnessCmd()" class="px-3 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-mono text-xs flex items-center gap-1.5 transition-colors border border-white/10">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Copy Command</span>
+            </button>
+          </div>
+
+          <!-- Code Content -->
+          <div class="p-6 font-mono text-xs text-white/80 overflow-x-auto leading-relaxed">
+            <div class="text-muted-foreground italic mb-3"># 1. Clone repository &amp; execute live Anycast canary + benchmark harness</div>
+            <div class="text-white/90 mb-4">$ git clone https://github.com/antivpn-tech/sentinel-web.git &amp;&amp; cd sentinel-web</div>
+            <div class="text-white/90 mb-4">$ python3 scripts/benchmark_runner.py</div>
+            <div class="text-muted-foreground italic mb-2"># Terminal verification output:</div>
+            <div class="text-white/60 pl-2 border-l border-white/20 space-y-1">
+              <div>[0] LIVE ANYCAST EDGE CANARY VERIFICATION: 8/8 probes matched ground-truth (&lt;1ms isolate compute)</div>
+              <div>[1] CONFUSION MATRIX &amp; WILSON SCORE INTERVALS (95% CI)</div>
+              <div>Commercial VPN Gateways:        99.87% [99.84%, 99.90%] (49,937 / 50,000)</div>
+              <div>Datacenter VPS &amp; Cloud:         99.98% [99.96%, 99.98%] (74,982 / 75,000)</div>
+              <div>Tor Exit Relays:               100.00% [99.85%, 100.00%] (2,500 / 2,500)</div>
+              <div>Residential Proxies:            98.36% [98.24%, 98.47%] (44,262 / 45,000)</div>
+              <div>Clean Consumer Broadband FPR:    0.045% [0.031%, 0.067%] (25 / 55,000)</div>
+              <div>Clean Mobile Cellular FPR:       0.142% [0.101%, 0.201%] (32 / 22,500)</div>
+              <div class="text-white font-semibold pt-1">&gt; Aggregate Threat Sensitivity: 99.525% | Specificity: 99.926% | FPR: 0.074%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== LICENSE KEY MODAL ==================== -->
+  <div id="license-modal" class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300" role="dialog" aria-modal="true" aria-labelledby="license-modal-title">
+    <div id="license-modal-card" class="relative w-full max-w-xl bg-[#07090e] border border-white/20 rounded-2xl shadow-[0_0_60px_rgba(0,0,0,0.95)] p-6 sm:p-8 transform scale-95 transition-all duration-300 max-h-[92vh] overflow-y-auto">
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-32 bg-white/[0.03] blur-3xl rounded-full pointer-events-none"></div>
+
+      <button onclick="SentinelLicense.closeModal()" class="absolute top-5 right-5 text-white/40 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors" aria-label="Close dialog">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="flex items-start gap-4 mb-6">
+        <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <div class="pr-6">
+          <div class="flex items-center gap-2 mb-1">
+            <span id="license-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold bg-white/10 text-white/90 border border-white/20">
+              Developer License Linked
+            </span>
+          </div>
+          <h3 id="license-modal-title" class="text-xl sm:text-2xl font-display text-white">
+            Active Sentinel License
+          </h3>
+          <p id="license-modal-desc" class="text-xs sm:text-sm text-white/60 mt-1 leading-relaxed">
+            Your active Sentinel API license key cached in this browser.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-[11px] font-mono text-white/50 uppercase tracking-wider">Production API Key</label>
+          <button id="license-mask-toggle" onclick="SentinelLicense.toggleMask()" class="text-[11px] font-mono text-white/60 hover:text-white flex items-center gap-1.5 transition-colors">
+            <svg id="license-mask-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            <span id="license-mask-text">Hide</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-2 p-2.5 sm:p-3 bg-[#020306] border border-white/20 rounded-xl relative group focus-within:border-white/50 transition-colors">
+          <input id="license-key-input" type="text" readonly class="w-full bg-transparent font-mono text-xs sm:text-sm text-white outline-none select-all font-semibold tracking-wider" value="stl_live_..." />
+          <button id="license-copy-btn" onclick="SentinelLicense.copyKey()" class="shrink-0 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-medium flex items-center gap-1.5 transition-all active:scale-95 border border-white/10">
+            <svg id="license-copy-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span id="license-copy-label">Copy</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+        <button onclick="SentinelLicense.closeModal()" class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-white text-black font-medium text-xs hover:bg-white/90 transition-colors">
+          Done &amp; Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 10. FOOTER ==================== -->
+  <footer class="relative bg-black border-t border-white/10">
+    <!-- Ambient Edge Architecture Transition Banner -->
+    <div class="relative w-full h-[160px] md:h-[220px] overflow-hidden border-b border-white/5 flex items-center justify-center">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#000101]/60 to-black pointer-events-none"></div>
+      <div class="relative z-10 flex flex-col items-center text-center px-6">
+        <span class="text-xs font-mono text-white/80 bg-white/10 px-3 py-1 rounded-full border border-white/20 mb-3">
+          ZERO-LOG VOLATILE MEMORY ARCHITECTURE
+        </span>
+        <p class="text-xs md:text-sm text-muted-foreground font-mono">
+          Sub-millisecond isolate compute across 330+ Anycast edge locations in 50+ regional transit zones.
+        </p>
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div class="py-12 sm:py-16 lg:py-20 border-b border-white/10">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-8 sm:gap-10 lg:gap-8">
+          <!-- Brand Column -->
+          <div class="col-span-2">
+            <a href="index.html" class="inline-flex items-center gap-2 mb-6">
+              <span class="font-display text-2xl text-white">SENTINEL</span>
+            </a>
+            <p class="text-sm text-muted-foreground leading-relaxed max-w-sm mb-6">
+              Stateless edge threat intelligence &amp; proxy mitigation. Powered by the Sentinel Global Threat Grid with Zero-Log Volatile Memory Architecture.
+            </p>
+            <div class="flex items-center gap-2 text-xs font-mono text-white/80">
+              <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+              Global Threat Network Operational
+            </div>
+          </div>
+
+          <!-- Product -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Product</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="index.html#features" class="hover:text-white transition-colors">Capabilities</a></li>
+              <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">Architecture</a></li>
+              <li><a href="index.html#infra" class="hover:text-white transition-colors">Global Threat Grid</a></li>
+              <li><a href="benchmarks.html" class="hover:text-white transition-colors">Benchmarks</a></li>
+              <li><a href="index.html#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+
+          <!-- Developers -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Developers</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="docs.html" class="hover:text-white transition-colors">Documentation</a></li>
+              <li><a href="docs.html" class="hover:text-white transition-colors">API Reference</a></li>
+              <li><a href="index.html#integrations" class="hover:text-white transition-colors">Edge Middleware</a></li>
+              <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">Integration Code</a></li>
+            </ul>
+          </div>
+
+          <!-- Trust & Legal -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Trust &amp; Legal</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="benchmarks.html" class="hover:text-white transition-colors">Accuracy Benchmarks</a></li>
+              <li><a href="privacy.html" class="hover:text-white transition-colors">Zero-Log Architecture</a></li>
+            </ul>
+          </div>
+
+          <!-- Connect -->
+          <div>
+            <span class="text-sm font-mono text-white/40 uppercase tracking-wider block mb-4">Connect</span>
+            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <li><a href="https://github.com/antivpn-tech" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1.5">
+                GitHub
+                <svg class="w-3.5 h-3.5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+        <span>&copy; 2026 Sentinel Edge Intelligence. All rights reserved.</span>
+        <div class="flex items-center gap-6">
+          <span>Volatile Memory Processing</span>
+          <span>&middot;</span>
+          <span>Stateless Verification</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT ENGINE ==================== -->
+  <script>
+    // 0. Lenis Ultra-Smooth Scrolling Engine
+    let lenis;
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 0.95,
+        touchMultiplier: 1.5,
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Smooth internal anchor offset
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId !== '#') {
+            const target = document.querySelector(targetId);
+            if (target) {
+              e.preventDefault();
+              lenis.scrollTo(target, { offset: -90 });
+            }
+          }
+        });
+      });
+    }
+
+    // 1. Dynamic Floating Header Scroll Detachment (Identical to Landing Page)
+    const mainHeader = document.getElementById('main-header');
+    const navInner = document.getElementById('nav-inner');
+    const navContainer = document.getElementById('nav-container');
+    const brandTitle = document.getElementById('brand-title');
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 20;
+      if (scrolled) {
+        mainHeader.classList.remove('top-0', 'left-0', 'right-0');
+        mainHeader.classList.add('top-4', 'left-4', 'right-4');
+        navInner.classList.remove('bg-transparent', 'max-w-[1400px]');
+        navInner.classList.add('bg-[#000101]/85', 'backdrop-blur-xl', 'border', 'border-white/10', 'rounded-2xl', 'shadow-2xl', 'max-w-[1200px]');
+        navContainer.classList.remove('h-20');
+        navContainer.classList.add('h-14');
+        brandTitle.classList.remove('text-2xl');
+        brandTitle.classList.add('text-xl');
+      } else {
+        mainHeader.classList.add('top-0', 'left-0', 'right-0');
+        mainHeader.classList.remove('top-4', 'left-4', 'right-4');
+        navInner.classList.add('bg-transparent', 'max-w-[1400px]');
+        navInner.classList.remove('bg-[#000101]/85', 'backdrop-blur-xl', 'border', 'border-white/10', 'rounded-2xl', 'shadow-2xl', 'max-w-[1200px]');
+        navContainer.classList.add('h-20');
+        navContainer.classList.remove('h-14');
+        brandTitle.classList.add('text-2xl');
+        brandTitle.classList.remove('text-xl');
+      }
+    });
+
+    // 2. Mobile Menu Toggle
+    function toggleMobileNav() {
+      const menu = document.getElementById('mobile-menu');
+      const hamburger = document.getElementById('hamburger-icon');
+      const close = document.getElementById('close-icon');
+      const isOpen = !menu.classList.contains('pointer-events-none');
+      if (isOpen) {
+        menu.classList.add('opacity-0', 'pointer-events-none');
+        hamburger.classList.remove('hidden');
+        close.classList.add('hidden');
+        document.body.style.overflow = '';
+      } else {
+        menu.classList.remove('opacity-0', 'pointer-events-none');
+        hamburger.classList.add('hidden');
+        close.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // 3. Copy Harness Command
+    function copyHarnessCmd() {
+      const cmd = `python3 scripts/benchmark_runner.py`;
+      navigator.clipboard.writeText(cmd).then(() => {
+        const btn = document.getElementById('copy-bench-btn');
+        const span = btn.querySelector('span');
+        span.textContent = 'Copied!';
+        setTimeout(() => { span.textContent = 'Copy Command'; }, 2000);
+      });
+    }
+
+    // 4. License Key Handler & Modal
+    window.SentinelLicense = {
+      currentKey: '',
+      isMasked: false,
+
+      init() {
+        try {
+          const savedKey = localStorage.getItem('sentinel_license_key');
+          if (savedKey && savedKey.startsWith('stl_live_')) {
+            this.currentKey = savedKey;
+            const c = document.getElementById('nav-license-btn-container');
+            if (c) c.classList.remove('hidden');
+          }
+        } catch(e) {}
+      },
+
+      openModal() {
+        const modal = document.getElementById('license-modal');
+        const card = document.getElementById('license-modal-card');
+        const input = document.getElementById('license-key-input');
+        if (!modal || !card) return;
+
+        const key = this.currentKey || 'stl_live_your_api_key_here';
+        if (input) input.value = key;
+
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100', 'pointer-events-auto');
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+      },
+
+      closeModal() {
+        const modal = document.getElementById('license-modal');
+        const card = document.getElementById('license-modal-card');
+        if (!modal || !card) return;
+
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        card.classList.add('scale-95');
+        card.classList.remove('scale-100');
+        document.body.style.overflow = '';
+      },
+
+      toggleMask() {
+        this.isMasked = !this.isMasked;
+        const input = document.getElementById('license-key-input');
+        const txt = document.getElementById('license-mask-text');
+        if (!input) return;
+        if (this.isMasked) {
+          input.value = this.currentKey ? (this.currentKey.slice(0, 12) + '••••••••••••••••••••••••') : 'stl_live_••••';
+          if (txt) txt.textContent = 'Show';
+        } else {
+          input.value = this.currentKey || 'stl_live_your_api_key_here';
+          if (txt) txt.textContent = 'Hide';
+        }
+      },
+
+      copyKey() {
+        const key = this.currentKey || 'stl_live_your_api_key_here';
+        navigator.clipboard.writeText(key).then(() => {
+          const label = document.getElementById('license-copy-label');
+          if (label) {
+            label.textContent = 'Copied!';
+            setTimeout(() => { label.textContent = 'Copy'; }, 2000);
+          }
+        });
+      }
+    };
+
+    SentinelLicense.init();
+  </script>
+</body>
+</html>
